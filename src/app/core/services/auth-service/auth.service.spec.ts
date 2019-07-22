@@ -62,12 +62,24 @@ describe('AuthService', () => {
           expect(localStorage.getItem('token')).toEqual('token');
         });
   });
+
   describe('getAccessToken', () => {
     it('should return stored token from localStorage',
         () => {
           localStorage.setItem('token', 'token');
           expect(AuthService.getAccessToken()).toEqual('token');
         });
+  });
+
+
+  describe('removeAccessToken', () => {
+      it('should return remove the token',
+            () => {
+                authService.setAccessToken('token');
+                expect(localStorage.getItem('token')).toEqual('token');
+                localStorage.removeItem('token');
+                expect(AuthService.getAccessToken()).toEqual(null);
+      });
   });
 
 });
