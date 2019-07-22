@@ -59,13 +59,13 @@ describe('AuthService', () => {
     it('should store the token in localStorage',
         () => {
           authService.setAccessToken('token');
-          expect(localStorage.getItem('id_token')).toEqual('token');
+          expect(localStorage.getItem('token')).toEqual('token');
         });
   });
   describe('getAccessToken', () => {
-    fit('should return stored token from localStorage',
+    it('should return stored token from localStorage',
         () => {
-          localStorage.setItem('tk', 'token');
+          localStorage.setItem('token', 'token');
           expect(AuthService.getAccessToken()).toEqual('token');
         });
   });

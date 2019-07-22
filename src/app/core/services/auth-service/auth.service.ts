@@ -7,7 +7,7 @@ export class AuthService {
 
   constructor() { }
 
-  private TOKEN_KEY = 'id_token';
+  private TOKEN_KEY = 'token';
 
   static getAccessToken(): string {
     return localStorage.getItem('token');
