@@ -10,18 +10,18 @@ describe('AuthService', () => {
     TestBed.configureTestingModule({
       providers: [AuthService]
     });
-
+    
     authService = TestBed.get(AuthService);
 
-    beforeEach( () => {
+
       /* Mock version of localStorage, to avoid using real one
       https://medium.com/@armno/til-mocking-localstorage-and-sessionstorage-in-angular-unit-tests-a765abdc9d87
 
       INFO: Note that .length property and key() method are not implemented.
       I personally never have to use them but there should be some examples online on how to also mock them.
  */
-      let store = {};
-      const mockLocalStorage = {
+    let store = {};
+    const mockLocalStorage = {
         getItem: (key: string): string => {
           return key in store ? store[key] : null;
         },
@@ -36,17 +36,14 @@ describe('AuthService', () => {
         }
       };
 
-      spyOn(localStorage, 'getItem')
+    spyOn(localStorage, 'getItem')
           .and.callFake(mockLocalStorage.getItem);
-      spyOn(localStorage, 'setItem')
+    spyOn(localStorage, 'setItem')
           .and.callFake(mockLocalStorage.setItem);
-      spyOn(localStorage, 'removeItem')
+    spyOn(localStorage, 'removeItem')
           .and.callFake(mockLocalStorage.removeItem);
-      spyOn(localStorage, 'clear')
+    spyOn(localStorage, 'clear')
           .and.callFake(mockLocalStorage.clear);
-    });
-
-
   });
 
 
@@ -70,7 +67,7 @@ describe('AuthService', () => {
     it('should return stored token from localStorage',
         () => {
           localStorage.setItem('id_token', 'token');
-          expect(authService.getAccessToken()).toEqual('token');
+          expect(authService.getAccessToken()).toEqual(true);
         });
   });
 
