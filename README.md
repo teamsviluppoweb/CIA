@@ -1,4 +1,13 @@
-# CIA
+
+[![npm version](https://img.shields.io/badge/%40angular%2Fcore-8.0.0-%23dd0031.svg)](https://www.npmjs.com/package/@angular/core/v/8.0.0)
+[![CircleCI](https://circleci.com/gh/RabbitHols/tdd/tree/master.svg?style=shield)](https://circleci.com/gh/RabbitHols/tdd/tree/master)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/rabbithols/cia/issues)
+
+
+
+
+# CIA (Concorso Ispettore Antincendio)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.0.
 
