@@ -10,7 +10,7 @@ describe('AuthService', () => {
     TestBed.configureTestingModule({
       providers: [AuthService]
     });
-    
+
     authService = TestBed.get(AuthService);
 
 
@@ -55,19 +55,18 @@ describe('AuthService', () => {
   });
 
 
-  describe('get token', () => {
+  describe('setAccessToken', () => {
     it('should store the token in localStorage',
         () => {
           authService.setAccessToken('token');
-          expect(localStorage.getItem('token')).toEqual('token');
+          expect(localStorage.getItem('id_token')).toEqual('token');
         });
   });
-
-  describe('set token', () => {
-    it('should return stored token from localStorage',
+  describe('getAccessToken', () => {
+    fit('should return stored token from localStorage',
         () => {
-          localStorage.setItem('id_token', 'token');
-          expect(authService.getAccessToken()).toEqual(true);
+          localStorage.setItem('tk', 'token');
+          expect(AuthService.getAccessToken()).toEqual('token');
         });
   });
 
