@@ -18,7 +18,7 @@ describe('AuthGuard', () => {
   it('should be true on valid token regex from cas', inject([AuthGuard], (guard: AuthGuard) => {
     const url = 'http://172.16.26.72:4200/?ticket=JWT-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
 
-    const result = AuthGuard.ispectUrl(url);
+    const result = guard.ispectUrl(url);
     expect(result).toEqual(true);
   }));
 
@@ -26,9 +26,21 @@ describe('AuthGuard', () => {
   it('should be false on invalid token regex from cas', inject([AuthGuard], (guard: AuthGuard) => {
     const url = 'http://172.16.26.72:4200/?ticket=JWTfdsfdsfsdxx-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
 
-    const result = AuthGuard.ispectUrl(url);
+    const result = guard.ispectUrl(url);
     expect(result).toEqual(false);
   }));
+
+  it('should extract the token from url', inject([AuthGuard], (guard: AuthGuard) => {
+    // tslint:disable-next-line:max-line-length
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+    const url = 'http://172.16.26.72:4200/?ticket=JWT-' + token;
+
+    const result = guard.refactorUrl(url);
+    expect(result).toEqual(token);
+  }));
+
+
+
 
 
 });
