@@ -1,19 +1,36 @@
-import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs';
+ import { Injectable } from '@angular/core';
+ import { CanActivate, Router} from '@angular/router';
+ import {Observable} from 'rxjs';
+ import {AuthService} from '../../services';
 
-@Injectable({
+ @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+ export class AuthGuard implements CanActivate {
     url: string;
 
-    constructor() {
+    constructor(private auth: AuthService, private router: Router) {
         this.url = window.location.href;
     }
 
-    canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        return true;
+    canActivate(): Observable<boolean> | Promise<boolean> | boolean {
+
+
+        switch (this.ispectUrl(this.url)) {
+
+            case true: {
+                const token = this.refactorUrl(this.url);
+                this.auth.setAccessToken(token);
+                return this.auth.validateJwt();
+            }
+
+            default: {
+                return false;
+            }
+
+        }
+
+
     }
 
 
@@ -30,5 +47,6 @@ export class AuthGuard implements CanActivate {
 
         return token;
     }
+
 
 }
