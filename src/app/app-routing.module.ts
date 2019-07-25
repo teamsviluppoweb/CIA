@@ -14,12 +14,12 @@ const routes: Routes = [
     children: USER_ROUTES
   },
   {
-    path: 'auth',
+    path: 'guest',
     component: GuestComponent,
-    loadChildren: './modules/auth/auth.module#GuestModule'
+    loadChildren: () => import('src/app/modules/guest/guest.module').then(m => m.GuestModule)
   },
   // Fallback when no prior routes is matched
-  { path: '**', redirectTo: '/domanda/edit', pathMatch: 'full' }
+  { path: '**', redirectTo: '/guest/login', pathMatch: 'full' }
 ];
 
 @NgModule({

@@ -5,9 +5,7 @@ import { AuthGuard } from './auth.guard';
 import {AuthService} from '../../services';
 import {Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
-import {routes} from '../../../app-routing.module';
-import {of} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {routes} from '../../../modules/domanda/domanda-routing.module';
 
 
 let httpClient: HttpClient;

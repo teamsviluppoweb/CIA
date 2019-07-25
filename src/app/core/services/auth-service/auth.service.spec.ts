@@ -3,12 +3,12 @@ import {async, inject, TestBed} from '@angular/core/testing';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { routes } from '../../../app-routing.module';
 import { HttpClient } from '@angular/common/http';
 import {
     HttpClientTestingModule,
     HttpTestingController
 } from '@angular/common/http/testing';
+import {routes} from '../../../modules/domanda/domanda-routing.module';
 
 let authService: AuthService;
 let router: Router;
@@ -97,7 +97,7 @@ describe('AuthService', () => {
 
     })));
 
-    fit(`should emit 'false' for an unauthorized code and redirect to auth/login`, async(inject([AuthService, HttpTestingController],
+    it(`should emit 'false' for an unauthorized code and redirect to auth/login`, async(inject([AuthService, HttpTestingController],
         (service: AuthService, backend: HttpTestingController) => {
 
 
@@ -110,7 +110,7 @@ describe('AuthService', () => {
                 expect(next).toBeFalsy();
                 expect(spy);
                 expect(service.logout).toHaveBeenCalled();
-                expect(router.navigate).toHaveBeenCalledWith(['auth/login']);
+                expect(router.navigate).toHaveBeenCalledWith(['/guest/login']);
                 expect(next).toEqual(false);
             });
 

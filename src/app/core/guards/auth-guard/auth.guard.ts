@@ -25,6 +25,7 @@
             }
 
             default: {
+                this.auth.logout();
                 return false;
             }
 

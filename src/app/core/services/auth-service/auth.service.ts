@@ -27,7 +27,7 @@ export class AuthService {
 
   logout(): void {
     this.removeAccessToken();
-    this.router.navigate(['auth/login']);
+    this.router.navigate(['/guest/login']);
   }
 
   validateJwt(): Observable<any> {
