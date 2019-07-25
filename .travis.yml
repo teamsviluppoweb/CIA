@@ -20,7 +20,6 @@ install:
   - npm install -g codecov
   - npm install coveralls
   - npm install
-  - ng lint
 
 before_script:
   - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
