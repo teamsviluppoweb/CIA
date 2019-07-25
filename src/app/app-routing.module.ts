@@ -16,7 +16,7 @@ const routes: Routes = [
   {
     path: 'auth',
     component: GuestComponent,
-    loadChildren: './modules/auth/auth.module#AuthModule'
+    loadChildren: './modules/auth/auth.module#GuestModule'
   },
   // Fallback when no prior routes is matched
   { path: '**', redirectTo: '/domanda/edit', pathMatch: 'full' }

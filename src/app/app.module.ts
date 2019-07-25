@@ -1,4 +1,3 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,7 +12,7 @@ import { GuestComponent } from './layouts/guest/guest.component';
   declarations: [
     AppComponent,
     UserComponent,
-    GuestComponent
+    GuestComponent,
   ],
   imports: [
     BrowserAnimationsModule,
