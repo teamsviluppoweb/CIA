@@ -1,0 +1,14 @@
+<h2>CAS DOPPELGANGER</h2>
+
+
+<form class="modal-content animate" (ngSubmit)="onSubmit()">
+
+  <label for="uname"><b>Username</b></label>
+  <input type="text" [(ngModel)]="name" placeholder="Enter Username" name="uname" required>
+  <br>
+  <label for="psw"><b>Password</b></label>
+  <input type="password" [(ngModel)]="password" placeholder="Enter Password" name="psw" required>
+  <br>
+  <button type="submit">Login</button>
+
+</form>
