@@ -1,6 +1,14 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {Observable} from 'rxjs';
+import {
+  TipologiaTitoliDiStudioLSt,
+  TitoliDiStudioIndirizzoLSt,
+  TitoliDiStudioLSt
+} from '../../../../../core/models/api.interface';
+import {ApiService} from '../../../../../core/services/api/api.service';
+import {concatMap, map} from 'rxjs/operators';
 
 
 
@@ -14,15 +22,17 @@ export class AggiungiDatiComponent implements OnInit {
 
   form: FormGroup;
 
-  tipologieTitoliLst = ['tipo 1', 'tipo 2', 'tipe 3'];
-  titoloDiStudioLst = ['tipo 1', 'tipo 2', 'tipe 3'];
-  indirizzoDiTitoloLst = ['tipo 1', 'tipo 2', 'tipe 3'];
+  $tipologiaDiStudioLst: Observable<any[] | TipologiaTitoliDiStudioLSt>;
+  $titoloDiStudioLst: Observable<any[] | TitoliDiStudioLSt>;
+  $indirizzoDiTitoloLst: Observable<any[] | TitoliDiStudioIndirizzoLSt>;
 
   constructor(private fb: FormBuilder,
               public dialogRef: MatDialogRef<AggiungiDatiComponent>,
+              private restApi: ApiService,
               @Inject(MAT_DIALOG_DATA) public dataDialog) {
 
-    console.log(this.dataDialog);
+
+    this.$tipologiaDiStudioLst = this.restApi.getTipologiaTitoliDiStudio();
 
     this.form = this.fb.group({
       tipologia: ['', Validators.required],
@@ -34,10 +44,13 @@ export class AggiungiDatiComponent implements OnInit {
       periodoConseguimento: ['', Validators.required],
     });
 
+    this.titoloDiStudio.disable();
+    this.indirizzo.disable();
   }
 
   ngOnInit() {
     this.OnChangesForms();
+    this.DropDownLogic();
   }
 
   onNoClick(): void {
@@ -52,7 +65,27 @@ export class AggiungiDatiComponent implements OnInit {
     return this.form.valid;
   }
 
+  DropDownLogic() {
+    this.$titoloDiStudioLst = this.tipologia.valueChanges.pipe(
+        map( (x) => x.id),
+        concatMap((x) => {
+              this.titoloDiStudio.enable();
+              return this.restApi.getTitoli(x);
+            }
+        ));
+
+    this.$indirizzoDiTitoloLst = this.titoloDiStudio.valueChanges.pipe(
+        map( (x) => x.id),
+        concatMap((x) => {
+              this.indirizzo.enable();
+              return this.restApi.getIndirizzoTitoli(x);
+            }
+        ));
+
+  }
+
   OnChangesForms() {
+
     this.tipologia.valueChanges.subscribe( (x) => {
       this.dataDialog.data.tipologia = x;
     });

@@ -49,8 +49,8 @@ export class StepTitoliDiStudioComponent implements OnInit {
     };
 
     const dialogRef = this.aggiungiDatiDialog.open(AggiungiDatiComponent, {
-      height: '500px',
-      width: '1100px',
+      height: '650px',
+      width: '1300px',
       data: {data: obj},
     });
 
@@ -60,7 +60,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
 
           const formazione: Formazione = {
             tipologia: dataDialog.data.tipologia,
-            titoloDiStudio: dataDialog.data.titoloDiStudio + ' ' + dataDialog.data.indirizzo,
+            titoloDiStudio: dataDialog.data.titoloDiStudio.desc + ' ' + dataDialog.data.indirizzo.desc,
             conseguitoPresso: dataDialog.data.istituto,
             luogo: dataDialog.data.luogo,
             periodoConseguimento: dataDialog.data.periodoConseguimento,

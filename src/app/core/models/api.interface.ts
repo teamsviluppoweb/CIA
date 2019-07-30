@@ -35,3 +35,19 @@ export interface SediApiLSt {
   id: string;
   desc: string;
 }
+
+export interface TipologiaTitoliDiStudioLSt {
+  id: string;
+  desc: string;
+}
+
+export interface TitoliDiStudioLSt {
+  id: string;
+  desc: string;
+}
+
+export interface TitoliDiStudioIndirizzoLSt {
+  id: string;
+  desc: string;
+}
+

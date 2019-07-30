@@ -3,9 +3,17 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {catchError} from 'rxjs/operators';
-import {HandleError, HttpErrorHandler} from "..";
-import {Corsi, CorsiApiLst, Formazione, QualificaSede, QualificheApiLst, SediApiLSt} from "../../models/api.interface";
-import {environment} from "../../../../environments/environment.dev";
+import {HandleError, HttpErrorHandler} from '..';
+import {
+  Corsi,
+  CorsiApiLst,
+  Formazione,
+  QualificaSede,
+  QualificheApiLst,
+  SediApiLSt,
+  TipologiaTitoliDiStudioLSt, TitoliDiStudioIndirizzoLSt, TitoliDiStudioLSt
+} from '../../models/api.interface';
+import {environment} from '../../../../environments/environment.dev';
 
 // To use if we don't want cached application forms response
 /*
@@ -94,4 +102,33 @@ export class ApiService {
     );
   }
 
+  getTipologiaTitoliDiStudio(): Observable<any[] | TipologiaTitoliDiStudioLSt> {
+    const refresh = false;
+
+    const options = createHttpOptions(refresh);
+
+    return this.http.get<TipologiaTitoliDiStudioLSt>(environment.endpoints.backendLocation + environment.endpoints.titoliStudioTipologie).pipe(
+        catchError(this.handleError('Get lista tipologia di studio', []))
+    );
+  }
+
+  getTitoli(id: string): Observable<any[] | TitoliDiStudioLSt> {
+    const refresh = false;
+
+    const options = createHttpOptions(refresh);
+
+    return this.http.get<TitoliDiStudioLSt>(environment.endpoints.backendLocation + environment.endpoints.titoliStudioTitoli +  id).pipe(
+        catchError(this.handleError('Get lista titoli di studio', []))
+    );
+  }
+
+  getIndirizzoTitoli(id: string): Observable<any[] | TitoliDiStudioIndirizzoLSt> {
+    const refresh = false;
+
+    const options = createHttpOptions(refresh);
+
+    return this.http.get<TitoliDiStudioIndirizzoLSt>(environment.endpoints.backendLocation + environment.endpoints.titoliStudioIndirizzi +  id).pipe(
+        catchError(this.handleError('Get lista titoli di studio', []))
+    );
+  }
 }
