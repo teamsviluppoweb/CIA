@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {DomandaEditComponent} from './components/domanda-edit/domanda-edit.component';
+import {DomandaEditComponent} from './components';
 
 export const routes: Routes = [
   {

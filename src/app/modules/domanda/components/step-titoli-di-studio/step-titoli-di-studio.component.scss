@@ -1,0 +1,41 @@
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+
+mat-form-field {
+  padding-right: 10px;
+}
+
+tr.mat-row {
+  height: 60px;
+}
+
+td.mat-cell {
+  padding: 5px;
+}
+
+
+tr.mat-header-row {
+  height: 56px;
+  background-color: #f3f3f3;
+}
+
+#formDatiRisultanti {
+  margin-bottom: 30px;
+}
+
+#tabDatiDichiarati .mat-row:hover {
+  background-color: #f3f3f3;
+}
+
+.edit {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#add {
+  cursor: pointer;
+}
+

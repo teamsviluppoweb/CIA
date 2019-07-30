@@ -1,1 +1,36 @@
-<p>domanda-edit works!</p>
+<form [formGroup]="form">
+  <mat-vertical-stepper #stepper [linear]="false">
+    <mat-step label="Informazioni personali">
+      <app-step-anagrafica></app-step-anagrafica>
+    </mat-step>
+
+    <mat-step label="Qualifica e Sede giuridica">
+      <app-step-qualifica-sede></app-step-qualifica-sede>
+    </mat-step>
+
+
+    <mat-step label="Dichiarazioni">
+    <app-step-dichiarazoini></app-step-dichiarazoini>
+    </mat-step>
+
+    <mat-step label="Titoli di studio valutabili">
+      <app-step-titoli-di-studio></app-step-titoli-di-studio>
+    </mat-step>
+
+
+    <mat-step label="Qualifiche professionali">
+      <app-step-qualifica-professionale></app-step-qualifica-professionale>
+    </mat-step>
+
+    <mat-step label="Corsi di formazione">
+      <app-step-corsi-di-formazione></app-step-corsi-di-formazione>
+    </mat-step>
+
+
+    <mat-step label="Invia Domanda">
+      <button type="submit">Submit</button>
+    </mat-step>
+
+  </mat-vertical-stepper>
+
+</form>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-domanda-edit',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DomandaEditComponent implements OnInit {
 
-  constructor() { }
+  public form: FormGroup;
 
-  ngOnInit() {
+  constructor(private fb: FormBuilder) { }
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
+    });
   }
 
 }

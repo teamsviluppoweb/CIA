@@ -23,6 +23,11 @@ export const environment = {
     fakeEndpoints: {
         backendLocation: 'http://localhost:8080/',
         whoami: 'whoami',
+    },
+    apicall: {
+        'titoli-formazione': 'http://localhost:8080/titolo-studio',
+        'qualifica-sede': 'http://localhost:8080/qualifica-sede',
+        'corsi-formazione': 'http://localhost:8080/corsi-formazione',
     }
 
 };

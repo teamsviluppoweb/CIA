@@ -1,0 +1,139 @@
+<div class="container" fxLayout="column">
+
+  <h3 style="font-weight: 400">Dati risultanti</h3>
+
+  <form id="formDatiRisultanti">
+
+    <table [dataSource]="corsiRisultanti"
+           fxFill mat-table>
+
+
+      <!-- Colonna nome corso-->
+      <ng-container matColumnDef="nomeCorso">
+        <th *matHeaderCellDef mat-header-cell>Nome corso</th>
+        <td *matCellDef="let row" mat-cell>{{row.nomeCorso}}</td>
+      </ng-container>
+
+      <!-- Colonna durata corso -->
+      <ng-container matColumnDef="durataCorso">
+        <th *matHeaderCellDef mat-header-cell>Durata corso</th>
+        <td *matCellDef="let row" mat-cell>{{row.durataCorso}}</td>
+      </ng-container>
+
+      <!-- Colonna data di conseguimento-->
+      <ng-container matColumnDef="dataDiConseguimento">
+        <th *matHeaderCellDef mat-header-cell>Data di conseguimento</th>
+        <td *matCellDef="let row" mat-cell>{{row.dataDiConseguimento}}</td>
+      </ng-container>
+
+      <!-- Colonna istituto  -->
+      <ng-container matColumnDef="istituto">
+        <th *matHeaderCellDef mat-header-cell>Istituto</th>
+        <td *matCellDef="let row" mat-cell>{{row.istituto}}</td>
+      </ng-container>
+
+      <!-- Colonna luogo -->
+      <ng-container matColumnDef="luogo">
+        <th *matHeaderCellDef mat-header-cell>Luogo</th>
+        <td *matCellDef="let row" mat-cell>{{row.luogo}}</td>
+      </ng-container>
+
+      <!-- Colonna periodo di conseguimento -->
+      <ng-container matColumnDef="periodoConseguimento">
+        <th *matHeaderCellDef mat-header-cell>Periodo di conseguimento</th>
+        <td *matCellDef="let row" mat-cell>{{row.periodoConseguimento}}</td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="TitoliDiStudioHeader" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: TitoliDiStudioHeader;" mat-row></tr>
+    </table>
+  </form>
+
+
+  <div fxLayout="row">
+    <h3 style="font-weight: 400">Dati dichiarati</h3>
+    <p style="
+    font-size: 10px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+font-weight: 100;">(Editabile)</p>
+  </div>
+
+  <form>
+
+    <table [dataSource]="corsiDichiarati"
+           cdkDropList
+           #table
+           [cdkDropListData]="corsiDichiarati"
+           (cdkDropListDropped)="dropTable($event)"
+           id="tabDatiDichiarati"
+           fxFill mat-table>
+
+
+      <!-- Colonna nome corso-->
+      <ng-container matColumnDef="nomeCorso">
+        <th *matHeaderCellDef mat-header-cell>Nome corso</th>
+        <td *matCellDef="let row" mat-cell>{{row.nomeCorso}}</td>
+      </ng-container>
+
+      <!-- Colonna durata corso -->
+      <ng-container matColumnDef="durataCorso">
+        <th *matHeaderCellDef mat-header-cell>Durata corso</th>
+        <td *matCellDef="let row" mat-cell>{{row.durataCorso}}</td>
+      </ng-container>
+
+      <!-- Colonna data di conseguimento-->
+      <ng-container matColumnDef="dataDiConseguimento">
+        <th *matHeaderCellDef mat-header-cell>Data di conseguimento</th>
+        <td *matCellDef="let row" mat-cell>{{row.dataDiConseguimento | date: 'dd/MM/yyyy'}}</td>
+      </ng-container>
+
+      <!-- Colonna istituto  -->
+      <ng-container matColumnDef="istituto">
+        <th *matHeaderCellDef mat-header-cell>Istituto</th>
+        <td *matCellDef="let row" mat-cell>{{row.istituto}}</td>
+      </ng-container>
+
+      <!-- Colonna luogo -->
+      <ng-container matColumnDef="luogo">
+        <th *matHeaderCellDef mat-header-cell>Luogo</th>
+        <td *matCellDef="let row" mat-cell>{{row.luogo}}</td>
+      </ng-container>
+
+      <!-- Colonna periodo di conseguimento -->
+      <ng-container matColumnDef="periodoConseguimento">
+        <th *matHeaderCellDef mat-header-cell>Periodo di conseguimento</th>
+        <td *matCellDef="let row" mat-cell>{{row.periodoConseguimento | date: 'dd/MM/yyyy'}}</td>
+      </ng-container>
+
+      <!-- Colonna edit -->
+      <ng-container matColumnDef="edit">
+        <th *matHeaderCellDef mat-header-cell>
+          <div fxLayout="row">
+            <mat-icon id="add" (click)="this.openDialogAggiungiDati()">add_box</mat-icon>
+          </div>
+        </th>
+        <td *matCellDef="let row; let i = index" mat-cell>
+          <mat-icon class="edit" (click)="deleteRow(i)">delete</mat-icon>
+        </td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="TitoliDiStudioHeaderEdit" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: TitoliDiStudioHeaderEdit; let i = index" mat-row  cdkDrag [cdkDragData]="row"></tr>
+    </table>
+
+  </form>
+
+
+  <div fxLayout="column" style="margin-top: 10px;">
+    <div fxFlex="row" fxLayoutGap="15px">
+      <span fxFill fxFlex="1 1 0"></span>
+      <button class="material-button" color="primary" mat-flat-button matStepperPrevious>Indietro</button>
+      <button class="material-button" color="primary" mat-flat-button matStepperNext>Avanti</button>
+    </div>
+  </div>
+
+</div>
+

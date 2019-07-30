@@ -1,0 +1,81 @@
+<h3>Inserisci qui le informazioni non risultanti in sipec info</h3>
+
+
+<div fxLayout="column" fxLayoutGap="10px" [formGroup]="form">
+
+  <div fxLayout="row" fxLayout.xs="column" >
+    <mat-form-field appearance="outline" fxFlex="0 0 60" fxFlex.xs="auto">
+      <mat-label>Nome corso</mat-label>
+      <mat-select formControlName="nomeCorso">
+        <mat-option *ngFor="let corso of nomiCorsiLst" [value]="corso" >
+          {{corso}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlex="0 0 40" fxFlex.xs="auto">
+      <mat-label>Istituto</mat-label>
+      <input name="istituto"
+             matInput
+             formControlName="istituto"
+      >
+    </mat-form-field>
+
+  </div>
+
+  <div fxLayout="row" fxLayout.xs="column" >
+
+    <mat-form-field appearance="outline" fxFlex="0 0 40" fxFlex.xs="auto">
+      <mat-label>Luogo</mat-label>
+      <input name="luogo"
+             matInput
+             formControlName="luogo"
+      >
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline" fxFlex="0 0 20" fxFlex.xs="auto">
+      <mat-label>Data conseguimento</mat-label>
+      <input name="dataDiConseguimento"
+             [matDatepicker]="pickerDataConseguimento"
+             matInput
+             formControlName="dataDiConseguimento"
+      >
+      <mat-datepicker-toggle matSuffix [for]="pickerDataConseguimento"></mat-datepicker-toggle>
+      <mat-datepicker #pickerDataConseguimento></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlex="0 0 20" fxFlex.xs="auto">
+      <mat-label>Periodo di conseguimento</mat-label>
+      <input name="periodoConseguimento"
+             [matDatepicker]="pickerPeriodoConseguimento"
+             matInput
+             formControlName="periodoConseguimento"
+      >
+      <mat-datepicker-toggle matSuffix [for]="pickerPeriodoConseguimento"></mat-datepicker-toggle>
+      <mat-datepicker #pickerPeriodoConseguimento></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlex="0 0 20" fxFlex.xs="auto">
+      <mat-label>Durata corso</mat-label>
+      <input name="durataCorso"
+             matInput
+             formControlName="durataCorso"
+      >
+    </mat-form-field>
+
+  </div>
+
+
+
+  <div fxLayout="row"  fxLayoutGap="20px">
+    <button mat-flat-button color="primary"
+            [disabled]="!isFormReady()"
+            (click)="sendData()"
+            [mat-dialog-close]="dataDialog"> Inserisci</button>
+
+    <button mat-flat-button id="discard" (click)="onNoClick()" >Esci</button>
+  </div>
+
+
+</div>

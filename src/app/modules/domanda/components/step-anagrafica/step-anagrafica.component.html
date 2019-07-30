@@ -1,0 +1,125 @@
+<div class="container">
+  <form>
+
+    <div fxLayout="column" fxLayoutGap="10px" [formGroup]="form">
+
+      <div fxLayout="row" fxLayout.xs="column" >
+
+        <mat-form-field appearance="outline" fxFlex="0 0 40" fxFlex.xs="auto">
+        <mat-label>Cognome</mat-label>
+        <label>
+          <input name="cognome"
+                 matInput
+                 formControlName="cognome"
+          >
+        </label>
+      </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="0 0 60" fxFlex.xs="auto">
+          <mat-label>Nome</mat-label>
+          <label>
+            <input name="nome"
+                   matInput
+                   formControlName="nome"
+            >
+          </label>
+        </mat-form-field>
+
+    </div>
+
+
+      <div fxLayout="row" fxLayout.xs="column" >
+
+        <mat-form-field appearance="outline" fxFlex="0 0 40" fxFlex.xs="auto">
+          <mat-label>Comune di nascita</mat-label>
+          <label>
+            <input name="comune-di-nascita"
+                   matInput
+                   formControlName="comuneNascita"
+            >
+          </label>
+        </mat-form-field>
+
+       <mat-form-field appearance="outline" fxFlex="0 0 35" fxFlex.xs="auto">
+         <mat-label>Codice fiscale</mat-label>
+         <label>
+           <input name="codice-fiscale"
+                  matInput
+                  formControlName="codiceFiscale"
+           >
+         </label>
+       </mat-form-field>
+
+       <mat-form-field appearance="outline" fxFlex="0 0 25" fxFlex.xs="auto">
+         <mat-label>Data di nascita</mat-label>
+         <label>
+           <input name="data-di-nascita"
+                  matInput
+                  formControlName="dataNascita"
+           >
+         </label>
+       </mat-form-field>
+
+      </div>
+
+
+      <mat-form-field appearance="outline" fxFlex="1 0">
+        <mat-label>Domicilio</mat-label>
+        <label>
+          <input name="domicilio"
+                 matInput
+                 formControlName="domicilio"
+          >
+        </label>
+      </mat-form-field>
+
+      <div fxLayout="row" fxLayout.xs="column" >
+
+        <mat-form-field appearance="outline" fxFlex="0 0 40" fxFlex.xs="auto">
+          <mat-label>Telefono</mat-label>
+          <label>
+            <input name="telefono"
+                   matInput
+                   formControlName="telefono"
+            >
+          </label>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="0 0 60" fxFlex.xs="auto">
+          <mat-label>mail</mat-label>
+          <label>
+            <input name="mail"
+                   matInput
+                   formControlName="email"
+            >
+          </label>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" fxFlex="1 0 100" fxFlex.xs="auto">
+        <mat-label>Sede di servizio</mat-label>
+        <label>
+          <input name="sede-servizio"
+                 matInput
+                 formControlName="sedeServizio"
+          >
+        </label>
+      </mat-form-field>
+
+    </div>
+
+
+
+
+    <div fxLayout="column" style="margin-top: 10px;">
+      <div fxFlex="row" fxLayoutGap="15px">
+        <span fxFill fxFlex="1 1 0"></span>
+        <button class="material-button" color="primary" mat-flat-button matStepperPrevious>Indietro</button>
+        <button class="material-button" color="primary" mat-flat-button matStepperNext>Avanti</button>
+      </div>
+    </div>
+
+
+  </form>
+
+</div>
