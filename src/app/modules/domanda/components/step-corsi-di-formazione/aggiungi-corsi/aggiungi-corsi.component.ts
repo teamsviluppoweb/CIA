@@ -1,6 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {ApiService} from '../../../../../core/services/api/api.service';
+import {Observable} from 'rxjs';
+import {CorsiApi} from '../../../../../core/models/api.interface';
 
 @Component({
   selector: 'app-aggiungi-corsi',
@@ -12,15 +15,18 @@ export class AggiungiCorsiComponent implements OnInit {
 
   form: FormGroup;
 
-  nomiCorsiLst = ['tipo 1', 'tipo 2', 'tipe 3'];
+  $nomiCorsiLst: Observable<any[] | CorsiApi>;
   titoloDiStudioLst = ['tipo 1', 'tipo 2', 'tipe 3'];
   indirizzoDiTitoloLst = ['tipo 1', 'tipo 2', 'tipe 3'];
 
   constructor(private fb: FormBuilder,
+              private restApi: ApiService,
               public dialogRef: MatDialogRef<AggiungiCorsiComponent>,
               @Inject(MAT_DIALOG_DATA) public dataDialog) {
 
     console.log(this.dataDialog);
+
+    this.$nomiCorsiLst = this.restApi.getListaCorsi();
 
     this.form = this.fb.group({
       nomeCorso: ['', Validators.required],

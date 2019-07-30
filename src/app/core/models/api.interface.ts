@@ -20,3 +20,8 @@ export interface Corsi {
   luogo: string;
   periodoConseguimento: string;
 }
+
+export interface CorsiApi {
+  id: string;
+  desc: string;
+}

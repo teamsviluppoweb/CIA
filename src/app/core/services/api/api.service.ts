@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {catchError} from 'rxjs/operators';
 import {HandleError, HttpErrorHandler} from "..";
-import {Corsi, Formazione, QualificaSede} from "../../models/api.interface";
+import {Corsi, CorsiApi, Formazione, QualificaSede} from "../../models/api.interface";
 import {environment} from "../../../../environments/environment.dev";
 
 // To use if we don't want cached application forms response
@@ -61,6 +61,16 @@ export class ApiService {
 
     return this.http.get<QualificaSede>(environment.apicall['qualifica-sede'], options).pipe(
       catchError(this.handleError('Formazione', []))
+    );
+  }
+
+  getListaCorsi(): Observable<any[] | CorsiApi> {
+    const refresh = false;
+
+    const options = createHttpOptions(refresh);
+
+    return this.http.get<CorsiApi>(environment.endpoints.backendLocation + environment.endpoints.corsi).pipe(
+        catchError(this.handleError('Get lista corsi', []))
     );
   }
 

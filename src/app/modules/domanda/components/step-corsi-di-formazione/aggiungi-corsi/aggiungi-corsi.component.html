@@ -7,8 +7,8 @@
     <mat-form-field appearance="outline" fxFlex="0 0 60" fxFlex.xs="auto">
       <mat-label>Nome corso</mat-label>
       <mat-select formControlName="nomeCorso">
-        <mat-option *ngFor="let corso of nomiCorsiLst" [value]="corso" >
-          {{corso}}
+        <mat-option *ngFor="let corso of ($nomiCorsiLst | async)" [value]="corso" >
+          {{corso.desc}}
         </mat-option>
       </mat-select>
     </mat-form-field>
