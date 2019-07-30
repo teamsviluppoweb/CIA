@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {Observable, of} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {catchError, first, map} from 'rxjs/operators';
+import {environment} from '../../../../environments/environment.dev';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,7 @@ export class AuthService {
   }
 
   validateJwt(): Observable<any> {
-    return this.http.get('/cas', {observe: 'response'}).pipe(
+    return this.http.get(environment.fakeEndpoints.backendLocation + environment.fakeEndpoints.whoami, {observe: 'response'}).pipe(
         map( (response) => {
           if (response.status === 200) {
             return true;

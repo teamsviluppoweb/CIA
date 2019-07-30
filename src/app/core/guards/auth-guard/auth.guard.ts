@@ -7,9 +7,10 @@
   providedIn: 'root'
 })
  export class AuthGuard implements CanActivate {
+
     url: string;
 
-    constructor(private auth: AuthService, private router: Router) {
+    constructor(private auth: AuthService) {
         this.url = window.location.href;
     }
 

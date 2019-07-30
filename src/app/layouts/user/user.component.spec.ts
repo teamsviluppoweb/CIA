@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserComponent } from './user.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {routes} from '../../modules/domanda/domanda-routing.module';
+import {DomandaEditComponent} from '../../modules/domanda/components/domanda-edit/domanda-edit.component';
 
 describe('UserComponent', () => {
   let component: UserComponent;
@@ -13,7 +14,7 @@ describe('UserComponent', () => {
       imports: [
         RouterTestingModule.withRoutes(routes),
       ],
-      declarations: [ UserComponent ]
+      declarations: [ UserComponent, DomandaEditComponent]
     })
     .compileComponents();
   }));

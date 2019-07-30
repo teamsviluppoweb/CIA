@@ -20,6 +20,10 @@ export const environment = {
         getDommanda: 'GetDomanda',
         inviaDomanda: 'SalvaDomanda'
     },
+    fakeEndpoints: {
+        backendLocation: 'http://localhost:8080/',
+        whoami: 'whoami',
+    }
 
 };
 

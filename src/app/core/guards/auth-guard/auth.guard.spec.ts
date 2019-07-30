@@ -1,11 +1,12 @@
-import {TestBed, inject, fakeAsync, async} from '@angular/core/testing';
-import {HttpClient, HttpResponse, HttpResponseBase} from '@angular/common/http';
+import {TestBed, inject} from '@angular/core/testing';
+import {HttpClient} from '@angular/common/http';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import { AuthGuard } from './auth.guard';
 import {AuthService} from '../../services';
 import {Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {routes} from '../../../modules/domanda/domanda-routing.module';
+import {DomandaEditComponent} from '../../../modules/domanda/components/domanda-edit/domanda-edit.component';
 
 
 let httpClient: HttpClient;
@@ -18,6 +19,9 @@ describe('AuthGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      declarations: [
+          DomandaEditComponent
+      ],
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes(routes)],
       providers: [
           AuthGuard,

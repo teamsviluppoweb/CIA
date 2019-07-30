@@ -9,6 +9,7 @@ import {
     HttpTestingController
 } from '@angular/common/http/testing';
 import {routes} from '../../../modules/domanda/domanda-routing.module';
+import {DomandaEditComponent} from '../../../modules/domanda/components/domanda-edit/domanda-edit.component';
 
 let authService: AuthService;
 let router: Router;
@@ -18,6 +19,9 @@ let httpTestingController: HttpTestingController;
 describe('AuthService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
+            declarations: [
+              DomandaEditComponent,
+            ],
             imports: [
                 RouterTestingModule.withRoutes(routes),
                 HttpClientTestingModule,
@@ -93,7 +97,7 @@ describe('AuthService', () => {
                 expect(next).toEqual(true);
             });
 
-            backend.expectOne('/cas').flush([], {status: 200, statusText: 'Authorized'});
+            backend.expectOne('http://localhost:8080/whoami').flush([], {status: 200, statusText: 'Authorized'});
 
     })));
 
@@ -114,7 +118,7 @@ describe('AuthService', () => {
                 expect(next).toEqual(false);
             });
 
-            backend.expectOne('/cas').flush([], {status: 401, statusText: 'Unauthorized'});
+            backend.expectOne('http://localhost:8080/whoami').flush([], {status: 401, statusText: 'Unauthorized'});
 
         })));
 
