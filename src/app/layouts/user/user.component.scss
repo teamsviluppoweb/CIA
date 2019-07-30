@@ -1,0 +1,20 @@
+@import "~src/assets/scss/colors";
+
+mat-toolbar {
+  background-color: $primary-color;
+  color: white;
+  height: 60px;
+}
+
+.container {
+  background-color: white;
+  border-radius: 15px;
+  padding-top: 10px;
+  height: 100%;
+  min-width: 300px;
+}
+
+.content {
+  margin: 0 auto;
+  max-width: 1300px;
+}
