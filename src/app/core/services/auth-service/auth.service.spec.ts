@@ -9,7 +9,8 @@ import {
     HttpTestingController
 } from '@angular/common/http/testing';
 import {routes} from '../../../modules/domanda/domanda-routing.module';
-import {DomandaEditComponent} from '../../../modules/domanda/components/domanda-edit/domanda-edit.component';
+import {DomandaEditComponent} from '../../../modules/domanda/components';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 
 let authService: AuthService;
 let router: Router;
@@ -26,7 +27,9 @@ describe('AuthService', () => {
                 RouterTestingModule.withRoutes(routes),
                 HttpClientTestingModule,
             ],
-            providers: [AuthService]
+            providers: [AuthService],
+            schemas: [NO_ERRORS_SCHEMA]
+
         });
 
         authService = TestBed.get(AuthService);
