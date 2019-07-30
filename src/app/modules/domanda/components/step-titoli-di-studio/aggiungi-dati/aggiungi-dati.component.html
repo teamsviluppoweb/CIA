@@ -36,7 +36,7 @@
 
   <div fxLayout="row" fxLayout.xs="column" >
 
-    <mat-form-field appearance="outline" fxFlex="0 0 40" fxFlex.xs="auto">
+    <mat-form-field appearance="outline" fxFlex="0 0 20" fxFlex.xs="auto">
       <mat-label>Data conseguimento</mat-label>
       <input name="dataDiConseguimento"
                [matDatepicker]="pickerDataConseguimento"
@@ -47,20 +47,7 @@
         <mat-datepicker #pickerDataConseguimento></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" fxFlex="0 0 60" fxFlex.xs="auto">
-      <mat-label>Istituto</mat-label>
-      <label>
-        <input name="istituto"
-               matInput
-               formControlName="istituto"
-        >
-      </label>
-    </mat-form-field>
-  </div>
-
-  <div fxLayout="row" fxLayout.xs="column" >
-
-    <mat-form-field appearance="outline" fxFlex="0 0 40" fxFlex.xs="auto">
+    <mat-form-field appearance="outline" fxFlex="0 0 20" fxFlex.xs="auto">
       <mat-label>Periodo Conseguimento</mat-label>
       <input name="periodoConseguimento"
              [matDatepicker]="pickerPeriodoConseguimento"
@@ -81,6 +68,42 @@
       </label>
     </mat-form-field>
 
+  </div>
+
+  <div fxLayout="row" fxLayout.xs="column" >
+
+
+    <mat-form-field appearance="outline" fxFlex fxFlex.xs="auto">
+      <mat-label>Nome Istituto</mat-label>
+      <label>
+        <input name="istituto"
+               matInput
+               formControlName="istituto"
+        >
+      </label>
+    </mat-form-field>
+
+  </div>
+
+  <div fxLayout="row" fxLayout.xs="column" >
+
+    <mat-form-field appearance="outline" fxFlex="0 0 50" fxFlex.xs="auto">
+      <mat-label>Provincia</mat-label>
+      <mat-select formControlName="provincia">
+        <mat-option *ngFor="let provincia of ($province | async)" [value]="provincia" >
+          {{provincia.provincia}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlex="0 0 50" fxFlex.xs="auto">
+      <mat-label>Comune</mat-label>
+      <mat-select formControlName="comune">
+        <mat-option *ngFor="let comn of ($comuni | async)" [value]="comn" >
+          {{comn.comune}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
   </div>
 

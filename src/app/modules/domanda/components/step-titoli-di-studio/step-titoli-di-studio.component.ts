@@ -43,7 +43,8 @@ export class StepTitoliDiStudioComponent implements OnInit {
       indirizzo: '',
       dataDiConseguimento: '',
       istituto: '',
-      luogo: '',
+      provincia: '',
+      comune: '',
       periodoConseguimento: '',
       isOkToInsert: false,
     };
@@ -62,7 +63,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
             tipologia: dataDialog.data.tipologia,
             titoloDiStudio: dataDialog.data.titoloDiStudio.desc + ' ' + dataDialog.data.indirizzo.desc,
             conseguitoPresso: dataDialog.data.istituto,
-            luogo: dataDialog.data.luogo,
+            luogo: dataDialog.data.provincia['provincia'] +  '(' + dataDialog.data.comune['comune'] + ')',
             periodoConseguimento: dataDialog.data.periodoConseguimento,
             dataValidazione: dataDialog.data.dataDiConseguimento,
           };

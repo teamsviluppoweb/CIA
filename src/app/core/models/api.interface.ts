@@ -51,3 +51,12 @@ export interface TitoliDiStudioIndirizzoLSt {
   desc: string;
 }
 
+export interface ProvinceLSt {
+  codProvincia: string;
+  provincia: string;
+}
+
+export interface ComuniLSt {
+  codComune: string;
+  comune: string;
+}

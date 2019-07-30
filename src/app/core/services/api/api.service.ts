@@ -5,9 +5,10 @@ import {Router} from '@angular/router';
 import {catchError} from 'rxjs/operators';
 import {HandleError, HttpErrorHandler} from '..';
 import {
+  ComuniLSt,
   Corsi,
   CorsiApiLst,
-  Formazione,
+  Formazione, ProvinceLSt,
   QualificaSede,
   QualificheApiLst,
   SediApiLSt,
@@ -129,6 +130,26 @@ export class ApiService {
 
     return this.http.get<TitoliDiStudioIndirizzoLSt>(environment.endpoints.backendLocation + environment.endpoints.titoliStudioIndirizzi +  id).pipe(
         catchError(this.handleError('Get lista titoli di studio', []))
+    );
+  }
+
+  getProvince(): Observable<any[] | ProvinceLSt> {
+    const refresh = false;
+
+    const options = createHttpOptions(refresh);
+
+    return this.http.get<ProvinceLSt>(environment.endpoints.backendLocation + environment.endpoints.province).pipe(
+        catchError(this.handleError('Get lista province', []))
+    );
+  }
+
+  getComuni(codiceProvincia: string): Observable<any[] | ComuniLSt> {
+    const refresh = false;
+
+    const options = createHttpOptions(refresh);
+
+    return this.http.get<ComuniLSt>(environment.endpoints.backendLocation + environment.endpoints.comuni + codiceProvincia).pipe(
+        catchError(this.handleError('Get lista comuni', []))
     );
   }
 }

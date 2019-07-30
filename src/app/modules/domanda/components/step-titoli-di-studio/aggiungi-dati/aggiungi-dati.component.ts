@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Observable} from 'rxjs';
 import {
+  ComuniLSt,
+  ProvinceLSt,
   TipologiaTitoliDiStudioLSt,
   TitoliDiStudioIndirizzoLSt,
   TitoliDiStudioLSt
@@ -25,6 +27,8 @@ export class AggiungiDatiComponent implements OnInit {
   $tipologiaDiStudioLst: Observable<any[] | TipologiaTitoliDiStudioLSt>;
   $titoloDiStudioLst: Observable<any[] | TitoliDiStudioLSt>;
   $indirizzoDiTitoloLst: Observable<any[] | TitoliDiStudioIndirizzoLSt>;
+  $province: Observable<any[] | ProvinceLSt>;
+  $comuni: Observable<any[] | ComuniLSt>;
 
   constructor(private fb: FormBuilder,
               public dialogRef: MatDialogRef<AggiungiDatiComponent>,
@@ -33,6 +37,7 @@ export class AggiungiDatiComponent implements OnInit {
 
 
     this.$tipologiaDiStudioLst = this.restApi.getTipologiaTitoliDiStudio();
+    this.$province = this.restApi.getProvince();
 
     this.form = this.fb.group({
       tipologia: ['', Validators.required],
@@ -41,11 +46,14 @@ export class AggiungiDatiComponent implements OnInit {
       dataDiConseguimento: ['', Validators.required],
       istituto: ['', Validators.required],
       luogo: ['', Validators.required],
+      provincia: ['', Validators.required],
+      comune: ['', Validators.required],
       periodoConseguimento: ['', Validators.required],
     });
 
     this.titoloDiStudio.disable();
     this.indirizzo.disable();
+    this.comune.disable();
   }
 
   ngOnInit() {
@@ -82,6 +90,14 @@ export class AggiungiDatiComponent implements OnInit {
             }
         ));
 
+    this.$comuni = this.provincia.valueChanges.pipe(
+        map( (x: ProvinceLSt) => x.codProvincia),
+        concatMap((x) => {
+          this.comune.enable();
+          return this.restApi.getComuni(x);
+        }
+    ));
+
   }
 
   OnChangesForms() {
@@ -107,8 +123,17 @@ export class AggiungiDatiComponent implements OnInit {
     });
 
     this.luogo.valueChanges.subscribe( (x) => {
-      this.dataDialog.data.luogo = x;
+      this.dataDialog.data.provincia = x;
     });
+
+    this.provincia.valueChanges.subscribe( (x) => {
+      this.dataDialog.data.provincia = x;
+    });
+
+    this.comune.valueChanges.subscribe( (x) => {
+      this.dataDialog.data.comune = x;
+    });
+
 
     this.periodoConseguimento.valueChanges.subscribe( (x) => {
       this.dataDialog.data.periodoConseguimento = x;
@@ -134,6 +159,14 @@ export class AggiungiDatiComponent implements OnInit {
 
   get istituto() {
     return this.form.get('istituto');
+  }
+
+  get provincia() {
+    return this.form.get('provincia');
+  }
+
+  get comune() {
+    return this.form.get('comune');
   }
 
   get luogo() {
