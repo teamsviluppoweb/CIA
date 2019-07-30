@@ -39,6 +39,32 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+
+            "dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -56,6 +82,7 @@
                 }
               ]
             }
+
           }
         },
         "serve": {
@@ -66,7 +93,10 @@
           "configurations": {
             "production": {
               "browserTarget": "CIA:build:production"
-            }
+            },
+            "dev": {
+            "browserTarget": "CIA:build:dev"
+          }
           }
         },
         "extract-i18n": {
