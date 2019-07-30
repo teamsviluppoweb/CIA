@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --configuration=dev --host 172.16.26.72",
+    "start": "ng serve",
+    "local-start": "ng serve --configuration=dev --host 172.16.26.72",
     "build": "ng build",
     "test": "ng test --code-coverage ",
     "lint": "ng lint",
