@@ -33,5 +33,8 @@ import {
     SharedModule,
     DomandaRoutingModule
   ],
+  entryComponents: [
+    AggiungiDatiComponent, AggiungiCorsiComponent
+  ]
 })
 export class DomandaModule {}

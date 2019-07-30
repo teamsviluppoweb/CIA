@@ -3,7 +3,7 @@ import {Formazione} from '../../../../core/models/api.interface';
 import {MatDialog, MatTable} from '@angular/material';
 import {AggiungiDatiComponent} from './aggiungi-dati/aggiungi-dati.component';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import {ApiService} from "../../../../core/services/api/api.service";
+import {ApiService} from '../../../../core/services/api/api.service';
 
 const tabellaHeader = ['tipologia', 'titolo-di-studio', 'conseguito-presso', 'luogo', 'periodo-conseguimento', 'data-validazione'];
 // tslint:disable-next-line:max-line-length
@@ -13,7 +13,6 @@ const tabellaHeaderEdit = ['tipologia', 'titolo-di-studio', 'conseguito-presso',
   selector: 'app-step-titoli-di-studio',
   templateUrl: './step-titoli-di-studio.component.html',
   styleUrls: ['./step-titoli-di-studio.component.scss'],
-  entryComponents: [AggiungiDatiComponent],
 })
 export class StepTitoliDiStudioComponent implements OnInit {
 

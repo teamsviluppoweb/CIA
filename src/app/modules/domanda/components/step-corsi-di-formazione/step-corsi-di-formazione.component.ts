@@ -14,7 +14,6 @@ const tabellaHeaderEdit = ['nomeCorso', 'durataCorso', 'dataDiConseguimento', 'i
   selector: 'app-step-corsi-di-formazione',
   templateUrl: './step-corsi-di-formazione.component.html',
   styleUrls: ['./step-corsi-di-formazione.component.scss'],
-  entryComponents: [AggiungiCorsiComponent],
 })
 export class StepCorsiDiFormazioneComponent implements OnInit {
   @ViewChild('table', {static: false}) table: MatTable<Formazione>;
