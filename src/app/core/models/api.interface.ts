@@ -21,7 +21,17 @@ export interface Corsi {
   periodoConseguimento: string;
 }
 
-export interface CorsiApi {
+export interface CorsiApiLst {
+  id: string;
+  desc: string;
+}
+
+export interface QualificheApiLst {
+  id: string;
+  desc: string;
+}
+
+export interface SediApiLSt {
   id: string;
   desc: string;
 }

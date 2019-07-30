@@ -2,28 +2,23 @@
 
   <div fxLayout="column" fxLayoutGap="10px" [formGroup]="form">
 
-  <div fxLayout="row" fxLayout.xs="column" >
-
-    <mat-form-field appearance="outline" fxFlex="0 0 40" fxFlex.xs="auto">
-      <mat-label>Qualifica</mat-label>
+    <mat-form-field appearance="outline" fxFlex="0 0 50" fxFlex.xs="auto">
+      <mat-label>Sede</mat-label>
       <mat-select formControlName="qualificaDichiarata">
-        <mat-option *ngFor="let sede of sediLst" [value]="sede" >
-          {{sede}}
+        <mat-option *ngFor="let sede of ($sediLst | async)" [value]="sede" >
+          {{sede.desc}}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" fxFlex="0 0 60" fxFlex.xs="auto">
+    <mat-form-field appearance="outline" fxFlex="0 0 50" fxFlex.xs="auto">
       <mat-label>Qualifica</mat-label>
       <mat-select formControlName="sedeGiuriridicaDichiarata">
-        <mat-option *ngFor="let qualifica of qualificheLst" [value]="qualifica" >
-          {{qualifica}}
+        <mat-option *ngFor="let qualifica of ($qualificheLst | async)" [value]="qualifica" >
+          {{qualifica.desc}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-
-
-  </div>
 
   </div>
 

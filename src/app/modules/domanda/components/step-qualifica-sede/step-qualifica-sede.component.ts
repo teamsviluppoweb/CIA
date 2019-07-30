@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {QualificaSede} from '../../../../core/models/api.interface';
-import {ApiService} from "../../../../core/services/api/api.service";
+import {QualificaSede, QualificheApiLst, SediApiLSt} from '../../../../core/models/api.interface';
+import {ApiService} from '../../../../core/services/api/api.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-step-qualifica-sede',
@@ -12,10 +13,14 @@ export class StepQualificaSedeComponent implements OnInit {
 
   form: FormGroup;
 
-  sediLst = ['roma', 'milano', 'lazio'];
-  qualificheLst = ['vigile', 'caposquadra', 'test'];
+  $sediLst: Observable<any[] | SediApiLSt>;
+  $qualificheLst: Observable<any[] | QualificheApiLst>;
 
   constructor(private fb: FormBuilder, private restApi: ApiService) {
+
+    this.$qualificheLst = this.restApi.getListaQualifiche();
+    this.$sediLst = this.restApi.getListaSedi();
+
     this.form = this.fb.group({
       qualifica: [''],
       sedeGiuridica: [''],

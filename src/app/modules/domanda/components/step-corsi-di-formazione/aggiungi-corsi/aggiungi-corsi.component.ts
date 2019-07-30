@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {ApiService} from '../../../../../core/services/api/api.service';
 import {Observable} from 'rxjs';
-import {CorsiApi} from '../../../../../core/models/api.interface';
+import {CorsiApiLst} from '../../../../../core/models/api.interface';
 
 @Component({
   selector: 'app-aggiungi-corsi',
@@ -15,7 +15,7 @@ export class AggiungiCorsiComponent implements OnInit {
 
   form: FormGroup;
 
-  $nomiCorsiLst: Observable<any[] | CorsiApi>;
+  $nomiCorsiLst: Observable<any[] | CorsiApiLst>;
   titoloDiStudioLst = ['tipo 1', 'tipo 2', 'tipe 3'];
   indirizzoDiTitoloLst = ['tipo 1', 'tipo 2', 'tipe 3'];
 

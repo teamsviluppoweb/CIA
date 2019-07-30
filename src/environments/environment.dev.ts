@@ -8,7 +8,7 @@ export const environment = {
     endpoints: {
         backendLocation: 'http://webpc.dipvvf.it:6001/',
         corsi: 'corsi',
-        corsiByCf: '/CorsiByCF',
+        corsiByCf: 'CorsiByCF',
         qualifiche: 'Qualifiche',
         sedi: 'Sedi',
         titoliDiStudiobyCf: 'TitoliStudiobyCF',

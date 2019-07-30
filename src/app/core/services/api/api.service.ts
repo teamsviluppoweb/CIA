@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {catchError} from 'rxjs/operators';
 import {HandleError, HttpErrorHandler} from "..";
-import {Corsi, CorsiApi, Formazione, QualificaSede} from "../../models/api.interface";
+import {Corsi, CorsiApiLst, Formazione, QualificaSede, QualificheApiLst, SediApiLSt} from "../../models/api.interface";
 import {environment} from "../../../../environments/environment.dev";
 
 // To use if we don't want cached application forms response
@@ -64,13 +64,33 @@ export class ApiService {
     );
   }
 
-  getListaCorsi(): Observable<any[] | CorsiApi> {
+  getListaCorsi(): Observable<any[] | CorsiApiLst> {
     const refresh = false;
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<CorsiApi>(environment.endpoints.backendLocation + environment.endpoints.corsi).pipe(
+    return this.http.get<CorsiApiLst>(environment.endpoints.backendLocation + environment.endpoints.corsi).pipe(
         catchError(this.handleError('Get lista corsi', []))
+    );
+  }
+
+  getListaQualifiche(): Observable<any[] | QualificheApiLst> {
+    const refresh = false;
+
+    const options = createHttpOptions(refresh);
+
+    return this.http.get<QualificheApiLst>(environment.endpoints.backendLocation + environment.endpoints.qualifiche).pipe(
+        catchError(this.handleError('Get lista qualifiche', []))
+    );
+  }
+
+  getListaSedi(): Observable<any[] | SediApiLSt> {
+    const refresh = false;
+
+    const options = createHttpOptions(refresh);
+
+    return this.http.get<SediApiLSt>(environment.endpoints.backendLocation + environment.endpoints.sedi).pipe(
+        catchError(this.handleError('Get lista sedi', []))
     );
   }
 
