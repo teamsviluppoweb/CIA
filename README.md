@@ -3,7 +3,7 @@
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/rabbithols/cia/issues)
 [![Coverage Status](https://coveralls.io/repos/github/RabbitHols/CIA/badge.svg?branch=master)](https://coveralls.io/github/RabbitHols/CIA?branch=master)
-[![CircleCI](https://circleci.com/gh/RabbitHols/tdd.svg?style=svg)](https://circleci.com/gh/RabbitHols/tdd)
+[![CircleCI](https://circleci.com/gh/RabbitHols/tdd.svg?style=svg)](https://circleci.com/gh/RabbitHols/CIA)
 
 
 # CIA (Concorso Ispettore Antincendio)
