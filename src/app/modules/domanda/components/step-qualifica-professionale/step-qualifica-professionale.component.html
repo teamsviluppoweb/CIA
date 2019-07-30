@@ -1,20 +1,5 @@
 <div class="container" fxLayout="column"  >
 
-  <h3 style="font-weight: 400">Seleziona la tua qualifica professionale</h3>
-
-  <div [formGroup]="form">
-    <mat-form-field appearance="outline" fxFlex>
-      <mat-label>Qualifica</mat-label>
-      <mat-select formControlName="qualificaProfessionale">
-        <mat-option *ngFor="let qlf of qualificheProfessionaliLst" [value]="qlf" >
-          {{qlf}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-  </div>
-
-
   <div fxLayout="column" style="margin-top: 10px;">
     <div fxFlex="row" fxLayoutGap="15px">
       <span fxFill fxFlex="1 1 0"></span>
