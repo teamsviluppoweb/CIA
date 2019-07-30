@@ -27,4 +27,6 @@ before_script:
 
 script:
   - codecov
-  - cat ./coverage/coverage.lcov | ./node_modules/coveralls/bin/coveralls.js
+
+after_script:
+  - cat ./coverage/*/lcov.info | ./node_modules/coveralls/bin/coveralls.js
