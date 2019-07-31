@@ -138,7 +138,7 @@ export class ApiService {
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<ProvinceLSt>(environment.endpoints.backendLocation + environment.endpoints.province).pipe(
+    return this.http.get<ProvinceLSt>(environment.endpoints.backendLocation + environment.endpoints.province, options).pipe(
         catchError(this.handleError('Get lista province', []))
     );
   }
@@ -148,7 +148,7 @@ export class ApiService {
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<ComuniLSt>(environment.endpoints.backendLocation + environment.endpoints.comuni + codiceProvincia).pipe(
+    return this.http.get<ComuniLSt>(environment.endpoints.backendLocation + environment.endpoints.comuni + codiceProvincia, options).pipe(
         catchError(this.handleError('Get lista comuni', []))
     );
   }

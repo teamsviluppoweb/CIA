@@ -8,8 +8,8 @@ import {
 import { Observable, of } from 'rxjs';
 import { startWith, tap } from 'rxjs/operators';
 
-import {RequestCache} from '../services/caching/request-cache.service';
-import {environment} from '../../../environments/environment';
+import {RequestCache} from '../services';
+import {environment} from "../../../environments/environment.dev";
 
 /**
  * If request is cachable and
@@ -52,7 +52,7 @@ function isCachable(req: HttpRequest<any>) {
   // Only GET requests are cachable
   return req.method === 'GET' &&
     // Only the search of application forms result are cachable in this app
-    -1 < req.url.indexOf(environment.requestUrl);
+    -1 < req.url.indexOf(environment.endpoints.backendLocation);
 }
 
 /**
