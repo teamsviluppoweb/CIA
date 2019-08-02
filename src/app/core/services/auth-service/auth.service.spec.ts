@@ -100,7 +100,7 @@ describe('AuthService', () => {
                 expect(next).toEqual(true);
             });
 
-            backend.expectOne('http://localhost:8080/whoami').flush([], {status: 200, statusText: 'Authorized'});
+            backend.expectOne('http://webpc.dipvvf.it:6001/GetDomanda').flush([], {status: 200, statusText: 'Authorized'});
 
     })));
 
@@ -121,7 +121,7 @@ describe('AuthService', () => {
                 expect(next).toEqual(false);
             });
 
-            backend.expectOne('http://localhost:8080/whoami').flush([], {status: 401, statusText: 'Unauthorized'});
+            backend.expectOne('http://webpc.dipvvf.it:6001/GetDomanda').flush([], {status: 401, statusText: 'Unauthorized'});
 
         })));
 
