@@ -16,13 +16,18 @@
 
     canActivate(): Observable<boolean> | Promise<boolean> | boolean {
 
-
         switch (this.ispectUrl(this.url)) {
 
             case true: {
                 const token = this.refactorUrl(this.url);
                 this.auth.setAccessToken(token);
                 return this.auth.validateJwt();
+                break;
+            }
+
+            case false: {
+                return this.auth.validateJwt();
+                break;
             }
 
             default: {

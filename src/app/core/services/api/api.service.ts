@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {catchError} from 'rxjs/operators';
@@ -7,7 +7,7 @@ import {HandleError, HttpErrorHandler} from '..';
 import {
   ComuniLSt,
   Corsi,
-  CorsiApiLst,
+  CorsiApiLst, Domanda,
   Formazione, ProvinceLSt,
   QualificaSede,
   QualificheApiLst,
@@ -123,12 +123,12 @@ export class ApiService {
     );
   }
 
-  getIndirizzoTitoli(id: string): Observable<any[] | TitoliDiStudioIndirizzoLSt> {
+  getIndirizzoTitoli(id: string): Observable<any[] | HttpResponse<TitoliDiStudioIndirizzoLSt>> {
     const refresh = false;
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<TitoliDiStudioIndirizzoLSt>(environment.endpoints.backendLocation + environment.endpoints.titoliStudioIndirizzi +  id).pipe(
+    return this.http.get<TitoliDiStudioIndirizzoLSt>(environment.endpoints.backendLocation + environment.endpoints.titoliStudioIndirizzi +  id,  { observe: 'response' }).pipe(
         catchError(this.handleError('Get lista titoli di studio', []))
     );
   }
@@ -152,4 +152,15 @@ export class ApiService {
         catchError(this.handleError('Get lista comuni', []))
     );
   }
+
+  getDomanda(): Observable<any[] | Domanda> {
+    const refresh = false;
+
+    const options = createHttpOptions(refresh);
+
+    return this.http.get<Domanda>(environment.endpoints.backendLocation + environment.endpoints.getDommanda, options).pipe(
+        catchError(this.handleError('Get domanda', []))
+    );
+  }
+
 }

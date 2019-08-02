@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   validateJwt(): Observable<any> {
-    return this.http.get(environment.fakeEndpoints.backendLocation + environment.fakeEndpoints.whoami, {observe: 'response'}).pipe(
+    return this.http.get(environment.endpoints.backendLocation + environment.endpoints.getDommanda, {observe: 'response'}).pipe(
         map( (response) => {
           if (response.status === 200) {
             return true;

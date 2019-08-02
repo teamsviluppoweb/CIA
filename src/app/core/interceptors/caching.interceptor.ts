@@ -9,7 +9,7 @@ import { Observable, of } from 'rxjs';
 import { startWith, tap } from 'rxjs/operators';
 
 import {RequestCache} from '../services';
-import {environment} from "../../../environments/environment.dev";
+import {environment} from '../../../environments/environment.dev';
 
 /**
  * If request is cachable and
