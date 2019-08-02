@@ -29,10 +29,7 @@ export class StepCorsiDiFormazioneComponent implements OnInit {
               public aggiungiDatiDialog: MatDialog) {}
 
   ngOnInit() {
-    this.restApi.getCorsi().subscribe( (data: Corsi[]) => {
-      this.corsiRisultanti = data;
-      this.corsiDichiarati = data;
-    });
+
   }
 
 

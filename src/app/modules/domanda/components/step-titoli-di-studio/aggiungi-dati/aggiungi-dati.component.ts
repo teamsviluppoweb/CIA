@@ -1,7 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {
   ComuniLSt,
   ProvinceLSt,
@@ -10,15 +10,15 @@ import {
   TitoliDiStudioLSt
 } from '../../../../../core/models/api.interface';
 import {ApiService} from '../../../../../core/services/api/api.service';
-import {concatMap, map} from 'rxjs/operators';
-
-
+import {catchError, concatMap, filter, map, switchMap} from 'rxjs/operators';
+import {HttpResponse} from '@angular/common/http';
 
 
 @Component({
   selector: 'app-aggiungi-dati',
   templateUrl: './aggiungi-dati.component.html',
-  styleUrls: ['./aggiungi-dati.component.scss']
+  styleUrls: ['./aggiungi-dati.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AggiungiDatiComponent implements OnInit {
 
@@ -26,7 +26,7 @@ export class AggiungiDatiComponent implements OnInit {
 
   $tipologiaDiStudioLst: Observable<any[] | TipologiaTitoliDiStudioLSt>;
   $titoloDiStudioLst: Observable<any[] | TitoliDiStudioLSt>;
-  $indirizzoDiTitoloLst: Observable<any[] | TitoliDiStudioIndirizzoLSt>;
+  $indirizzoDiTitoloLst: Observable<any[] | HttpResponse<TitoliDiStudioIndirizzoLSt | Response>>;
   $province: Observable<any[] | ProvinceLSt>;
   $comuni: Observable<any[] | ComuniLSt>;
 
@@ -78,15 +78,34 @@ export class AggiungiDatiComponent implements OnInit {
         map( (x) => x.id),
         concatMap((x) => {
               this.titoloDiStudio.enable();
+              this.indirizzo.reset();
+              this.indirizzo.disable();
               return this.restApi.getTitoli(x);
             }
         ));
 
     this.$indirizzoDiTitoloLst = this.titoloDiStudio.valueChanges.pipe(
         map( (x) => x.id),
-        concatMap((x) => {
+        filter((x) => {
+          if (x) {
+            return true;
+          }
+          this.indirizzo.reset();
+          this.indirizzo.disable();
+          return false;
+        }),
+        switchMap((x) => {
               this.indirizzo.enable();
-              return this.restApi.getIndirizzoTitoli(x);
+              x = x.replace('/', '%2');
+              return this.restApi.getIndirizzoTitoli(x).pipe(
+                  map((y) => {
+                    if(y['status'] == 204) {
+                      console.log('ayuuuto');
+                    }
+                    console.log(y);
+                    return y['body'];
+                  }),
+              );
             }
         ));
 

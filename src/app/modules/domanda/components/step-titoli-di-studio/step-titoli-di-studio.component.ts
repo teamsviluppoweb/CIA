@@ -1,13 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Formazione} from '../../../../core/models/api.interface';
+import {Domanda, Formazione, TitoliStudioPossedutiEntity} from '../../../../core/models/api.interface';
 import {MatDialog, MatTable} from '@angular/material';
 import {AggiungiDatiComponent} from './aggiungi-dati/aggiungi-dati.component';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {ApiService} from '../../../../core/services/api/api.service';
+import {map} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
 
-const tabellaHeader = ['tipologia', 'titolo-di-studio', 'conseguito-presso', 'luogo', 'periodo-conseguimento', 'data-validazione'];
 // tslint:disable-next-line:max-line-length
-const tabellaHeaderEdit = ['tipologia', 'titolo-di-studio', 'conseguito-presso', 'luogo', 'periodo-conseguimento', 'data-validazione', 'edit'];
+const tabellaHeader = ['anno', 'titolo-di-studio', 'conseguito-presso'];
 
 @Component({
   selector: 'app-step-titoli-di-studio',
@@ -20,19 +21,22 @@ export class StepTitoliDiStudioComponent implements OnInit {
 
   anagraficaDatasource: Formazione[] = [];
 
-  titoliDiStudioDichiarati: Formazione[] = [];
+  $titoliDiStudio: Observable<TitoliStudioPossedutiEntity[]> = of([]);
+  titoliDiStudioDichiarati = [];
 
   TitoliDiStudioHeader: string[] = tabellaHeader;
-  TitoliDiStudioHeaderEdit: string[] = tabellaHeaderEdit;
 
   constructor(private restApi: ApiService,
               public aggiungiDatiDialog: MatDialog) {}
 
   ngOnInit() {
-    this.restApi.getFormazione().subscribe( (data: Formazione[]) => {
-      this.anagraficaDatasource = data;
-      this.titoliDiStudioDichiarati = data;
-    });
+   this.$titoliDiStudio = this.restApi.getDomanda().pipe(
+       map(
+           (x: Domanda) => {
+             return x.titoliStudioPosseduti;
+           }
+       )
+   );
   }
 
 
@@ -56,14 +60,14 @@ export class StepTitoliDiStudioComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dataDialog => {
-      if(dataDialog) {
+      if (dataDialog) {
         if (dataDialog.data.isOkToInsert) {
 
           const formazione: Formazione = {
             tipologia: dataDialog.data.tipologia,
             titoloDiStudio: dataDialog.data.titoloDiStudio.desc + ' ' + dataDialog.data.indirizzo.desc,
             conseguitoPresso: dataDialog.data.istituto,
-            luogo: dataDialog.data.provincia['provincia'] +  '(' + dataDialog.data.comune['comune'] + ')',
+            luogo: dataDialog.data.provincia.provincia +  '(' + dataDialog.data.comune.comune + ')',
             periodoConseguimento: dataDialog.data.periodoConseguimento,
             dataValidazione: dataDialog.data.dataDiConseguimento,
           };
@@ -77,9 +81,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
   }
 
   dropTable(event: CdkDragDrop<Formazione[]>) {
-    console.log('dio');
     const prevIndex = this.titoliDiStudioDichiarati.findIndex((d) => {
-      console.log('yahoo');
       return d === event.item.data;
     });
     moveItemInArray(this.titoliDiStudioDichiarati, prevIndex, event.currentIndex);

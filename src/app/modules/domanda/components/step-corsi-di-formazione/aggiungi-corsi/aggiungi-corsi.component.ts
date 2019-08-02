@@ -16,8 +16,7 @@ export class AggiungiCorsiComponent implements OnInit {
   form: FormGroup;
 
   $nomiCorsiLst: Observable<any[] | CorsiApiLst>;
-  titoloDiStudioLst = ['tipo 1', 'tipo 2', 'tipe 3'];
-  indirizzoDiTitoloLst = ['tipo 1', 'tipo 2', 'tipe 3'];
+
 
   constructor(private fb: FormBuilder,
               private restApi: ApiService,

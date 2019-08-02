@@ -1,48 +1,30 @@
 <div class="container" fxLayout="column">
   <form>
 
-    <table [dataSource]="titoliDiStudioDichiarati"
+    <table [dataSource]="$titoliDiStudio"
            cdkDropList
            #table
-           [cdkDropListData]="titoliDiStudioDichiarati"
+           [cdkDropListData]="$titoliDiStudio"
            (cdkDropListDropped)="dropTable($event)"
            id="tabDatiDichiarati"
            fxFill mat-table>
 
       <!-- Colonna tipologia laurea-->
-      <ng-container matColumnDef="tipologia">
-        <th *matHeaderCellDef mat-header-cell>Tipologia</th>
-        <td *matCellDef="let row" mat-cell>{{row.tipologia.desc}}</td>
+      <ng-container matColumnDef="anno">
+        <th *matHeaderCellDef mat-header-cell>Anno</th>
+        <td *matCellDef="let row" mat-cell>{{row.dataConseguimento}}</td>
       </ng-container>
 
       <!-- Colonna titolo di studio -->
       <ng-container matColumnDef="titolo-di-studio">
         <th *matHeaderCellDef mat-header-cell>Titolo di studio</th>
-        <td *matCellDef="let row" mat-cell>{{row.titoloDiStudio}}</td>
+        <td *matCellDef="let row" mat-cell>{{row.tipologia}}2019/08/30 {{row.descTS}}</td>
       </ng-container>
 
       <!-- Colonna conseguito presso -->
       <ng-container matColumnDef="conseguito-presso">
         <th *matHeaderCellDef mat-header-cell>Conseguito presso</th>
-        <td *matCellDef="let row" mat-cell>{{row.conseguitoPresso}}</td>
-      </ng-container>
-
-      <!-- Colonna luogo  -->
-      <ng-container matColumnDef="luogo">
-        <th *matHeaderCellDef mat-header-cell>Luogo</th>
-        <td *matCellDef="let row" mat-cell>{{row.luogo}}</td>
-      </ng-container>
-
-      <!-- Colonna periodo conseguimento -->
-      <ng-container matColumnDef="periodo-conseguimento">
-        <th *matHeaderCellDef mat-header-cell>Periodo di conseguimento</th>
-        <td *matCellDef="let row" mat-cell>{{row.periodoConseguimento | date: 'dd/MM/yyyy' }}</td>
-      </ng-container>
-
-      <!-- Colonna data validazione -->
-      <ng-container matColumnDef="data-validazione">
-        <th *matHeaderCellDef mat-header-cell>Data validazione</th>
-        <td *matCellDef="let row" mat-cell>{{row.dataValidazione | date: 'dd/MM/yyyy'}}</td>
+        <td *matCellDef="let row" mat-cell>{{row.istituto}}</td>
       </ng-container>
 
       <!-- Colonna edit -->
@@ -57,8 +39,8 @@
         </td>
       </ng-container>
 
-      <tr *matHeaderRowDef="TitoliDiStudioHeaderEdit" mat-header-row></tr>
-      <tr *matRowDef="let row; columns: TitoliDiStudioHeaderEdit; let i = index" mat-row  cdkDrag [cdkDragData]="row"></tr>
+      <tr *matHeaderRowDef="TitoliDiStudioHeader" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: TitoliDiStudioHeader; let i = index" mat-row  cdkDrag [cdkDragData]="row"></tr>
     </table>
 
   </form>

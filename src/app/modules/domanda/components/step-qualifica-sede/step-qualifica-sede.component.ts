@@ -24,9 +24,6 @@ export class StepQualificaSedeComponent implements OnInit {
     this.form = this.fb.group({
       qualifica: [''],
       sedeGiuridica: [''],
-
-      qualificaDichiarata: [''],
-      sedeGiuriridicaDichiarata: [''],
     });
 
     this.qualifica.disable();
@@ -35,15 +32,8 @@ export class StepQualificaSedeComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.restApi.getQualificaSede().subscribe(
-     (data: QualificaSede) => {
-       this.form.patchValue({
-         qualifica: data.qualifica,
-         sedeGiuridica: data.sede,
-
-       });
-     }
-   );
+    this.$qualificheLst = this.restApi.getListaQualifiche();
+    this.$sediLst = this.restApi.getListaSedi();
   }
 
   get qualifica() {
