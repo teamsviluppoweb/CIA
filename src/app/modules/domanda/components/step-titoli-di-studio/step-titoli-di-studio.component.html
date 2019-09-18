@@ -1,10 +1,10 @@
 <div class="container" fxLayout="column">
   <form>
 
-    <table [dataSource]="$titoliDiStudio"
+    <table [dataSource]="titoliDiStudioDichiarati"
            cdkDropList
            #table
-           [cdkDropListData]="$titoliDiStudio"
+           [cdkDropListData]="titoliDiStudioDichiarati"
            (cdkDropListDropped)="dropTable($event)"
            id="tabDatiDichiarati"
            fxFill mat-table>

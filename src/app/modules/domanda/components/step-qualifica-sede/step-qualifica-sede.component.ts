@@ -26,9 +26,6 @@ export class StepQualificaSedeComponent implements OnInit {
       sedeGiuridica: [''],
     });
 
-    this.qualifica.disable();
-    this.sedeGiuridica.disable();
-
   }
 
   ngOnInit() {
