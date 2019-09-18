@@ -8,7 +8,7 @@ import {map} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 
 // tslint:disable-next-line:max-line-length
-const tabellaHeader = ['anno', 'titolo-di-studio', 'conseguito-presso'];
+const tabellaHeader = ['anno', 'titolo-di-studio', 'conseguito-presso', 'edit'];
 
 @Component({
   selector: 'app-step-titoli-di-studio',
