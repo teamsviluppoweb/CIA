@@ -5,12 +5,11 @@ import {USER_ROUTES} from './shared/routes/user.routes';
 import {GuestComponent} from './layouts/guest/guest.component';
 import {NgModule} from '@angular/core';
 
-
 const routes: Routes = [
   {
     path: '',
     component: UserComponent,
-    canActivate: [AuthGuard], // Should be replaced with actual auth guard
+    //canActivate: [AuthGuard], // Should be replaced with actual auth guard
     children: USER_ROUTES
   },
   {

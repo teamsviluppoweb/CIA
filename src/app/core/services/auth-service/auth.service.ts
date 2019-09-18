@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable, of} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
 import {catchError, first, map} from 'rxjs/operators';
-import {environment} from '../../../../environments/environment.dev';
+import {ApiService} from "../api/api.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,7 @@ export class AuthService {
 
   private TOKEN_KEY = 'token';
 
-  constructor( private router: Router, private http: HttpClient) { }
+  constructor( private router: Router, private restApi: ApiService) { }
 
   getAccessToken(): string {
    return localStorage.getItem('token');
@@ -32,9 +31,9 @@ export class AuthService {
   }
 
   validateJwt(): Observable<any> {
-    return this.http.get(environment.endpoints.backendLocation + environment.endpoints.getDommanda, {observe: 'response'}).pipe(
+    return this.restApi.getDomanda(true).pipe(
         map( (response) => {
-          if (response.status === 200) {
+          if (response['status'] === 200) {
             return true;
           }
         }),
@@ -51,3 +50,4 @@ export class AuthService {
   }
 
 }
+

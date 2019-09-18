@@ -1,0 +1,8 @@
+{
+  "http://172.16.26.72:4200/GetDomanda": {
+    "target": "http://172.16.26.72:4200/diooo",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

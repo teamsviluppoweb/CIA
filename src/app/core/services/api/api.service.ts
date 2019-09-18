@@ -17,17 +17,15 @@ import {
 import {environment} from '../../../../environments/environment.dev';
 
 // To use if we don't want cached application forms response
-/*
-const httpOptions = {
-  headers: new HttpHeaders({
-    'x-refresh':  'true'
-  })
-};
-*/
 
-function createHttpOptions(refresh = false) {
-  const headerMap = refresh ? {'x-refresh': 'true'} : {};
-  const headers = new HttpHeaders(headerMap) ;
+
+
+function createHttpOptions(refresh = true, observe = false) {
+  const headerRefresh = refresh ? {'x-refresh': 'true'} : {};
+  const headerResponse = observe ? {'observe': 'response'} : {};
+
+  const headers = new HttpHeaders(headerRefresh);
+
   return { headers };
 }
 
@@ -128,6 +126,7 @@ export class ApiService {
 
     const options = createHttpOptions(refresh);
 
+    // tslint:disable-next-line:max-line-length
     return this.http.get<TitoliDiStudioIndirizzoLSt>(environment.endpoints.backendLocation + environment.endpoints.titoliStudioIndirizzi +  id,  { observe: 'response' }).pipe(
         catchError(this.handleError('Get lista titoli di studio', []))
     );
@@ -153,10 +152,10 @@ export class ApiService {
     );
   }
 
-  getDomanda(): Observable<any[] | Domanda> {
+  getDomanda(observe = false): Observable<any[] | Domanda> {
     const refresh = false;
 
-    const options = createHttpOptions(refresh);
+    const options = createHttpOptions(refresh, observe);
 
     return this.http.get<Domanda>(environment.endpoints.backendLocation + environment.endpoints.getDommanda, options).pipe(
         catchError(this.handleError('Get domanda', []))

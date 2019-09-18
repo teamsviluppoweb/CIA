@@ -15,14 +15,18 @@ export class TokenInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     const token = localStorage.getItem('token');
-
+    console.log(token);
     const cloned = request.clone({
       headers: request.headers.set('Authorization',
         'Bearer ' + token)
     });
+
+
     return next.handle(cloned).pipe(
         tap(
-            succ => { },
+            succ => {
+                console.log('OK');
+            },
             err => {
               if (err.status === 401) {
                 this.router.navigateByUrl('/guest/login');
