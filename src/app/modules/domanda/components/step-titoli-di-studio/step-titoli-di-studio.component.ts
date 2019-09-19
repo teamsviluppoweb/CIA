@@ -63,6 +63,8 @@ export class StepTitoliDiStudioComponent implements OnInit {
       if (dataDialog) {
         if (dataDialog.data.isOkToInsert) {
 
+          console.log(dataDialog.data);
+
           const formazione: Formazione = {
             tipologia: dataDialog.data.tipologia,
             titoloDiStudio: dataDialog.data.titoloDiStudio.desc + ' ' + dataDialog.data.indirizzo.desc,

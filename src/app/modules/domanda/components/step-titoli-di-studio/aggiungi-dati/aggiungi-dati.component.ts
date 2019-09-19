@@ -95,14 +95,22 @@ export class AggiungiDatiComponent implements OnInit {
           return false;
         }),
         switchMap((x) => {
+
               this.indirizzo.enable();
-              x = x.replace('/', '%2');
+              console.log('dsds', x);
+              x = x.replace('/', '%2F');
+              console.log('dsds', x);
               return this.restApi.getIndirizzoTitoli(x).pipe(
                   map((y) => {
-                    if(y['status'] == 204) {
-                      console.log('ayuuuto');
+
+                    // Se la lista è vuota allora non è obbligatoria
+                    console.log(y['body']);
+
+                    if(y['body'] < 1) {
+                      this.indirizzo.reset();
+                      this.indirizzo.disable();
                     }
-                    console.log(y);
+
                     return y['body'];
                   }),
               );

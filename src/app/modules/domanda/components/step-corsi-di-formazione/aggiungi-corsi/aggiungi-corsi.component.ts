@@ -40,6 +40,14 @@ export class AggiungiCorsiComponent implements OnInit {
 
   ngOnInit() {
     this.OnChangesForms();
+    this.form.patchValue({
+      nomeCorso: this.dataDialog.data.nomeCorso,
+      durataCorso: this.dataDialog.data.durataCorso,
+      dataDiConseguimento: this.dataDialog.data.dataDiConseguimento,
+      istituto: this.dataDialog.data.istituto,
+      luogo: this.dataDialog.data.luogo,
+      periodoConseguimento: this.dataDialog.data.periodoConseguimento
+    });
   }
 
   onNoClick(): void {

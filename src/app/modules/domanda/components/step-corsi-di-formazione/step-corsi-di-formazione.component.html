@@ -48,7 +48,7 @@
       </ng-container>
 
       <!-- Colonna edit -->
-      <ng-container matColumnDef="edit">
+      <ng-container matColumnDef="delete">
         <th *matHeaderCellDef mat-header-cell>
           <div fxLayout="row">
             <mat-icon id="add" (click)="this.openDialogAggiungiDati()">add_box</mat-icon>
@@ -56,6 +56,17 @@
         </th>
         <td *matCellDef="let row; let i = index" mat-cell>
           <mat-icon class="edit" (click)="deleteRow(i)">delete</mat-icon>
+        </td>
+      </ng-container>
+
+
+
+      <!-- Colonna edit -->
+      <ng-container matColumnDef="edit">
+        <th *matHeaderCellDef mat-header-cell>
+        </th>
+        <td *matCellDef="let row; let i = index" mat-cell>
+          <mat-icon class="edit" (click)="edit(i)">edit</mat-icon>
         </td>
       </ng-container>
 
