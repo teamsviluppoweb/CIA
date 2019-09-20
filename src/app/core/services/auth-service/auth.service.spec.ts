@@ -104,25 +104,5 @@ describe('AuthService', () => {
 
     })));
 
-    it(`should emit 'false' for an unauthorized code and redirect to auth/login`, async(inject([AuthService, HttpTestingController],
-        (service: AuthService, backend: HttpTestingController) => {
-
-
-            authService = new AuthService(router, httpClient);
-            spyOn(router, 'navigate');
-            const spy = spyOn(service, 'logout').and.callThrough();
-
-
-            service.validateJwt().subscribe((next) => {
-                expect(next).toBeFalsy();
-                expect(spy);
-                expect(service.logout).toHaveBeenCalled();
-                expect(router.navigate).toHaveBeenCalledWith(['/guest/login']);
-                expect(next).toEqual(false);
-            });
-
-            backend.expectOne('http://webpc.dipvvf.it:6001/GetDomanda').flush([], {status: 401, statusText: 'Unauthorized'});
-
-        })));
 
 });
