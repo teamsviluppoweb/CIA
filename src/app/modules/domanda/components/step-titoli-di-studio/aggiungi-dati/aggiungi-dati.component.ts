@@ -104,13 +104,18 @@ export class AggiungiDatiComponent implements OnInit {
                   map((y) => {
 
                     // Se la lista è vuota allora non è obbligatoria
-                    console.log(y['body']);
+                    console.log(y['body'], 'size', y['body'].length);
 
-                    if(y['body'] < 1) {
+
+                    if(y['body'].length < 1) {
                       this.indirizzo.reset();
                       this.indirizzo.disable();
+                      console.clear();
+                      console.log(this.$indirizzoDiTitoloLst, 'yey');
+                      return null;
                     }
 
+                    console.log('ma ci arriva dio');
                     return y['body'];
                   }),
               );
