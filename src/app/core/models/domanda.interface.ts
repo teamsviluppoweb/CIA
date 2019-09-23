@@ -1,6 +1,6 @@
 export interface DomandaInterface {
-    id?: null;
-    idDomanda?: null;
+    id: string;
+    idDomanda: string;
     versione: number;
     dataInvio: string;
     anagCandidato: AnagCandidatoInterface;
