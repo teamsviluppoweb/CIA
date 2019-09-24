@@ -13,62 +13,153 @@ const express = require('express');
 var bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken');
 const exjwt = require('express-jwt');
+const get = require('simple-get')
+
 
 var expiresIn = 3000;
 // Instantiating the express app
 const app = express();
 let domanda = {
-    "DomandaConcorso": {
-        "IdDomanda": "",
-        "Versione": "",
-        "Stato": 0,
-        "IstanzaJSON": "",
-        "DataInvio": "",
-        "DataModifica": ""
-    },
-    "Anagrafica": {
-        "CodiceFiscale": "ZHNLNN72T65X210W",
-        "Cognome": "Super",
-        "Nome": "Mario",
-        "ProvinciaNascita": "RM",
-        "ComuneNascita": "Roma",
-        "DataNascita": "1972-12-25T00:00:00",
-        "Sesso": "M",
-        "Residenza": "Via Cavour 5 - 00184 Roma",
-        "Cellulare": "12345678",
-        "Email": "supermario@libero.it",
-        "DomicilioDigitale": "supermaio@pec.aruba.it"
-    },
-    "TitoloDiploma": {
-        "TipoDiploma": "",
-        "Istituto": "",
-        "AnnoConseguimento": "",
-        "Provincia": "",
-        "Comune": "",
-        "Indirizzo": ""
-    },
-    "Lingua": {
-        "Id": "",
-        "Descrizione": ""
-    },
-    "Riserve": [],
-    "TitoliPreferenziali": [],
-    "NumeroFigli": "",
-    "Invalidita": {
-        "prcInvalidita": "",
-        "enteInvalidita": "",
-        "dataInvalidita": "",
-        "eszProva": "",
-        "ausProva": "",
-        "tmpAggiuntivi": ""
-    }
+
+	"id": null,
+
+	"idDomanda": null,
+
+	"versione": 0,
+
+	"dataInvio": "2019-06-20T08:19:00.217Z",
+
+	"anagCandidato": {
+
+		"codiceFiscale": "MRCGLC72P20H501T",
+
+		"cognome": "MARCIANO",
+
+		"nome": "GIANLUCA",
+
+		"dataNascita": "1972-09-20T00:00:00",
+
+		"codComuneNascita": "58091",
+
+		"comuneNascita": "ROMA",
+
+		"codprovNascita": "RM",
+
+		"domicilio": "VIA CARLO PIRZIO BIROLI, 111 - 00043 CIAMPINO (RM)",
+
+		"telefono": "0 0",
+
+		"email": "gianluca.marciano@vigilfuoco.it",
+
+		"codQualifica": "263",
+
+		"descQualifica": "COLL TECNICO-INFORMATICO",
+
+		"nomeQualifica": "CTI",
+
+		"codSede": "8L",
+
+		"descSede": "Ufficio per i servizi informatici"
+
+	},
+
+	"titoliStudioPosseduti": [
+
+		{
+
+			"idTipologia": 1,
+
+			"tipologia": "laurea",
+
+			"idTS": "D008",
+
+			"descTS": "prova desc",
+
+			"idIndirizzoTS": "45",
+
+			"indirizzoTS": "fdfdfd dfdfds",
+
+			"dataConseguimento": "1979-12-31T23:00:00Z",
+
+			"istituto": "La Sapienza, Roma",
+
+			"luogo": "via roma 12",
+
+			"durataAnni": "3 anni"
+
+		},
+
+		{
+
+			"idTipologia": 2,
+
+			"tipologia": "laurea",
+
+			"idTS": "D008",
+
+			"descTS": "prova desc",
+
+			"idIndirizzoTS": "45",
+
+			"indirizzoTS": "fdfdfd dfdfds",
+
+			"dataConseguimento": "1979-12-31T23:00:00Z",
+
+			"istituto": "La Sapienza, Roma",
+
+			"luogo": "via roma 12",
+
+			"durataAnni": "3 anni"
+
+		}
+
+	],
+
+	"corsiAggAmm": [
+
+		{
+
+			"idCorso": "Tipologia corso 1",
+
+			"tipologiaCorso": "2 mesi",
+
+			"DescCorso": "",
+
+			"Sorgente": "",
+
+			"GiorniCorso": "",
+
+			"OreCorso": "",
+
+			"dataInizio": "1990-01-05T23:00:00Z",
+
+			"dataFine": "1990-01-07T23:00:00Z",
+
+			"CodiceCorso": "Istituto Formazione, Udine"
+
+		}
+
+	],
+
+	"protocollo":
+
+	{
+
+		"id": "11936",
+
+		"numero": "290",
+
+		"data": "2019-07-19T23:00:00Z"
+
+	}
+
 };
 
 // See the react auth blog in which cors is required for access
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Content-type,Authorization');
-    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     next();
 });
 
@@ -125,31 +216,31 @@ app.get('/whoami', jwtMW /* Using the express jwt MW here */, (req, res) => {
 });
 
 app.get('/titolo-studio', jwtMW /* Using the express jwt MW here */, (req, res) => {
-    
+
     const studio = [
-        {   
+        {
             tipologia: "Diploma di istruzione secondaria superiore",
             titoloDiStudio: "Diploma di istruzione secondaria superiore ad indirizzo tecninco industriale - informatica",
             conseguitoPresso: "ITIS Enrico Fermi",
             luogo: "Roma (RM)",
-            periodoConseguimento: "1992",
-            dataValidazione: "18/09/2017"
+            periodoConseguimento: "1564481832",
+            dataValidazione: "1564481832"
         },
-        {   
+        {
             tipologia: "Diploma di laurea (vecchio ordinamento)",
             titoloDiStudio: "Matematica",
             conseguitoPresso: "Ateneo la sapienza",
             luogo: "Roma (RM)",
-            periodoConseguimento: "1997",
-            dataValidazione: "18/09/2017"
+            periodoConseguimento: "1564481832",
+            dataValidazione: "1564481832"
         },
-        {   
+        {
             tipologia: "Titolo post laurea",
             titoloDiStudio: "Master di primo livello - qualità nella pubblica amministrazione",
             conseguitoPresso: "Università degli studi Roma Tre",
             luogo: "Roma (RM)",
-            periodoConseguimento: "18/0",
-            dataValidazione: "18/09/2017"
+            periodoConseguimento: "1564481832",
+            dataValidazione: "1564481832"
         },
     ];
 
@@ -159,16 +250,44 @@ app.get('/titolo-studio', jwtMW /* Using the express jwt MW here */, (req, res) 
 
 
 
+
+app.get('/corsi', jwtMW /* Using the express jwt MW here */, (req, res) => {
+
+    let oggetto;
+
+    const opts = {
+        url: 'http://webpc.dipvvf.it:6001/Corsi',
+        json: true,
+        headers: {
+            'Authorization': 'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFsVHlwZSI6WyJVc2VybmFtZVBhc3N3b3JkQ3JlZGVudGlhbCJdLCJhdWQiOiJodHRwOi8vMTcyLjE2LjI2LjcyOjQyMDAvIiwic3ViIjoiQkxMUFJJNjlUMjhMNDgzSyIsImlzRnJvbU5ld0xvZ2luIjpbInRydWUiXSwiYXV0aGVudGljYXRpb25EYXRlIjpbIjIwMTktMDktMDlUMTQ6MTA6MTUuNDg3MDI3WiJdLCJhdXRoZW50aWNhdGlvbk1ldGhvZCI6WyJTdGF0aWMgQ3JlZGVudGlhbHMiXSwic3VjY2Vzc2Z1bEF1dGhlbnRpY2F0aW9uSGFuZGxlcnMiOlsiU3RhdGljIENyZWRlbnRpYWxzIl0sImlzcyI6Imh0dHBzOi8vd2VicGMuZGlwdnZmLml0Ojg0NDMvY2FzIiwibG9uZ1Rlcm1BdXRoZW50aWNhdGlvblJlcXVlc3RUb2tlblVzZWQiOlsiZmFsc2UiXSwiZXhwIjoxNTc2NTcyODQ0LCJpYXQiOjE1NzY1NzI4NDQsImp0aSI6IlNULTEtdG5BWEtTY1JHeU1IOGU1MjkxRUdqTEEzVENFLWpvZWctVmlydHVhbEJveCJ9.CZ6O43c6J1st0IYHh1l3JmNnnh3bebdzNXshJKhFGbcmtxhFtfGpwUE3gGdfDw2_dttIbuvIoytP6J21flIsoQ',
+            'Content-Type' :  'application/x-www-form-urlencoded'
+          }
+      }
+
+    get.concat(opts, function (err, res, data) {
+      if (err) throw err
+      oggetto = data // `res` is a stream
+    })
+
+    setTimeout(function(){
+        res.send(oggetto);
+    }, 2000);
+
+    //Sending some response when authenticated
+});
+
+
+
 app.get('/corsi-formazione', jwtMW /* Using the express jwt MW here */, (req, res) => {
 
     const corsi = [
-        {   
+        {
             nomeCorso: "Corso Angular",
             durataCorso: "1 settimana",
-            dataDiConseguimento: "12/03/2019",
+            dataDiConseguimento: "1564481832",
             istituto: 'Istituto iris',
             luogo: "Roma (RM)",
-            periodoConseguimento: "12/04/2019",
+            periodoConseguimento: "1564481832",
         },
     ];
 
@@ -199,7 +318,7 @@ app.get('/comuni', jwtMW /* Using the express jwt MW here */, (req, res) => {
     res.send(comuni); //Sending some response when authenticated
 });
 
-app.get('/qualifica-sede', jwtMW /* Using the express jwt MW here */, (req, res) => {
+app.get('/Sedi', jwtMW /* Using the express jwt MW here */, (req, res) => {
     const data = {
         "qualifica": "caposquadra",
         "sede": "Via cavour nr.5"
@@ -231,7 +350,7 @@ app.get('/titoli', jwtMW /* Using the express jwt MW here */, (req, res) => {
         { "Id": 14, "Descrizione": "Aver prestato lodevole servizio a qualunque titolo, per non meno di un anno, nell'amministrazione che ha indetto il concorso" },
         { "Id": 15, "Descrizione": "Insignito di medaglia al valor militare" },
         { "Id": 16, "Descrizione": "Militare volontario delle forze armate congedato senza demerito al termine della ferma o rafferma" },
-        { "Id": 17, "Descrizione": "Coniugato e non coniugato con riguardo al numero di figli a carico"}
+        { "Id": 17, "Descrizione": "Coniugato e non coniugato con riguardo al numero di figli a carico" }
     ];
     res.send(titoli); //Sending some response when authenticated
 });
@@ -242,8 +361,14 @@ app.get('/domanda', jwtMW /* Using the express jwt MW here */, (req, res) => {
     res.send(domanda); //Sending some response when authenticated
 });
 
-app.put('/domanda', jwtMW /* Using the express jwt MW here */, (req, res) => {
-    domanda = req.body;
+
+app.get('/domanda', jwtMW /* Using the express jwt MW here */, (req, res) => {
+
+    res.send(domanda); //Sending some response when authenticated
+});
+
+app.get('/GetDomanda', jwtMW /* Using the express jwt MW here */, (req, res) => {
+
     res.send(domanda); //Sending some response when authenticated
 });
 
