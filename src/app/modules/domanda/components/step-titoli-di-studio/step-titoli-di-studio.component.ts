@@ -5,8 +5,8 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {map} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
-import {Formazione} from "../../../../core/models/api.interface";
-import {DomandaInterface, TitoliStudioPossedutiInterface} from "../../../../core/models/domanda.interface";
+import {Formazione} from '../../../../core/models/api.interface';
+import {DomandaInterface, TitoliStudioPossedutiInterface} from '../../../../core/models/domanda.interface';
 
 // tslint:disable-next-line:max-line-length
 const tabellaHeader = ['anno', 'titolo-di-studio', 'conseguito-presso', 'edit'];
@@ -66,11 +66,18 @@ export class StepTitoliDiStudioComponent implements OnInit {
       if (dataDialog) {
         if (dataDialog.data.isOkToInsert) {
 
-          console.log(dataDialog.data);
+
+          let titoloStudioTemp;
+
+          if (dataDialog.data.indirizzo === null) {
+            titoloStudioTemp = dataDialog.data.titoloDiStudio.desc;
+          } else {
+            titoloStudioTemp = dataDialog.data.titoloDiStudio.desc + ' ' + dataDialog.data.indirizzo.desc;
+          }
 
           const formazione: Formazione = {
             tipologia: dataDialog.data.tipologia,
-            titoloDiStudio: dataDialog.data.titoloDiStudio.desc + ' ' + dataDialog.data.indirizzo.desc,
+            titoloDiStudio: titoloStudioTemp,
             conseguitoPresso: dataDialog.data.istituto,
             luogo: dataDialog.data.provincia.provincia +  '(' + dataDialog.data.comune.comune + ')',
             periodoConseguimento: dataDialog.data.periodoConseguimento,
@@ -78,6 +85,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
           };
 
           console.log('inseriiimento');
+          console.log()
 
           this.titoliDiStudioDichiarati = [formazione].concat(this.titoliDiStudioDichiarati);
         }
