@@ -130,6 +130,10 @@ export class StepCorsiDiFormazioneComponent implements OnInit {
   }
 
   edit(index) {
+
+    console.log(this.corsiDichiarati[index].nomeCorso);
+
+
     const obj = {
       nomeCorso: this.corsiDichiarati[index].nomeCorso,
       durataCorso: this.corsiDichiarati[index].durataCorso,

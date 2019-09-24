@@ -92,13 +92,13 @@ export class ApiService {
     );
   }
 
-  getIndirizzoTitoli(id: string): Observable<any[] | HttpResponse<TitoliDiStudioIndirizzoLSt[]>> {
+  getIndirizzoTitoli(id: string): Observable<any[] | TitoliDiStudioIndirizzoLSt[]> {
     const refresh = false;
 
     const options = createHttpOptions(refresh);
 
     // tslint:disable-next-line:max-line-length
-    return this.http.get<TitoliDiStudioIndirizzoLSt[]>(environment.endpoints.backendLocation + environment.endpoints.indirizziTitoliStudio +  id,  { observe: 'response' }).pipe(
+    return this.http.get<TitoliDiStudioIndirizzoLSt[]>(environment.endpoints.backendLocation + environment.endpoints.indirizziTitoliStudio +  id,  options).pipe(
         catchError(this.handleError('Get lista titoli di studio', []))
     );
   }

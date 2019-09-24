@@ -10,7 +10,7 @@ import {
   TitoliDiStudioLSt
 } from '../../../../../core/models/api.interface';
 import {ApiService} from '../../../../../core/services/api/api.service';
-import {catchError, concatMap, filter, map, switchMap} from 'rxjs/operators';
+import {catchError, concatMap, filter, map, switchMap, tap} from 'rxjs/operators';
 import {HttpResponse} from '@angular/common/http';
 
 
@@ -44,7 +44,7 @@ export class AggiungiDatiComponent implements OnInit {
     this.form = this.fb.group({
       tipologia: ['', Validators.required],
       titoloDiStudio: ['', Validators.required],
-      indirizzo: ['', Validators.required],
+      indirizzo: [''],
       dataDiConseguimento: ['', Validators.required],
       istituto: ['', Validators.required],
       luogo: ['', Validators.required],
@@ -53,7 +53,6 @@ export class AggiungiDatiComponent implements OnInit {
       periodoConseguimento: ['', Validators.required],
     });
 
-    this.titoloDiStudio.disable();
     this.indirizzo.disable();
     this.comune.disable();
   }
@@ -76,57 +75,67 @@ export class AggiungiDatiComponent implements OnInit {
   }
 
   DropDownLogic() {
-    this.$titoloDiStudioLst = this.tipologia.valueChanges.pipe(
-        map( (x) => x.id),
+
+
+      this.tipologia.valueChanges.pipe(
+          tap( () => {
+              this.titoloDiStudio.reset();
+              this.indirizzo.reset();
+          })
+      ).subscribe(
+          () => {
+          }
+      );
+
+
+      this.$titoloDiStudioLst = this.tipologia.valueChanges.pipe(
+        map( (x) =>{
+            if(x.id === null) {
+                console.log('shaked');
+                return of;
+            }
+
+            return x.id;
+        }),
         concatMap((x) => {
-              this.titoloDiStudio.enable();
               this.indirizzo.reset();
               this.indirizzo.disable();
               return this.restApi.getTitoli(x);
             }
         ));
 
-    this.$indirizzoDiTitoloLst = this.titoloDiStudio.valueChanges.pipe(
-        map( (x) => x.id),
-        filter((x) => {
-          if (x) {
-            return true;
-          }
-          this.indirizzo.reset();
-          this.indirizzo.disable();
-          return false;
+      this.$indirizzoDiTitoloLst = this.titoloDiStudio.valueChanges.pipe(
+          filter((x) => {
+              if (x) {
+                  return true;
+              }
+              return false;
+          }),
+        map( (x) => {
+            return x.id;
         }),
         switchMap((x) => {
-
-              this.indirizzo.enable();
-              console.log('dsds', x);
-              x = x.replace('/', '%2F');
-              console.log('dsds', x);
               return this.restApi.getIndirizzoTitoli(x).pipe(
-                  map((y: HttpResponse<TitoliDiStudioIndirizzoLSt[]> ) => {
+                  map((y: TitoliDiStudioIndirizzoLSt[]) => {
 
-                    // Se la lista è vuota allora non è obbligatoria
-                    console.log(y.body.length, 'size', y.body.length);
-
-
-                    if (y.body.length < 1) {
-                        this.isIndirizziValid = false;
+                    if (y.length < 1) {
                         this.indirizzo.reset();
                         this.indirizzo.disable();
-                        console.clear();
-                        console.log(this.$indirizzoDiTitoloLst, 'yey');
                         return null;
+                    } else {
+                        this.indirizzo.enable();
+                        this.indirizzo.setValidators([Validators.required]);
                     }
 
-                    this.isIndirizziValid = true;
-                    console.log('ma ci arriva dio');
-                    return y.body;
+                    this.indirizzo.updateValueAndValidity();
+
+                    return y;
                   }),
               );
             }
         ));
 
-    this.$comuni = this.provincia.valueChanges.pipe(
+      this.$comuni = this.provincia.valueChanges.pipe(
         map( (x: ProvinceLSt) => x.codProvincia),
         concatMap((x) => {
           this.comune.enable();
