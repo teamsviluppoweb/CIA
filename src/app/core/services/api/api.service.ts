@@ -7,7 +7,7 @@ import {HandleError, HttpErrorHandler} from '..';
 import {
   ComuniLSt,
   Corsi,
-  CorsiApiLst, Domanda,
+  CorsiApiLst,
   Formazione, ProvinceLSt,
   QualificaSede,
   QualificheApiLst,
@@ -15,6 +15,7 @@ import {
   TipologiaTitoliDiStudioLSt, TitoliDiStudioIndirizzoLSt, TitoliDiStudioLSt
 } from '../../models/api.interface';
 import {environment} from '../../../../environments/environment.dev';
+import {DomandaInterface} from "../../models/domanda.interface";
 
 // To use if we don't want cached application forms response
 
@@ -152,12 +153,12 @@ export class ApiService {
     );
   }
 
-  getDomanda(observe = false): Observable<any[] | Domanda> {
+  getDomanda(observe = false): Observable<any[] | DomandaInterface> {
     const refresh = false;
 
     const options = createHttpOptions(refresh, observe);
 
-    return this.http.get<Domanda>(environment.endpoints.backendLocation + environment.endpoints.getDommanda, options).pipe(
+    return this.http.get<DomandaInterface>(environment.endpoints.backendLocation + environment.endpoints.getDommanda, options).pipe(
         catchError(this.handleError('Get domanda', []))
     );
   }

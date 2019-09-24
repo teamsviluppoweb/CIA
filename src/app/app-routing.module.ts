@@ -9,7 +9,7 @@ const routes: Routes = [
   {
     path: '',
     component: UserComponent,
-    //canActivate: [AuthGuard], // Should be replaced with actual auth guard
+    canActivate: [AuthGuard], // Should be replaced with actual auth guard
     children: USER_ROUTES
   },
   {
