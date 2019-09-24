@@ -4,14 +4,19 @@
 
 export const environment = {
   production: false,
-  requestUrl: '172.16.26.72'
-};
+  requestUrl: '127.0.0.1',
+  endpoints: {
+    backendLocation: '',
+    corsi: '',
+    qualifiche: '',
+    sedi: '',
+    tipologieTitoliStudio: '',
+    titoliTitoloStudio: '',
+    indirizziTitoliStudio: '',
+    province: '',
+    comuni: '/',
+    visualizzaDOmanda: '',
+    salvaDomanda: '',
+  }
 
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+};

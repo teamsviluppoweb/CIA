@@ -6,24 +6,19 @@ export const environment = {
     production: false,
     requestUrl: '127.0.0.1',
     endpoints: {
-        backendLocation: 'http://webpc.dipvvf.it:6001/',
+        backendLocation: 'http://localhost:8080',
         corsi: 'corsi',
-        corsiByCf: 'CorsiByCF',
-        qualifiche: 'Qualifiche',
-        sedi: 'Sedi',
-        titoliDiStudiobyCf: 'TitoliStudiobyCF',
-        titoliStudioTipologie: 'TitoliStudio/Tipologie',
-        titoliStudioTitoli: 'TitoliStudio/Titoli/',
-        titoliStudioIndirizzi: 'TitoliStudio/Indirizzi/',
-        province: 'Province',
-        comuni: 'Province/',
-        getDommanda: 'GetDomanda',
-        inviaDomanda: 'SalvaDomanda'
-    },
-    fakeEndpoints: {
-        backendLocation: 'http://localhost:8080/',
-        whoami: 'whoami',
-    },
+        qualifiche: 'qualifiche',
+        sedi: 'sedi',
+        tipologieTitoliStudio: 'titoliStudio/tipologia',
+        titoliTitoloStudio: 'TitoliStudio/Titoli',
+        indirizziTitoliStudio: 'TitoliStudio/Indirizzi/',
+        province: 'province',
+        comuni: 'province/',
+        visualizzaDOmanda: 'getDomanda',
+        salvaDomanda: 'salvaDomanda',
+    }
+
 };
 
 /*
