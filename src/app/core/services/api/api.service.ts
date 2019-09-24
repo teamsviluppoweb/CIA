@@ -123,13 +123,12 @@ export class ApiService {
     );
   }
 
-  getDomanda(observe = false): Observable<any[] | HttpResponse<DomandaInterface>> {
-    const refresh = false;
+  getDomanda(observe = false, refresh = false): Observable<any[] | HttpResponse<DomandaInterface>> {
 
-    const options = createHttpOptions(refresh, observe);
+    const options = createHttpOptions(refresh, false);
 
 
-    return this.http.get<DomandaInterface>(environment.endpoints.backendLocation + environment.endpoints.visualizzaDomanda, { observe: 'response' }).pipe(
+    return this.http.get<HttpResponse<DomandaInterface>>(environment.endpoints.backendLocation + environment.endpoints.visualizzaDomanda, options).pipe(
         catchError(this.handleError('Get domanda', []))
     );
   }

@@ -2,23 +2,37 @@
 
   <div fxLayout="column" fxLayoutGap="10px" [formGroup]="form">
 
+
+
     <mat-form-field appearance="outline" fxFlex="0 0 50" fxFlex.xs="auto">
-      <mat-label>Sede</mat-label>
-      <mat-select formControlName="qualifica">
-        <mat-option *ngFor="let sede of ($sediLst | async)" [value]="sede" >
-          {{sede.desc}}
+      <mat-select #singleSelect
+                  formControlName="sedeGiuridica"
+                  placeholder="Seleziona sede">
+        <ngx-mat-select-search formControlName="sedeDropdown"
+                               [noEntriesFoundLabel]="'Nessun risultato'"
+                               [placeholderLabel]="'Cerca sede'"></ngx-mat-select-search>
+        <mat-option *ngFor="let sede of (filtroSedi | async)" [value]="sede">
+          {{sede}}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
+
+
+
     <mat-form-field appearance="outline" fxFlex="0 0 50" fxFlex.xs="auto">
-      <mat-label>Qualifica</mat-label>
-      <mat-select formControlName="sedeGiuridica">
-        <mat-option *ngFor="let qualifica of ($qualificheLst | async)" [value]="qualifica" >
-          {{qualifica.desc}}
+      <mat-select #singleSelect
+                  formControlName="qualifica"
+                  placeholder="Seleziona qualifica">
+        <ngx-mat-select-search formControlName="qualificaDropdown"
+                               [noEntriesFoundLabel]="'Nessun risultato'"
+                               [placeholderLabel]="'Cerca sede'"></ngx-mat-select-search>
+        <mat-option *ngFor="let qualifica of (filtroQualifiche | async)" [value]="qualifica">
+          {{qualifica}}
         </mat-option>
       </mat-select>
     </mat-form-field>
+
 
   </div>
 

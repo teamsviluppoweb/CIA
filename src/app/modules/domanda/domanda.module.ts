@@ -13,6 +13,7 @@ import {
   StepCorsiDiFormazioneComponent,
   AggiungiDatiComponent,
   AggiungiCorsiComponent } from './components';
+import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 
 
 
@@ -31,7 +32,8 @@ import {
   imports: [
     CommonModule,
     SharedModule,
-    DomandaRoutingModule
+    DomandaRoutingModule,
+    NgxMatSelectSearchModule
   ],
   entryComponents: [
     AggiungiDatiComponent, AggiungiCorsiComponent
