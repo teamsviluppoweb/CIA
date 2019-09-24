@@ -6,7 +6,7 @@
                 corsi: 'corsi',
                 qualifiche: 'qualifiche',
                 sedi: 'sedi',
-                tipologieTitoliStudio: 'titoliStudio/tipologia',
+                tipologieTitoliStudio: 'titoliStudio/tipologie',
                 titoliTitoloStudio: 'TitoliStudio/Titoli',
                 indirizziTitoliStudio: 'TitoliStudio/Indirizzi/',
                 province: 'province',
