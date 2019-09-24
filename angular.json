@@ -82,11 +82,11 @@
                 }
               ]
             },
-            "uffweb": {
+            "node": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.uffweb.ts"
+                  "with": "src/environments/environment.node.ts"
                 }
               ],
               "optimization": false,
@@ -119,8 +119,8 @@
             "production": {
               "browserTarget": "CIA:build:production"
             },
-            "uffweb": {
-              "browserTarget": "CIA:build:production"
+            "node": {
+              "browserTarget": "CIA:build:dev"
             },
             "dev": {
             "browserTarget": "CIA:build:dev"

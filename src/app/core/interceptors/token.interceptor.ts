@@ -15,7 +15,6 @@ export class TokenInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     const token = localStorage.getItem('token');
-    console.log(token);
     const cloned = request.clone({
       headers: request.headers.set('Authorization',
         'Bearer ' + token)
@@ -25,7 +24,7 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(cloned).pipe(
         tap(
             succ => {
-                console.log('OK');
+                console.log('Good Token');
             },
             err => {
               if (err.status === 401) {

@@ -2,7 +2,7 @@
             production: false,
             requestUrl: '127.0.0.1',
             endpoints: {
-                backendLocation: 'http://webpc.dipvvf.it:6001/',
+                backendLocation: 'http://localhost:8080/',
                 corsi: 'corsi',
                 qualifiche: 'qualifiche',
                 sedi: 'sedi',
@@ -11,8 +11,8 @@
                 indirizziTitoliStudio: 'TitoliStudio/Indirizzi/',
                 province: 'province',
                 comuni: 'province/',
-                visualizzaDOmanda: 'getDomanda',
-                salvaDomanda: 'salvaDomanda',
+                visualizzaDomanda: 'Domanda',
+                salvaDomanda: 'Domanda',
             }
 
         };

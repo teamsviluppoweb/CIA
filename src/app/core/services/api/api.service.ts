@@ -14,9 +14,9 @@ import {
   SediApiLSt,
   TipologiaTitoliDiStudioLSt, TitoliDiStudioIndirizzoLSt, TitoliDiStudioLSt
 } from '../../models/api.interface';
-import {environment} from '../../../../environments/environment.dev';
-import {DomandaInterface} from "../../models/domanda.interface";
-import {DomandaModel} from "../../models";
+import {DomandaInterface} from '../../models/domanda.interface';
+import {DomandaModel} from '../../models';
+import {environment} from '../../../../environments/environment';
 
 // To use if we don't want cached application forms response
 
@@ -24,7 +24,7 @@ import {DomandaModel} from "../../models";
 
 function createHttpOptions(refresh = true, observe = false) {
   const headerRefresh = refresh ? {'x-refresh': 'true'} : {};
-  const headerResponse = observe ? {'observe': 'response'} : {};
+  const headerResponse = observe ? {observe: 'response'} : {};
 
   const headers = new HttpHeaders(headerRefresh);
 
@@ -47,7 +47,7 @@ export class ApiService {
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<CorsiApiLst>(environment.endpoints.corsi).pipe(
+    return this.http.get<CorsiApiLst>( environment.endpoints.backendLocation + environment.endpoints.corsi).pipe(
         catchError(this.handleError('Get lista corsi', []))
     );
   }
@@ -57,7 +57,7 @@ export class ApiService {
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<QualificheApiLst>(environment.endpoints.qualifiche).pipe(
+    return this.http.get<QualificheApiLst>(environment.endpoints.backendLocation + environment.endpoints.qualifiche).pipe(
         catchError(this.handleError('Get lista qualifiche', []))
     );
   }
@@ -67,7 +67,7 @@ export class ApiService {
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<SediApiLSt>(environment.endpoints.sedi).pipe(
+    return this.http.get<SediApiLSt>(environment.endpoints.backendLocation + environment.endpoints.sedi).pipe(
         catchError(this.handleError('Get lista sedi', []))
     );
   }
@@ -77,7 +77,7 @@ export class ApiService {
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<TipologiaTitoliDiStudioLSt>(environment.endpoints.tipologieTitoliStudio).pipe(
+    return this.http.get<TipologiaTitoliDiStudioLSt>(environment.endpoints.backendLocation + environment.endpoints.tipologieTitoliStudio).pipe(
         catchError(this.handleError('Get lista tipologia di studio', []))
     );
   }
@@ -87,7 +87,7 @@ export class ApiService {
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<TitoliDiStudioLSt>(environment.endpoints.titoliTitoloStudio +  id).pipe(
+    return this.http.get<TitoliDiStudioLSt>(environment.endpoints.backendLocation + environment.endpoints.titoliTitoloStudio +  id).pipe(
         catchError(this.handleError('Get lista titoli di studio', []))
     );
   }
@@ -98,7 +98,7 @@ export class ApiService {
     const options = createHttpOptions(refresh);
 
     // tslint:disable-next-line:max-line-length
-    return this.http.get<TitoliDiStudioIndirizzoLSt[]>(environment.endpoints.indirizziTitoliStudio +  id,  { observe: 'response' }).pipe(
+    return this.http.get<TitoliDiStudioIndirizzoLSt[]>(environment.endpoints.backendLocation + environment.endpoints.indirizziTitoliStudio +  id,  { observe: 'response' }).pipe(
         catchError(this.handleError('Get lista titoli di studio', []))
     );
   }
@@ -108,7 +108,7 @@ export class ApiService {
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<ProvinceLSt>(environment.endpoints.province, options).pipe(
+    return this.http.get<ProvinceLSt>(environment.endpoints.backendLocation + environment.endpoints.province, options).pipe(
         catchError(this.handleError('Get lista province', []))
     );
   }
@@ -118,17 +118,18 @@ export class ApiService {
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<ComuniLSt>(environment.endpoints.comuni + codiceProvincia, options).pipe(
+    return this.http.get<ComuniLSt>(environment.endpoints.backendLocation + environment.endpoints.comuni + codiceProvincia, options).pipe(
         catchError(this.handleError('Get lista comuni', []))
     );
   }
 
-  getDomanda(observe = false): Observable<any[] | DomandaInterface> {
+  getDomanda(observe = false): Observable<any[] | HttpResponse<DomandaInterface>> {
     const refresh = false;
 
     const options = createHttpOptions(refresh, observe);
 
-    return this.http.get<DomandaInterface>(environment.endpoints.visualizzaDOmanda, options).pipe(
+
+    return this.http.get<DomandaInterface>(environment.endpoints.backendLocation + environment.endpoints.visualizzaDomanda, { observe: 'response' }).pipe(
         catchError(this.handleError('Get domanda', []))
     );
   }
@@ -136,7 +137,7 @@ export class ApiService {
   salvaDomanda(domanda: DomandaModel): Observable<any[] | DomandaInterface> {
 
 
-    return this.http.post<DomandaInterface>(environment.endpoints.salvaDomanda, domanda).pipe(
+    return this.http.post<DomandaInterface>(environment.endpoints.backendLocation + environment.endpoints.salvaDomanda, domanda).pipe(
         catchError(this.handleError('Salva domanda', []))
     );
   }

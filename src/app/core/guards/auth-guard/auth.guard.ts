@@ -16,9 +16,12 @@
 
     canActivate(): Observable<boolean> | Promise<boolean> | boolean {
 
+        console.log('dio');
+
         switch (this.ispectUrl(this.url)) {
 
             case true: {
+                console.log('Good url');
                 const token = this.refactorUrl(this.url);
                 this.auth.setAccessToken(token);
                 return this.auth.validateJwt();

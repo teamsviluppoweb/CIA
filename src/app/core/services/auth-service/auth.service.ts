@@ -33,16 +33,14 @@ export class AuthService {
   validateJwt(): Observable<any> {
     return this.restApi.getDomanda(true).pipe(
         map( (response) => {
-          if (response['status'] === 200) {
+
+            // Se il token è sbagliato ci pensa l'interceptor a fare il logout all'utente
+
+            console.log(response);
+
             return true;
-          }
         }),
         catchError((err: Response) => {
-          if (err.status === 200) {
-            return of(true);
-          }
-
-          this.logout();
           return of(false);
         }),
         first()
