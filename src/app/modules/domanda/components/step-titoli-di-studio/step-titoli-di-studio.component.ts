@@ -1,11 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Domanda, Formazione, TitoliStudioPossedutiEntity} from '../../../../core/models/api.interface';
 import {MatDialog, MatTable} from '@angular/material';
 import {AggiungiDatiComponent} from './aggiungi-dati/aggiungi-dati.component';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {map} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
+import {Formazione} from "../../../../core/models/api.interface";
+import {DomandaInterface, TitoliStudioPossedutiInterface} from "../../../../core/models/domanda.interface";
 
 // tslint:disable-next-line:max-line-length
 const tabellaHeader = ['anno', 'titolo-di-studio', 'conseguito-presso', 'edit'];
@@ -21,7 +22,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
 
   anagraficaDatasource: Formazione[] = [];
 
-  $titoliDiStudio: Observable<TitoliStudioPossedutiEntity[]> = of([]);
+  $titoliDiStudio: Observable<TitoliStudioPossedutiInterface[]> = of([]);
   titoliDiStudioDichiarati = [];
 
   TitoliDiStudioHeader: string[] = tabellaHeader;
@@ -32,7 +33,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
   ngOnInit() {
    this.$titoliDiStudio = this.restApi.getDomanda().pipe(
        map(
-           (x: Domanda) => {
+           (x: DomandaInterface) => {
              return x.titoliStudioPosseduti;
            }
        )

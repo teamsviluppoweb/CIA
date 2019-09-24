@@ -22,9 +22,12 @@
       </mat-select>
     </mat-form-field>
 
+
+
+
     <!-- TODO: ngIf crea errori non fa caricare la dropdown lista la prima volta -->
 
-    <mat-form-field appearance="outline" fxFlex.xs="auto" *ngIf="($indirizzoDiTitoloLst | async)">
+    <mat-form-field appearance="outline" fxFlex.xs="auto">
       <mat-label>Indirizzo di titolo</mat-label>
       <mat-select formControlName="indirizzo">
         <mat-option *ngFor="let indirizzo of ($indirizzoDiTitoloLst | async)" [value]="indirizzo" >

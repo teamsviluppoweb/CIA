@@ -30,6 +30,8 @@ export class AggiungiDatiComponent implements OnInit {
   $province: Observable<any[] | ProvinceLSt>;
   $comuni: Observable<any[] | ComuniLSt>;
 
+  isIndirizziValid = false;
+
   constructor(private fb: FormBuilder,
               public dialogRef: MatDialogRef<AggiungiDatiComponent>,
               private restApi: ApiService,
@@ -101,22 +103,24 @@ export class AggiungiDatiComponent implements OnInit {
               x = x.replace('/', '%2F');
               console.log('dsds', x);
               return this.restApi.getIndirizzoTitoli(x).pipe(
-                  map((y) => {
+                  map((y: HttpResponse<TitoliDiStudioIndirizzoLSt[]> ) => {
 
                     // Se la lista è vuota allora non è obbligatoria
-                    console.log(y['body'], 'size', y['body'].length);
+                    console.log(y.body.length, 'size', y.body.length);
 
 
-                    if(y['body'].length < 1) {
-                      this.indirizzo.reset();
-                      this.indirizzo.disable();
-                      console.clear();
-                      console.log(this.$indirizzoDiTitoloLst, 'yey');
-                      return null;
+                    if (y.body.length < 1) {
+                        this.isIndirizziValid = false;
+                        this.indirizzo.reset();
+                        this.indirizzo.disable();
+                        console.clear();
+                        console.log(this.$indirizzoDiTitoloLst, 'yey');
+                        return null;
                     }
 
+                    this.isIndirizziValid = true;
                     console.log('ma ci arriva dio');
-                    return y['body'];
+                    return y.body;
                   }),
               );
             }
