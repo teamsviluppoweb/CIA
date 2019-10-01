@@ -1,17 +1,16 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {Observable, of} from 'rxjs';
+import {MAT_DIALOG_DATA, MatDialogRef, MatSelect} from '@angular/material';
+import {Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {
-  ComuniLSt,
-  ProvinceLSt,
-  TipologiaTitoliDiStudioLSt,
-  TitoliDiStudioIndirizzoLSt,
-  TitoliDiStudioLSt
+    ComuniLSt,
+    ProvinceLSt, QualificheApiLst, SediApiLSt,
+    TipologiaTitoliDiStudioLSt,
+    TitoliDiStudioIndirizzoLSt,
+    TitoliDiStudioLSt
 } from '../../../../../core/models/api.interface';
 import {ApiService} from '../../../../../core/services/api/api.service';
-import {catchError, concatMap, filter, map, switchMap, tap} from 'rxjs/operators';
-import {HttpResponse} from '@angular/common/http';
+import {concatMap, filter, map, take, takeUntil} from 'rxjs/operators';
 
 
 @Component({
@@ -22,24 +21,35 @@ import {HttpResponse} from '@angular/common/http';
 })
 export class AggiungiDatiComponent implements OnInit {
 
+    @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
+
   form: FormGroup;
 
-  $tipologiaDiStudioLst: Observable<any[] | TipologiaTitoliDiStudioLSt>;
-  $titoloDiStudioLst: Observable<any[] | TitoliDiStudioLSt>;
-  $indirizzoDiTitoloLst: Observable<any[] | HttpResponse<TitoliDiStudioIndirizzoLSt | Response>>;
-  $province: Observable<any[] | ProvinceLSt>;
-  $comuni: Observable<any[] | ComuniLSt>;
-
-  isIndirizziValid = false;
-
-  constructor(private fb: FormBuilder,
-              public dialogRef: MatDialogRef<AggiungiDatiComponent>,
-              private restApi: ApiService,
-              @Inject(MAT_DIALOG_DATA) public dataDialog) {
+  public tipologiaTitoliFilter: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
+    // tslint:disable-next-line:variable-name
+  tipologiaTitoli_lst: TitoliDiStudioLSt[];
+  descrizioneTipologiaTitoli: string[];
 
 
-    this.$tipologiaDiStudioLst = this.restApi.getTipologiaTitoliDiStudio();
-    this.$province = this.restApi.getProvince();
+  public titoliStudioFilter: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
+    // tslint:disable-next-line:variable-name
+  titoliStudio_lst: TitoliDiStudioLSt[];
+  descrizioneTitoliStudio: string[];
+
+  public indirzzoStudioFilter: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
+    // tslint:disable-next-line:variable-name
+  indirizzoStudio_lst: TitoliDiStudioLSt[];
+  descrizioneIndirizzoStudio: string[];
+
+    private onDetroy = new Subject<void>();
+
+
+    constructor(private fb: FormBuilder,
+                public dialogRef: MatDialogRef<AggiungiDatiComponent>,
+                private restApi: ApiService,
+                @Inject(MAT_DIALOG_DATA) public dataDialog) {
+
+
 
     this.form = this.fb.group({
       tipologia: ['', Validators.required],
@@ -51,15 +61,74 @@ export class AggiungiDatiComponent implements OnInit {
       provincia: ['', Validators.required],
       comune: ['', Validators.required],
       periodoConseguimento: ['', Validators.required],
+
+      tipologiaTitoliDropdown: [''],
+      titoliStudioDropdown: [''],
+      indirizzoStudioDropdown: [''],
     });
 
-    this.indirizzo.disable();
-    this.comune.disable();
-  }
 
-  ngOnInit() {
+
+    this.restApi.getTipologiaTitoliDiStudio().pipe(
+            concatMap( (Titoli: TitoliDiStudioLSt[]) => {
+
+                this.tipologiaTitoli_lst = Titoli;
+                this.setInitialValue(this.tipologiaTitoliFilter);
+
+                // Gli passo un array di stringhe contenente solo i nomi delle province
+                this.tipologiaTitoliFilter.next(this.tipologiaTitoli_lst.map(nome => nome.desc).slice());
+                this.descrizioneTipologiaTitoli = this.tipologiaTitoli_lst.map(nome => nome.desc).slice();
+
+                return this.restApi.getDomanda();
+            })
+        )  .subscribe(
+            (x) => {
+                console.log(x);
+            }
+        );
+
+
+    }
+
+
+    private setInitialValue(value) {
+        value
+            .pipe(take(1), takeUntil(this.onDetroy))
+            .subscribe(() => {
+                // setting the compareWith property to a comparison function
+                // triggers initializing the selection according to the initial value of
+                // the form control (i.e. _initializeSelection())
+                // this needs to be done after the filteredBanks are loaded initially
+                // and after the mat-option elements are available
+                this.singleSelect.compareWith = (a: string, b: string) => a && b && a === b;
+            });
+    }
+
+
+
+
+    private filterList(value, form, filters) {
+        if (!value) {
+            return;
+        }
+        // ottiene la keyword di ricerca
+        let search = form.value;
+        if (!search) {
+            filters.next(value.slice());
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+        // Filtra le province
+        filters.next(
+            value.filter(prov => prov.toLocaleLowerCase().indexOf(search) > -1)
+        );
+    }
+
+
+
+    ngOnInit() {
     this.OnChangesForms();
-    this.DropDownLogic();
   }
 
   onNoClick(): void {
@@ -74,113 +143,103 @@ export class AggiungiDatiComponent implements OnInit {
     return this.form.valid;
   }
 
-  DropDownLogic() {
-
-
-      this.tipologia.valueChanges.pipe(
-          tap( () => {
-              this.titoloDiStudio.reset();
-              this.indirizzo.reset();
-          })
-      ).subscribe(
-          () => {
-          }
-      );
-
-
-      this.$titoloDiStudioLst = this.tipologia.valueChanges.pipe(
-        map( (x) =>{
-            if(x.id === null) {
-                console.log('shaked');
-                return of;
-            }
-
-            return x.id;
-        }),
-        concatMap((x) => {
-              this.indirizzo.reset();
-              this.indirizzo.disable();
-              return this.restApi.getTitoli(x);
-            }
-        ));
-
-      this.$indirizzoDiTitoloLst = this.titoloDiStudio.valueChanges.pipe(
-          filter((x) => {
-              if (x) {
-                  return true;
-              }
-              return false;
-          }),
-        map( (x) => {
-            return x.id;
-        }),
-        switchMap((x) => {
-              return this.restApi.getIndirizzoTitoli(x).pipe(
-                  map((y: TitoliDiStudioIndirizzoLSt[]) => {
-
-                    if (y.length < 1) {
-                        this.indirizzo.reset();
-                        this.indirizzo.disable();
-                        return null;
-                    } else {
-                        this.indirizzo.enable();
-                        this.indirizzo.setValidators([Validators.required]);
-                    }
-
-                    this.indirizzo.updateValueAndValidity();
-
-                    return y;
-                  }),
-              );
-            }
-        ));
-
-      this.$comuni = this.provincia.valueChanges.pipe(
-        map( (x: ProvinceLSt) => x.codProvincia),
-        concatMap((x) => {
-          this.comune.enable();
-          return this.restApi.getComuni(x);
-        }
-    ));
-
-  }
 
   OnChangesForms() {
 
-    this.tipologia.valueChanges.subscribe( (x) => {
-      this.dataDialog.data.tipologia = x;
-    });
+      this.tipologiaTitoliDropdown.valueChanges
+          .pipe(takeUntil(this.onDetroy))
+          .subscribe(() => {
+              this.filterList(this.descrizioneTipologiaTitoli, this.tipologiaTitoliDropdown, this.tipologiaTitoliFilter);
+          });
 
-    this.titoloDiStudio.valueChanges.subscribe( (x) => {
+      this.titoliStudioDropdown.valueChanges
+          .pipe(takeUntil(this.onDetroy))
+          .subscribe(() => {
+              this.filterList(this.descrizioneTitoliStudio, this.titoliStudioDropdown, this.titoliStudioFilter);
+          });
+
+      this.indirizzoStudioDropdown.valueChanges
+          .pipe(takeUntil(this.onDetroy))
+          .subscribe(() => {
+              this.filterList(this.descrizioneIndirizzoStudio, this.indirizzoStudioDropdown, this.indirzzoStudioFilter);
+          });
+
+
+      this.tipologia.valueChanges.pipe(
+          filter(() => this.tipologia.valid),
+          map( () => {
+              return this.tipologiaTitoli_lst
+                  .filter(selected => selected.desc === this.tipologia.value)
+                  .map(selected => selected.id)
+                  .reduce(selected => selected);
+          }),
+          // Mi ricavo i titoli di studio
+          concatMap(id => this.restApi.getTitoli(id))
+      ).subscribe( (value: any[]) => {
+
+
+          this.titoliStudio_lst = value;
+          this.setInitialValue(this.titoliStudioFilter);
+
+          // Gli passo un array di stringhe contenente solo i nomi dei titoli
+
+          this.titoliStudioFilter.next(this.titoliStudio_lst.map(nome => nome.desc).slice());
+          this.descrizioneTitoliStudio = this.titoliStudio_lst.map(nome => nome.desc).slice();
+      });
+
+      this.titoloDiStudio.valueChanges.pipe(
+          filter(() => this.indirizzo.valid),
+          map( () => {
+              return this.titoliStudio_lst
+                  .filter(selected => selected.desc === this.titoloDiStudio.value)
+                  .map(selected => selected.id)
+                  .reduce(selected => selected);
+          }),
+          // Mi ricavo i titoli di studio
+          concatMap(id => this.restApi.getIndirizzoTitoli(id))
+      ).subscribe( (value: any[]) => {
+
+
+          this.indirizzoStudio_lst = value;
+          this.setInitialValue(this.indirzzoStudioFilter);
+
+          // Gli passo un array di stringhe contenente solo i nomi dei titoli
+
+          this.indirzzoStudioFilter.next(this.indirizzoStudio_lst.map(nome => nome.desc).slice());
+          this.descrizioneIndirizzoStudio = this.indirizzoStudio_lst.map(nome => nome.desc).slice();
+      });
+
+
+      this.titoloDiStudio.valueChanges.subscribe( (x) => {
       this.dataDialog.data.titoloDiStudio = x;
     });
 
-    this.indirizzo.valueChanges.subscribe( (x) => {
+      this.indirizzo.valueChanges.subscribe( (x) => {
       this.dataDialog.data.indirizzo = x;
     });
 
-    this.dataDiConseguimento.valueChanges.subscribe( (x) => {
+      this.dataDiConseguimento.valueChanges.subscribe( (x) => {
       this.dataDialog.data.dataDiConseguimento = x;
     });
 
-    this.istituto.valueChanges.subscribe( (x) => {
+      this.istituto.valueChanges.subscribe( (x) => {
       this.dataDialog.data.istituto = x;
     });
 
-    this.luogo.valueChanges.subscribe( (x) => {
+      this.luogo.valueChanges.subscribe( (x) => {
       this.dataDialog.data.provincia = x;
     });
 
-    this.provincia.valueChanges.subscribe( (x) => {
+      this.provincia.valueChanges.subscribe( (x) => {
       this.dataDialog.data.provincia = x;
     });
 
-    this.comune.valueChanges.subscribe( (x) => {
+      this.comune.valueChanges.subscribe( (x) => {
       this.dataDialog.data.comune = x;
     });
 
 
-    this.periodoConseguimento.valueChanges.subscribe( (x) => {
+      this.periodoConseguimento.valueChanges.subscribe( (x) => {
       this.dataDialog.data.periodoConseguimento = x;
     });
 
@@ -222,6 +281,16 @@ export class AggiungiDatiComponent implements OnInit {
     return this.form.get('periodoConseguimento');
   }
 
+  get tipologiaTitoliDropdown() {
+    return this.form.get('tipologiaTitoliDropdown');
+  }
 
+  get titoliStudioDropdown() {
+    return this.form.get('titoliStudioDropdown');
+  }
+
+  get indirizzoStudioDropdown() {
+    return this.form.get('indirizzoStudioDropdown');
+  }
 
 }

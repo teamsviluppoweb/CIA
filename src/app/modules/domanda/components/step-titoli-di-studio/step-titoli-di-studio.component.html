@@ -12,7 +12,7 @@
       <!-- Colonna tipologia laurea-->
       <ng-container matColumnDef="anno">
         <th *matHeaderCellDef mat-header-cell>Anno</th>
-        <td *matCellDef="let row" mat-cell>{{row.dataValidazione | date: 'dd/MM/yyyy'}}</td>
+        <td *matCellDef="let row" mat-cell>{{row.dataDiConseguimento | date: 'dd/MM/yyyy'}}</td>
       </ng-container>
 
       <!-- Colonna titolo di studio -->
@@ -24,11 +24,11 @@
       <!-- Colonna conseguito presso -->
       <ng-container matColumnDef="conseguito-presso">
         <th *matHeaderCellDef mat-header-cell>Conseguito presso</th>
-        <td *matCellDef="let row" mat-cell> {{row.conseguitoPresso}} </td>
+        <td *matCellDef="let row" mat-cell> {{row.titoloDiStudio.desc}}  {{row?.indirizzo?.desc}}</td>
       </ng-container>
 
-      <!-- Colonna edit -->
-      <ng-container matColumnDef="edit">
+      <!-- Colonna delete -->
+      <ng-container matColumnDef="delete">
         <th *matHeaderCellDef mat-header-cell>
           <div fxLayout="row">
             <mat-icon id="add" (click)="this.openDialogAggiungiDati()">add_box</mat-icon>
@@ -38,6 +38,17 @@
             <mat-icon class="edit" (click)="deleteRow(i)">delete</mat-icon>
         </td>
       </ng-container>
+
+
+      <!-- Colonna edit -->
+      <ng-container matColumnDef="edit">
+        <th *matHeaderCellDef mat-header-cell>
+        </th>
+        <td *matCellDef="let row; let i = index" mat-cell>
+          <mat-icon class="edit" (click)="edit(i)">edit</mat-icon>
+        </td>
+      </ng-container>
+
 
       <tr *matHeaderRowDef="TitoliDiStudioHeader" mat-header-row></tr>
       <tr *matRowDef="let row; columns: TitoliDiStudioHeader; let i = index" mat-row  cdkDrag [cdkDragData]="row"></tr>

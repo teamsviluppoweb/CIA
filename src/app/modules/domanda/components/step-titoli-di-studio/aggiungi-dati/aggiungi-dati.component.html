@@ -4,34 +4,45 @@
 <div fxLayout="column" fxLayoutGap="10px" [formGroup]="form">
 
   <div fxLayout="column" fxLayout.xs="column" >
-    <mat-form-field appearance="outline" fxFlex.xs="auto">
-      <mat-label>Tipologia Titolo di Studio</mat-label>
-      <mat-select formControlName="tipologia">
-        <mat-option *ngFor="let tipologia of ($tipologiaDiStudioLst | async)" [value]="tipologia" >
-          {{tipologia.desc}}
+    <mat-form-field appearance="outline"  fxFlex.xs="auto">
+      <mat-select #singleSelect
+                  formControlName="tipologia"
+                  placeholder="Seleziona sede">
+        <ngx-mat-select-search formControlName="tipologiaTitoliDropdown"
+                               [noEntriesFoundLabel]="'Nessun risultato'"
+                               [placeholderLabel]="'Cerca sede'"></ngx-mat-select-search>
+        <mat-option *ngFor="let sede of (tipologiaTitoliFilter | async)" [value]="sede">
+          {{sede}}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" fxFlex.xs="auto">
-      <mat-label>Titolo di studio</mat-label>
-      <mat-select formControlName="titoloDiStudio">
-        <mat-option *ngFor="let titolo of ($titoloDiStudioLst | async)" [value]="titolo" >
-          {{titolo.desc}}
+
+    <mat-form-field appearance="outline"  fxFlex.xs="auto">
+      <mat-select #singleSelect
+                  formControlName="titoloDiStudio"
+                  placeholder="Seleziona sede">
+        <ngx-mat-select-search formControlName="titoliStudioDropdown"
+                               [noEntriesFoundLabel]="'Nessun risultato'"
+                               [placeholderLabel]="'Cerca titolo'"></ngx-mat-select-search>
+        <mat-option *ngFor="let titoli of (titoliStudioFilter | async)" [value]="titoli">
+          {{titoli}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-
 
 
 
     <!-- TODO: ngIf crea errori non fa caricare la dropdown lista la prima volta -->
-
-    <mat-form-field appearance="outline" fxFlex.xs="auto">
-      <mat-label>Indirizzo di titolo</mat-label>
-      <mat-select formControlName="indirizzo">
-        <mat-option *ngFor="let indirizzo of ($indirizzoDiTitoloLst | async)" [value]="indirizzo" >
-          {{indirizzo.desc}}
+    <mat-form-field appearance="outline"  fxFlex.xs="auto">
+      <mat-select #singleSelect
+                  formControlName="indirizzo"
+                  placeholder="Seleziona indirizzo">
+        <ngx-mat-select-search formControlName="indirizzoStudioDropdown"
+                               [noEntriesFoundLabel]="'Nessun risultato'"
+                               [placeholderLabel]="'Cerca indirizzo'"></ngx-mat-select-search>
+        <mat-option *ngFor="let indirizzo of (indirzzoStudioFilter | async)" [value]="indirizzo">
+          {{indirizzo}}
         </mat-option>
       </mat-select>
     </mat-form-field>

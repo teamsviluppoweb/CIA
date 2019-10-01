@@ -20,8 +20,6 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
   // Lista delle qualifiche filtrate dalle parole chiavi nel campo
   $sediLst: Observable<any[] | SediApiLSt>;
 
-
-
   public filtroSedi: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
   public filtroQualifiche: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
 
@@ -99,10 +97,8 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-
     this.filtroSedi.unsubscribe();
     this.filtroQualifiche.unsubscribe();
-
 
     this.onDetroy.next();
     this.onDetroy.complete();
@@ -174,9 +170,5 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
   get qualificaDropdown() {
     return this.form.get('qualificaDropdown');
   }
-
-
-
-
 
 }
