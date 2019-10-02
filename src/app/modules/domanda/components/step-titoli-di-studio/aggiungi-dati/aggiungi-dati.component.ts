@@ -41,13 +41,25 @@ export class AggiungiDatiComponent implements OnInit {
   indirizzoStudio_lst: TitoliDiStudioLSt[];
   descrizioneIndirizzoStudio: string[];
 
+  public provinceFilter: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
+    // tslint:disable-next-line:variable-name
+  province_lst: ProvinceLSt[];
+  provinceNomi: string[];
+
+
+  public comuniFitler: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
+  // tslint:disable-next-line:variable-name
+  comuni_lst: ProvinceLSt[];
+  comuniNomi: string[];
+
+
     private onDetroy = new Subject<void>();
 
 
-    constructor(private fb: FormBuilder,
-                public dialogRef: MatDialogRef<AggiungiDatiComponent>,
-                private restApi: ApiService,
-                @Inject(MAT_DIALOG_DATA) public dataDialog) {
+  constructor(private fb: FormBuilder,
+              public dialogRef: MatDialogRef<AggiungiDatiComponent>,
+              private restApi: ApiService,
+              @Inject(MAT_DIALOG_DATA) public dataDialog) {
 
 
 
@@ -65,6 +77,8 @@ export class AggiungiDatiComponent implements OnInit {
       tipologiaTitoliDropdown: [''],
       titoliStudioDropdown: [''],
       indirizzoStudioDropdown: [''],
+      provinceDropdown: [''],
+      comuniDropdown: [''],
     });
 
 
@@ -82,6 +96,26 @@ export class AggiungiDatiComponent implements OnInit {
                 return this.restApi.getDomanda();
             })
         )  .subscribe(
+            (x) => {
+                console.log(x);
+            }
+        );
+
+    this.restApi.getProvince()
+          .pipe(
+              concatMap( (Province: ProvinceLSt[]) => {
+
+                  this.province_lst = Province;
+                  this.setInitialValue(this.provinceFilter);
+
+                  // Gli passo un array di stringhe contenente solo i nomi delle province
+                  this.provinceFilter.next(this.province_lst.map(nome => nome.provincia).slice());
+                  this.provinceNomi = this.province_lst.map(nome => nome.provincia).slice();
+
+                  return this.restApi.getDomanda();
+              }),
+          )
+        .subscribe(
             (x) => {
                 console.log(x);
             }
@@ -156,12 +190,15 @@ export class AggiungiDatiComponent implements OnInit {
           .pipe(takeUntil(this.onDetroy))
           .subscribe(() => {
               this.filterList(this.descrizioneTitoliStudio, this.titoliStudioDropdown, this.titoliStudioFilter);
+              this.indirizzo.reset();
           });
 
       this.indirizzoStudioDropdown.valueChanges
           .pipe(takeUntil(this.onDetroy))
           .subscribe(() => {
               this.filterList(this.descrizioneIndirizzoStudio, this.indirizzoStudioDropdown, this.indirzzoStudioFilter);
+              this.indirizzo.reset();
+
           });
 
 
@@ -210,6 +247,31 @@ export class AggiungiDatiComponent implements OnInit {
       });
 
 
+      this.provincia.valueChanges
+          .pipe(
+              // Mi assicuro che il valore nel form sia valido
+              filter(() => this.provincia.valid),
+              // Mi ricavo il codice provincia per ricavare i comuni
+              map( () => {
+                  return this.province_lst
+                      .filter(selected => selected.provincia === this.provincia.value)
+                      .map(selected => selected.codProvincia)
+                      .reduce(selected => selected);
+              }),
+              // Mi ricavo i comuni
+              concatMap(val => this.restApi.getComuni(val))
+          )
+          .subscribe((value: any[]) => {
+
+              this.comuni_lst = value;
+
+              // Popolo la dropdown con i comuni
+              this.setInitialValue(this.comuniFitler);
+              this.comuniFitler.next(this.comuniNomi.slice());
+
+          });
+
+
       this.titoloDiStudio.valueChanges.subscribe( (x) => {
       this.dataDialog.data.titoloDiStudio = x;
     });
@@ -238,10 +300,23 @@ export class AggiungiDatiComponent implements OnInit {
       this.dataDialog.data.comune = x;
     });
 
-
       this.periodoConseguimento.valueChanges.subscribe( (x) => {
       this.dataDialog.data.periodoConseguimento = x;
     });
+
+      // Analizza i cambiamenti del testo nel campo di ricerca del dropdown search dei comuni
+      this.comuniDropdown.valueChanges
+          .pipe(takeUntil(this.onDetroy))
+          .subscribe(() => {
+              this.filterList(this.comuniNomi, this.comuniDropdown, this.comuniFitler);
+          });
+
+      // Analizza i cambiamenti del testo nel campo di ricerca del dropdown search delle province
+      this.provinceDropdown.valueChanges
+          .pipe(takeUntil(this.onDetroy))
+          .subscribe(() => {
+              this.filterList(this.provinceNomi, this.provinceDropdown, this.provinceFilter);
+          });
 
   }
 
@@ -291,6 +366,14 @@ export class AggiungiDatiComponent implements OnInit {
 
   get indirizzoStudioDropdown() {
     return this.form.get('indirizzoStudioDropdown');
+  }
+
+  get provinceDropdown() {
+    return this.form.get('provinceDropdown');
+  }
+
+  get comuniDropdown() {
+    return this.form.get('comuniDropdown');
   }
 
 }

@@ -104,23 +104,33 @@
   <div fxLayout="row" fxLayout.xs="column" >
 
     <mat-form-field appearance="outline" fxFlex="0 0 50" fxFlex.xs="auto">
-      <mat-label>Provincia</mat-label>
-      <mat-select formControlName="provincia">
-        <mat-option *ngFor="let provincia of ($province | async)" [value]="provincia" >
-          {{provincia.provincia}}
+      <mat-select #singleSelect
+                  [formControl]="provincia"
+                  placeholder="Seleziona Provincia">
+
+        <ngx-mat-select-search [formControl]="provinceDropdown"
+                               [noEntriesFoundLabel]="'Nessun risultato'"
+                               [placeholderLabel]="'Cerca provincia . . '"></ngx-mat-select-search>
+        <mat-option *ngFor="let prov of (provinceFilter | async)" [value]="prov">
+          {{prov}}
         </mat-option>
       </mat-select>
     </mat-form-field>
+
 
     <mat-form-field appearance="outline" fxFlex="0 0 50" fxFlex.xs="auto">
-      <mat-label>Comune</mat-label>
-      <mat-select formControlName="comune">
-        <mat-option *ngFor="let comn of ($comuni | async)" [value]="comn" >
-          {{comn.comune}}
+      <mat-select #singleSelect
+                  [formControl]="comune"
+                  placeholder="Seleziona Comune">
+
+        <ngx-mat-select-search [formControl]="comuniDropdown"
+                               [noEntriesFoundLabel]="'Nessun risultato'"
+                               [placeholderLabel]="'Cerca comune . . '"></ngx-mat-select-search>
+        <mat-option *ngFor="let com of (comuniFitler | async)" [value]="com">
+          {{com}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-
   </div>
 
   <div fxLayout="row"  fxLayoutGap="20px">
