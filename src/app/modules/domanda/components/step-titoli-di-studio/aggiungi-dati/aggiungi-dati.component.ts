@@ -49,7 +49,7 @@ export class AggiungiDatiComponent implements OnInit {
 
   public comuniFitler: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
   // tslint:disable-next-line:variable-name
-  comuni_lst: ProvinceLSt[];
+  comuni_lst: ComuniLSt[];
   comuniNomi: string[];
 
 
@@ -264,10 +264,11 @@ export class AggiungiDatiComponent implements OnInit {
           .subscribe((value: any[]) => {
 
               this.comuni_lst = value;
-
-              // Popolo la dropdown con i comuni
               this.setInitialValue(this.comuniFitler);
-              this.comuniFitler.next(this.comuniNomi.slice());
+
+
+              this.comuniFitler.next(this.comuni_lst.map(nome => nome.comune).slice());
+              this.comuniNomi = this.comuni_lst.map(nome => nome.comune).slice();
 
           });
 

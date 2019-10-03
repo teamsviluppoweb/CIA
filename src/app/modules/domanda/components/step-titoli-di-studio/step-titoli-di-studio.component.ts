@@ -30,15 +30,6 @@ export class StepTitoliDiStudioComponent implements OnInit {
               public aggiungiDatiDialog: MatDialog) {}
 
   ngOnInit() {
-    /**
-     *  this.$titoliDiStudio = this.restApi.getDomanda().pipe(
-     map(
-     (x: DomandaInterface) => {
-             return x.titoliStudioPosseduti;
-           }
-     )
-     );
-     */
   }
 
 
