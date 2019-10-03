@@ -34,7 +34,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
 
 
   openDialogEditDati(index) {
-
+    this.titoliDiStudioDichiarati[index].isEditing = true;
     const dialogRef = this.aggiungiDatiDialog.open(AggiungiDatiComponent, {
       height: '650px',
       width: '1300px',
@@ -61,10 +61,12 @@ export class StepTitoliDiStudioComponent implements OnInit {
       indirizzo: '',
       dataDiConseguimento: '',
       istituto: '',
+      luogo: '',
       provincia: '',
       comune: '',
       periodoConseguimento: '',
       isOkToInsert: false,
+      isEditing: false,
     };
 
     const dialogRef = this.aggiungiDatiDialog.open(AggiungiDatiComponent, {

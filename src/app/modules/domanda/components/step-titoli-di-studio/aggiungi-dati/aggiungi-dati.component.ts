@@ -61,31 +61,10 @@ export class AggiungiDatiComponent implements OnInit {
               private restApi: ApiService,
               @Inject(MAT_DIALOG_DATA) public dataDialog) {
 
-    console.clear();
-
-    console.log(dataDialog);
-
-    this.form = this.fb.group({
-      tipologia: ['', Validators.required],
-      titoloDiStudio: ['', Validators.required],
-      indirizzo: [''],
-      dataDiConseguimento: ['', Validators.required],
-      istituto: ['', Validators.required],
-      luogo: ['', Validators.required],
-      provincia: ['', Validators.required],
-      comune: ['', Validators.required],
-      periodoConseguimento: ['', Validators.required],
-
-      tipologiaTitoliDropdown: [''],
-      titoliStudioDropdown: [''],
-      indirizzoStudioDropdown: [''],
-      provinceDropdown: [''],
-      comuniDropdown: [''],
-    });
+          this.form = this.createForm();
 
 
-
-    this.restApi.getTipologiaTitoliDiStudio().pipe(
+          this.restApi.getTipologiaTitoliDiStudio().pipe(
             concatMap( (Titoli: TitoliDiStudioLSt[]) => {
 
                 this.tipologiaTitoli_lst = Titoli;
@@ -99,11 +78,21 @@ export class AggiungiDatiComponent implements OnInit {
             })
         )  .subscribe(
             (x) => {
-                console.log(x);
+              if(dataDialog.data.isEditing) {
+                  this.form.patchValue({
+                      tipologia: dataDialog.data.tipologia,
+                      dataDiConseguimento: dataDialog.data.dataDiConseguimento,
+                      istituto: dataDialog.data.istituto,
+                      luogo:  dataDialog.data.luogo,
+                      provincia: dataDialog.data.provincia,
+                      comune:  dataDialog.data.comune,
+                      periodoConseguimento: dataDialog.data.periodoConseguimento,
+                  });
+              }
             }
         );
 
-    this.restApi.getProvince()
+          this.restApi.getProvince()
           .pipe(
               concatMap( (Province: ProvinceLSt[]) => {
 
@@ -141,6 +130,26 @@ export class AggiungiDatiComponent implements OnInit {
     }
 
 
+    private createForm() {
+      return this.fb.group({
+          tipologia: ['', Validators.required],
+          titoloDiStudio: ['', Validators.required],
+          indirizzo: [''],
+          dataDiConseguimento: ['', Validators.required],
+          istituto: ['', Validators.required],
+          luogo: ['', Validators.required],
+          provincia: ['', Validators.required],
+          comune: ['', Validators.required],
+          periodoConseguimento: ['', Validators.required],
+
+          tipologiaTitoliDropdown: [''],
+          titoliStudioDropdown: [''],
+          indirizzoStudioDropdown: [''],
+          provinceDropdown: [''],
+          comuniDropdown: [''],
+      });
+    }
+
 
 
     private filterList(value, form, filters) {
@@ -173,6 +182,8 @@ export class AggiungiDatiComponent implements OnInit {
 
   sendData() {
     this.dataDialog.data.isOkToInsert = true;
+    this.dataDialog.data.isEditing = false;
+
   }
 
   isFormReady() {
@@ -224,15 +235,23 @@ export class AggiungiDatiComponent implements OnInit {
 
           this.titoliStudioFilter.next(this.titoliStudio_lst.map(nome => nome.desc).slice());
           this.descrizioneTitoliStudio = this.titoliStudio_lst.map(nome => nome.desc).slice();
+
+
+          if (this.dataDialog.data.isEditing) {
+              this.titoloDiStudio.patchValue(this.dataDialog.data.titoloDiStudio);
+          }
       });
 
       this.titoloDiStudio.valueChanges.pipe(
           filter(() => this.indirizzo.valid),
           map( () => {
+
               return this.titoliStudio_lst
                   .filter(selected => selected.desc === this.titoloDiStudio.value)
                   .map(selected => selected.id)
                   .reduce(selected => selected);
+
+
           }),
           // Mi ricavo i titoli di studio
           concatMap(id => this.restApi.getIndirizzoTitoli(id))
@@ -246,6 +265,10 @@ export class AggiungiDatiComponent implements OnInit {
 
           this.indirzzoStudioFilter.next(this.indirizzoStudio_lst.map(nome => nome.desc).slice());
           this.descrizioneIndirizzoStudio = this.indirizzoStudio_lst.map(nome => nome.desc).slice();
+
+          if (this.dataDialog.data.isEditing) {
+              this.indirizzo.patchValue(this.dataDialog.data.indirizzo);
+          }
       });
 
 
@@ -293,6 +316,10 @@ export class AggiungiDatiComponent implements OnInit {
       this.istituto.valueChanges.subscribe( (x) => {
       this.dataDialog.data.istituto = x;
     });
+
+      this.luogo.valueChanges.subscribe( (x) => {
+          this.dataDialog.data.luogo = x;
+      });
 
       this.provincia.valueChanges.subscribe( (x) => {
       this.dataDialog.data.provincia = x;
