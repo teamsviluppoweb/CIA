@@ -18,13 +18,13 @@
       <!-- Colonna titolo di studio -->
       <ng-container matColumnDef="titolo-di-studio">
         <th *matHeaderCellDef mat-header-cell>Titolo di studio</th>
-        <td *matCellDef="let row" mat-cell>{{row.tipologia.desc}}}</td>
+        <td *matCellDef="let row" mat-cell>{{row.tipologia}}}</td>
       </ng-container>
 
       <!-- Colonna conseguito presso -->
       <ng-container matColumnDef="conseguito-presso">
         <th *matHeaderCellDef mat-header-cell>Conseguito presso</th>
-        <td *matCellDef="let row" mat-cell> {{row.titoloDiStudio.desc}}  {{row?.indirizzo?.desc}}</td>
+        <td *matCellDef="let row" mat-cell> {{row.titoloDiStudio}}  {{row?.indirizzo}}</td>
       </ng-container>
 
       <!-- Colonna delete -->

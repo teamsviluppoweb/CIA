@@ -61,7 +61,9 @@ export class AggiungiDatiComponent implements OnInit {
               private restApi: ApiService,
               @Inject(MAT_DIALOG_DATA) public dataDialog) {
 
+    console.clear();
 
+    console.log(dataDialog);
 
     this.form = this.fb.group({
       tipologia: ['', Validators.required],
@@ -272,6 +274,9 @@ export class AggiungiDatiComponent implements OnInit {
 
           });
 
+      this.tipologia.valueChanges.subscribe( (x) => {
+          this.dataDialog.data.tipologia = x;
+      });
 
       this.titoloDiStudio.valueChanges.subscribe( (x) => {
       this.dataDialog.data.titoloDiStudio = x;
@@ -287,10 +292,6 @@ export class AggiungiDatiComponent implements OnInit {
 
       this.istituto.valueChanges.subscribe( (x) => {
       this.dataDialog.data.istituto = x;
-    });
-
-      this.luogo.valueChanges.subscribe( (x) => {
-      this.dataDialog.data.provincia = x;
     });
 
       this.provincia.valueChanges.subscribe( (x) => {
