@@ -384,7 +384,7 @@ app.get('/titoliStudio/titoli/:idTitolo', jwtMW /* Using the express jwt MW here
  * 
  */
 
-app.get('/titoliStudio/indirizzi/:idIndirizzi', jwtMW /* Using the express jwt MW here */, (req, res) => {
+app.get('/TitoliStudio/Indirizzi/:idIndirizzi', jwtMW /* Using the express jwt MW here */, (req, res) => {
 
     const idIndirizzi = req.params['idIndirizzi'];
 
@@ -398,6 +398,8 @@ app.get('/titoliStudio/indirizzi/:idIndirizzi', jwtMW /* Using the express jwt M
             'Content-Type' :  'application/x-www-form-urlencoded'
           }
       }
+
+    console.log('wut?');
 
     get.concat(opts, function (err, res, data) {
       if (err) throw err
@@ -433,7 +435,16 @@ app.get('/province', jwtMW /* Using the express jwt MW here */, (req, res) => {
       }
 
     get.concat(opts, function (err, res, data) {
-      if (err) throw err
+      if (err) {
+          res.send(
+              [
+                  {
+                    codProvincia: '1',
+                    provincia: 'Roma'
+                  }
+              ]
+          );
+      }
       oggetto = data // `res` is a stream
     })
 
@@ -467,7 +478,16 @@ app.get('/province/:codProvincia', jwtMW /* Using the express jwt MW here */, (r
       }
 
     get.concat(opts, function (err, res, data) {
-      if (err) throw err
+      if (err) {
+        res.send(
+            [
+                {
+                  codProvincia: '1',
+                  provincia: 'Roma'
+                }
+            ]
+        );
+      }
       oggetto = data // `res` is a stream
     })
 
