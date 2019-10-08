@@ -1,4 +1,4 @@
-<form [formGroup]="form">
+<form [formGroup]="form"  (ngSubmit)="inviaDomanda()">
   <mat-vertical-stepper #stepper [linear]="false">
     <mat-step label="Informazioni personali">
       <app-step-anagrafica></app-step-anagrafica>

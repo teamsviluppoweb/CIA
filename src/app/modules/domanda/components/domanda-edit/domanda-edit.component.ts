@@ -17,4 +17,8 @@ export class DomandaEditComponent implements OnInit {
     });
   }
 
+  inviaDomanda() {
+    console.log(this.form);
+  }
+
 }

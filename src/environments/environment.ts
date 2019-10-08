@@ -15,7 +15,7 @@ export const environment = {
     indirizziTitoliStudio: '',
     province: '',
     comuni: '/',
-    visualizzaDomanda: '',
+    visualizzaDomanda: 'getDomanda',
     salvaDomanda: '',
   }
 

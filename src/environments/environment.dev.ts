@@ -11,7 +11,7 @@
                 indirizziTitoliStudio: 'TitoliStudio/Indirizzi/',
                 province: 'province',
                 comuni: 'province/',
-                visualizzaDomanda: 'Domanda',
+                visualizzaDomanda: 'getDomanda',
                 salvaDomanda: 'Domanda',
             }
 
