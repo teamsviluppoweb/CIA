@@ -61,6 +61,7 @@ export class AggiungiCorsiComponent implements OnInit {
 
   sendData() {
     this.dataDialog.data.isOkToInsert = true;
+    this.dataDialog.data.isEditing = false;
   }
 
   isFormReady() {
@@ -117,7 +118,6 @@ export class AggiungiCorsiComponent implements OnInit {
   get periodoConseguimento() {
     return this.form.get('periodoConseguimento');
   }
-
 
 
 }

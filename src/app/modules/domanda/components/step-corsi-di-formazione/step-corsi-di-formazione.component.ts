@@ -42,11 +42,13 @@ export class StepCorsiDiFormazioneComponent implements OnInit {
       luogo: '',
       periodoConseguimento: '',
       isOkToInsert: false,
+      isEditing: false,
     };
 
     const dialogRef = this.aggiungiDatiDialog.open(AggiungiCorsiComponent, {
       height: 'auto',
       width: 'auto',
+      disableClose: true,
       data: {data: obj},
     });
 
@@ -142,6 +144,7 @@ export class StepCorsiDiFormazioneComponent implements OnInit {
       luogo: this.corsiDichiarati[index].luogo,
       periodoConseguimento: this.corsiDichiarati[index].periodoConseguimento,
       isOkToInsert: false,
+      isEditing: true,
     };
 
 
