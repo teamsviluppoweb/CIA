@@ -1,5 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {ApiService} from "../../../../core/services/api/api.service";
+import {AnagCandidatoInterface, DomandaInterface} from "../../../../core/models/domanda.interface";
+import {HttpResponse} from "@angular/common/http";
+import {DomandaModel} from "../../../../core/models";
 
 @Component({
   selector: 'app-step-anagrafica',
@@ -10,10 +14,7 @@ export class StepAnagraficaComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
-
-
-  ngOnInit() {
+  constructor(private fb: FormBuilder, private restApi: ApiService) {
     this.form = this.fb.group({
       nome: [''],
       cognome: [''],
@@ -25,18 +26,34 @@ export class StepAnagraficaComponent implements OnInit {
       email: [''],
       sedeServizio: ['']
     });
+  }
 
-    this.form.patchValue({
-      nome: 'Robert Alexandru',
-      cognome: 'Turturica',
-      dataNascita: '02/12/1995',
-      comuneNascita: 'Roma',
-      domicilio: 'Via dei carraresi 14 00164',
-      codiceFiscale: 'TRTZRS98DALS97SH',
-      telefono: '+39 3202635017',
-      email: 'roberturturica@gmail.com',
-      sedeServizio: 'Via dei cosimi '
-    });
+
+  ngOnInit() {
+
+    this.restApi.getDomanda().subscribe(
+        (data) => {
+
+
+          let ang = data['domanda'];
+          ang =  ang['anagCandidato'];
+          this.form.patchValue({
+            nome: ang.nome,
+            cognome: ang.cognome,
+            dataNascita: ang.dataNascita,
+            comuneNascita: ang.comuneNascita,
+            domicilio: ang.domicilio,
+            codiceFiscale: ang.codiceFiscale,
+            telefono: ang.telefono,
+            email: ang.email,
+            sedeServizio: ang.descSede,
+          });
+
+        }
+
+
+    );
+
   }
 
 

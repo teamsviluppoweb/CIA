@@ -51,6 +51,11 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
 
     this.onChanges();
 
+
+    this.restApi.getDomanda().pipe(
+
+    );
+
   }
 
   ngOnInit() {
@@ -70,7 +75,17 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
             })
         )  .subscribe(
         (x) => {
-          console.log(x);
+            x = x['domanda'];
+            console.log(x['stato']);
+          if (x['stato'] === 1) {
+
+              let ang =  x['anagCandidato'];
+
+              let sede = this.listaSedi.filter(x => x.id === ang['codSede']).reduce(x => x.desc);
+              console.log(sede);
+              this.sedeGiuridica.patchValue(sede.desc);
+
+          }
         }
     );
 
@@ -88,8 +103,17 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
         })
     )  .subscribe(
         (x) => {
-          console.log(x);
-        }
+            x = x['domanda'];
+            console.log(x['stato']);
+            if (x['stato'] === 1) {
+
+                let ang =  x['anagCandidato'];
+
+                let qualifica = this.listaQualifiche.filter(x => x.id === ang['codQualifica']).reduce(x => x.desc);
+                console.log(qualifica);
+                this.qualifica.patchValue(qualifica.desc);
+
+            }        }
     );
 
     this.onChanges();
@@ -138,6 +162,10 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
 
 
   onChanges() {
+
+      this.sedeGiuridica.valueChanges.subscribe((x) => {
+          console.log(x);
+      });
 
     // Analizza i cambiamenti del testo nel campo di ricerca del dropdown search dei comuni
     this.sedeDropdown.valueChanges
