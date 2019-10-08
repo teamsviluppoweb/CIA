@@ -45,8 +45,8 @@ export class StepCorsiDiFormazioneComponent implements OnInit {
     };
 
     const dialogRef = this.aggiungiDatiDialog.open(AggiungiCorsiComponent, {
-      height: '350px',
-      width: '1100px',
+      height: 'auto',
+      width: 'auto',
       data: {data: obj},
     });
 

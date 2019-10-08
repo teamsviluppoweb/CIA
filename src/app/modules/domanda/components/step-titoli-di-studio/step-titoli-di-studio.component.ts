@@ -35,8 +35,8 @@ export class StepTitoliDiStudioComponent implements OnInit {
 
   openDialogEditDati(index) {
     this.titoliDiStudioDichiarati[index].isEditing = true;
-    const dialogRef = this.aggiungiDatiDialog.open(AggiungiDatiComponent, {
-      height: '650px',
+    let dialogRef = this.aggiungiDatiDialog.open(AggiungiDatiComponent, {
+      height: 'auto',
       width: '1300px',
       data: {data: this.titoliDiStudioDichiarati[index]},
     });
@@ -50,6 +50,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
 
         }
       }
+
     });
   }
 
@@ -69,9 +70,10 @@ export class StepTitoliDiStudioComponent implements OnInit {
       isEditing: false,
     };
 
-    const dialogRef = this.aggiungiDatiDialog.open(AggiungiDatiComponent, {
-      height: '650px',
+    let dialogRef = this.aggiungiDatiDialog.open(AggiungiDatiComponent, {
+      height: 'auto',
       width: '1300px',
+      disableClose: true,
       data: {data: obj},
     });
 
@@ -83,6 +85,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
           this.titoliDiStudioDichiarati = [dataDialog.data].concat(this.titoliDiStudioDichiarati);
         }
       }
+
     });
   }
 
