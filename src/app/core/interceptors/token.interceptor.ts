@@ -30,7 +30,8 @@ export class TokenInterceptor implements HttpInterceptor {
               if (err.status === 401) {
                 this.router.navigateByUrl('/guest/login');
               }
-              if (err.status === 500 || err.status === 0) {
+              if (err.status === 500) {
+                  console.log(err);
                   this.router.navigateByUrl('/guest/error');
               }
             }

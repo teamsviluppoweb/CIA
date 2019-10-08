@@ -4,6 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {ApiService} from '../../../../../core/services/api/api.service';
 import {Observable} from 'rxjs';
 import {CorsiApiLst} from '../../../../../core/models/api.interface';
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-aggiungi-corsi',
@@ -25,7 +26,9 @@ export class AggiungiCorsiComponent implements OnInit {
 
     console.log(this.dataDialog);
 
-    this.$nomiCorsiLst = this.restApi.getListaCorsi();
+    this.$nomiCorsiLst = this.restApi.getListaCorsi().pipe(
+        tap((x) => console.log('corsi have been called', x))
+    );
 
     this.form = this.fb.group({
       nomeCorso: ['', Validators.required],
@@ -36,10 +39,12 @@ export class AggiungiCorsiComponent implements OnInit {
       periodoConseguimento: ['', Validators.required],
     });
 
+    this.OnChangesForms();
+
+
   }
 
   ngOnInit() {
-    this.OnChangesForms();
     this.form.patchValue({
       nomeCorso: this.dataDialog.data.nomeCorso,
       durataCorso: this.dataDialog.data.durataCorso,

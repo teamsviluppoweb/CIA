@@ -18,7 +18,7 @@ import { GuestComponent } from './layouts/guest/guest.component';
     BrowserAnimationsModule,
     SharedModule,
     CoreModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

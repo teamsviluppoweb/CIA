@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSelect} from '@angular/material';
 import {Observable, of, ReplaySubject, Subject} from 'rxjs';
@@ -19,7 +19,7 @@ import {concatMap, filter, map, take, takeUntil} from 'rxjs/operators';
   styleUrls: ['./aggiungi-dati.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AggiungiDatiComponent implements OnInit {
+export class AggiungiDatiComponent implements OnInit, OnDestroy {
 
     @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
 
@@ -53,46 +53,54 @@ export class AggiungiDatiComponent implements OnInit {
   comuniNomi: string[];
 
 
+  test;
     private onDetroy = new Subject<void>();
 
+
+
+    ngOnDestroy() {
+        this.onDetroy.next();
+        this.onDetroy.complete();
+
+        this.titoliStudioFilter.unsubscribe();
+        this.tipologiaTitoliFilter.unsubscribe();
+        this.indirzzoStudioFilter.unsubscribe();
+        this.test.unsubscribe();
+    }
 
   constructor(private fb: FormBuilder,
               public dialogRef: MatDialogRef<AggiungiDatiComponent>,
               private restApi: ApiService,
               @Inject(MAT_DIALOG_DATA) public dataDialog) {
 
-          this.form = this.createForm();
+      this.form = this.createForm();
+      this.OnChangesForms();
 
 
-          this.restApi.getTipologiaTitoliDiStudio().pipe(
-            concatMap( (Titoli: TitoliDiStudioLSt[]) => {
+      this.test = this.restApi.getTipologiaTitoliDiStudio().subscribe(
+          (Titoli: TitoliDiStudioLSt[]) => {
 
-                this.tipologiaTitoli_lst = Titoli;
-                this.setInitialValue(this.tipologiaTitoliFilter);
+              this.tipologiaTitoli_lst = Titoli;
+              this.setInitialValue(this.tipologiaTitoliFilter);
 
-                // Gli passo un array di stringhe contenente solo i nomi delle province
-                this.tipologiaTitoliFilter.next(this.tipologiaTitoli_lst.map(nome => nome.desc).slice());
-                this.descrizioneTipologiaTitoli = this.tipologiaTitoli_lst.map(nome => nome.desc).slice();
+              // Gli passo un array di stringhe contenente solo i nomi delle province
+              this.tipologiaTitoliFilter.next(this.tipologiaTitoli_lst.map(nome => nome.desc).slice());
+              this.descrizioneTipologiaTitoli = this.tipologiaTitoli_lst.map(nome => nome.desc).slice();
+              console.log('dio', this.dataDialog.data.isEditing);
 
-                return this.restApi.getDomanda();
-            })
-        )  .subscribe(
-            (x) => {
-              if(dataDialog.data.isEditing) {
+              if(this.dataDialog.data.isEditing) {
                   this.form.patchValue({
-                      tipologia: dataDialog.data.tipologia,
-                      dataDiConseguimento: dataDialog.data.dataDiConseguimento,
-                      istituto: dataDialog.data.istituto,
-                      luogo:  dataDialog.data.luogo,
-                      provincia: dataDialog.data.provincia,
-                      comune:  dataDialog.data.comune,
-                      periodoConseguimento: dataDialog.data.periodoConseguimento,
-                  });
+                      tipologia: this.dataDialog.data.tipologia,
+                      dataDiConseguimento: this.dataDialog.data.dataDiConseguimento,
+                      istituto: this.dataDialog.data.istituto,
+                      luogo:  this.dataDialog.data.luogo,
+                      periodoConseguimento: this.dataDialog.data.periodoConseguimento,
+                  }, {emitEvent: true});
               }
-            }
-        );
+          }
+      );
 
-          this.restApi.getProvince()
+      this.restApi.getProvince()
           .pipe(
               concatMap( (Province: ProvinceLSt[]) => {
 
@@ -106,11 +114,11 @@ export class AggiungiDatiComponent implements OnInit {
                   return this.restApi.getDomanda();
               }),
           )
-        .subscribe(
-            (x) => {
-                console.log(x);
-            }
-        );
+          .subscribe(
+              (x) => {
+                  this.provincia.patchValue(this.dataDialog.data.provincia);
+              }
+          );
 
 
     }
@@ -171,9 +179,10 @@ export class AggiungiDatiComponent implements OnInit {
     }
 
 
-
     ngOnInit() {
-    this.OnChangesForms();
+
+
+
   }
 
   onNoClick(): void {
@@ -183,7 +192,6 @@ export class AggiungiDatiComponent implements OnInit {
   sendData() {
     this.dataDialog.data.isOkToInsert = true;
     this.dataDialog.data.isEditing = false;
-
   }
 
   isFormReady() {
@@ -218,6 +226,8 @@ export class AggiungiDatiComponent implements OnInit {
       this.tipologia.valueChanges.pipe(
           filter(() => this.tipologia.valid),
           map( () => {
+              console.log('dio mi ha toccato');
+
               return this.tipologiaTitoli_lst
                   .filter(selected => selected.desc === this.tipologia.value)
                   .map(selected => selected.id)
@@ -227,6 +237,7 @@ export class AggiungiDatiComponent implements OnInit {
           concatMap(id => this.restApi.getTitoli(id))
       ).subscribe( (value: any[]) => {
 
+          console.log('ora io tocco lui');
 
           this.titoliStudio_lst = value;
           this.setInitialValue(this.titoliStudioFilter);
@@ -278,6 +289,12 @@ export class AggiungiDatiComponent implements OnInit {
               filter(() => this.provincia.valid),
               // Mi ricavo il codice provincia per ricavare i comuni
               map( () => {
+
+                  console.log('why!!!!', this.province_lst
+                      .filter(selected => selected.provincia === this.provincia.value)
+                      .map(selected => selected.codProvincia)
+                      .reduce(selected => selected) );
+
                   return this.province_lst
                       .filter(selected => selected.provincia === this.provincia.value)
                       .map(selected => selected.codProvincia)
@@ -294,6 +311,12 @@ export class AggiungiDatiComponent implements OnInit {
 
               this.comuniFitler.next(this.comuni_lst.map(nome => nome.comune).slice());
               this.comuniNomi = this.comuni_lst.map(nome => nome.comune).slice();
+
+
+              if (this.dataDialog.data.isEditing) {
+                  console.log('cambia dio comune');
+                  this.comune.patchValue(this.dataDialog.data.comune);
+              }
 
           });
 
