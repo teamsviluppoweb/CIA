@@ -4,6 +4,7 @@ export interface DomandaInterface {
     id: string;
     idDomanda: string;
     versione: number;
+    stato: number;
     dataInvio: string;
     anagCandidato: AnagCandidatoInterface;
     titoliStudioPosseduti?: (TitoliStudioPossedutiInterface)[] | null;

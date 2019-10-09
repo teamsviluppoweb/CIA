@@ -15,7 +15,7 @@ export class DomandaModel implements DomandaInterface {
         id: null;
         idDomanda: null;
         versione: number;
-        stato: string;
+        stato: number;
         dataInvio: string;
         anagCandidato: AnagCandidatoModel;
         protocollo: ProtocolloModel;

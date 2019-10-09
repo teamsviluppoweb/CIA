@@ -51,14 +51,51 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
 
     this.onChanges();
 
-
-    this.restApi.getDomanda().pipe(
-
-    );
-
   }
 
   ngOnInit() {
+
+    this.restApi.getListaSedi()
+        .pipe(
+            concatMap( (Sedi: SediApiLSt[]) => {
+
+              this.listaSedi = Sedi;
+              this.setInitialValue(this.filtroSedi);
+
+              // Gli passo un array di stringhe contenente solo i nomi delle province
+              this.filtroSedi.next(this.listaSedi.map(nome => nome.desc).slice());
+              this.listaDescrizioneSedi = this.listaSedi.map(nome => nome.desc).slice();
+
+              return this.restApi.getDomanda();
+            })
+        )  .subscribe(
+        (x) => {
+            if (this.restApi.domanda.stato === 1) {
+              this.sedeGiuridica.patchValue(this.restApi.domanda.anagCandidato.sede.desc);
+            }
+        }
+    );
+
+    this.restApi.getListaQualifiche().pipe(
+        concatMap( (Qualifiche: QualificheApiLst[]) => {
+
+          this.listaQualifiche = Qualifiche;
+          this.setInitialValue(this.filtroQualifiche);
+
+          // Gli passo un array di stringhe contenente solo i nomi delle province
+          this.filtroQualifiche.next(this.listaQualifiche.map(nome => nome.desc).slice());
+          this.listaDescrizioneQualifiche = this.listaQualifiche.map(nome => nome.desc).slice();
+
+          return this.restApi.getDomanda();
+        })
+    )  .subscribe(
+        (z) => {
+          if (this.restApi.domanda.stato === 1) {
+            this.qualifica.patchValue(this.restApi.domanda.anagCandidato.qualifica.desc);
+          }
+        }
+    );
+
     this.onChanges();
   }
 
@@ -111,14 +148,14 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
       });
 
     // Analizza i cambiamenti del testo nel campo di ricerca del dropdown search dei comuni
-    this.sedeDropdown.valueChanges
+      this.sedeDropdown.valueChanges
         .pipe(takeUntil(this.onDetroy))
         .subscribe(() => {
           this.filterList(this.listaDescrizioneSedi, this.sedeDropdown, this.filtroSedi);
         });
 
     // Analizza i cambiamenti del testo nel campo di ricerca del dropdown search dei comuni
-    this.qualificaDropdown.valueChanges
+      this.qualificaDropdown.valueChanges
         .pipe(takeUntil(this.onDetroy))
         .subscribe(() => {
           this.filterList(this.listaDescrizioneQualifiche, this.qualificaDropdown, this.filtroQualifiche);
