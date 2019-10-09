@@ -193,11 +193,24 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
                 .reduce(selected => selected);
         }
 
-        if (this.indirizzo.value) {
+
+        /*
+        Visto che gli indirizzi possono essere vuoti, mi controllo che l'array non sia vuoto altrimenti
+        mi triggera un errore in console
+         */
+
+        const isArrayIndirizziEmpty = this.indirizzoStudio_lst.
+        filter(selected => selected.desc === this.indirizzo.value)
+            .map(selected => selected).length > 0;
+
+        if (!isArrayIndirizziEmpty) {
             this.dataDialog.data.indirizzo = this.indirizzoStudio_lst.
             filter(selected => selected.desc === this.indirizzo.value)
                 .map(selected => selected)
                 .reduce(selected => selected);
+        } else {
+            this.dataDialog.data.indirizzo.desc = '';
+            this.dataDialog.data.indirizzo.id = '';
         }
 
 
