@@ -5,7 +5,13 @@ import {
     TitoliStudioPossedutiInterface
 } from './domanda.interface';
 import {Injectable} from "@angular/core";
-import {QualificheApiLst, SediApiLSt} from "./api.interface";
+import {
+        QualificheApiLst,
+        SediApiLSt,
+        TipologiaTitoliDiStudioLSt,
+        TitoliDiStudioIndirizzoLSt,
+        TitoliDiStudioLSt
+} from "./api.interface";
 @Injectable({
         providedIn: 'root',
 })
@@ -38,8 +44,8 @@ export class AnagCandidatoModel implements  AnagCandidatoInterface {
         domicilio: string;
         telefono: string;
         email: string;
-        qualifica: Qualifica;
-        sede: Sede;
+        qualificaAttuale: Qualifica;
+        sedeAttuale: Sede;
 }
 
 export class Qualifica implements  QualificheApiLst {
@@ -53,17 +59,37 @@ export class Sede implements  SediApiLSt {
 }
 
 export class TitoliStudioPossedutiModel implements  TitoliStudioPossedutiInterface {
-        idTipologia: number;
-        tipologia: string;
-        idTS: string;
-        descTS: string;
-        idIndirizzoTS: string;
-        indirizzoTS: string;
-        dataConseguimento: string;
+        tipologia: TipologiaModel;
+        titolo: TitoloModel;
+        indirizzo: IndirizzoModel;
+        dataConseguiento: string;
         istituto: string;
-        luogo: string;
+        luogoIstituto: LuogoIstitutoModel;
         durataAnni: string;
 }
+
+export class LuogoIstitutoModel {
+        codice: string;
+        nome: string;
+        codiceProvincia: string;
+}
+
+export class TipologiaModel implements TipologiaTitoliDiStudioLSt {
+        id: string;
+        desc: string;
+}
+
+export class TitoloModel implements TitoliDiStudioLSt {
+        id: string;
+        desc: string;
+}
+
+export class IndirizzoModel implements  TitoliDiStudioIndirizzoLSt {
+        id: string;
+        desc: string;
+}
+
+
 
 export class CorsiAggAmmModel implements CorsiAggAmmInterface {
         idCorso: string;

@@ -35,9 +35,6 @@ export class AuthService {
         map( (response) => {
 
             // Se il token è sbagliato ci pensa l'interceptor a fare il logout all'utente
-
-            console.log(response);
-
             return true;
         }),
         catchError((err: Response) => {

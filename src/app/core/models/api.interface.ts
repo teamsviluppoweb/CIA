@@ -52,12 +52,13 @@ export interface TitoliDiStudioIndirizzoLSt {
 }
 
 export interface ProvinceLSt {
-  codProvincia: string;
-  provincia: string;
+  codice: string;
+  nome: string;
 }
 
 export interface ComuniLSt {
-  codComune: string;
-  comune: string;
+  codice: string;
+  nome: string;
+  codiceProvincia: string;
 }
 

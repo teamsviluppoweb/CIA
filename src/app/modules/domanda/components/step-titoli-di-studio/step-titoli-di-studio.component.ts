@@ -5,7 +5,8 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {Observable, of} from 'rxjs';
 import {Formazione} from '../../../../core/models/api.interface';
-import { TitoliStudioPossedutiInterface} from '../../../../core/models/domanda.interface';
+import {DomandaInterface, TitoliStudioPossedutiInterface} from '../../../../core/models/domanda.interface';
+import {DomandaModel} from '../../../../core/models';
 
 // tslint:disable-next-line:max-line-length
 const tabellaHeader = ['anno', 'titolo-di-studio', 'conseguito-presso', 'delete', 'edit'];
@@ -28,23 +29,25 @@ export class StepTitoliDiStudioComponent implements OnInit {
 
   constructor(private restApi: ApiService,
               public aggiungiDatiDialog: MatDialog) {
-    this.restApi.getDomanda().subscribe(
-        (data) => {
 
-          let tit = data['domanda'];
-          tit =  tit['titoliStudioPosseduti'];
-
-          console.log(tit.length);
-
-          for (let titKey in tit) {
-            let volatileData = tit[titKey];
-
+    this.restApi.getDomanda().subscribe( x => {
+        if (this.restApi.domanda.stato === 1) {
+          this.restApi.domanda.titoliStudioPosseduti.map(t => {
             const obj = {
-              tipologia: '',
-              titoloDiStudio: '',
-              indirizzo: '',
-              dataDiConseguimento: '',
-              istituto: '',
+              tipologia: {
+                id: t.tipologia.id,
+                desc: t.tipologia.desc,
+              },
+              titoloDiStudio: {
+                id: t.titolo.id,
+                desc: t.titolo.desc,
+              },
+              indirizzo: {
+                id: t.indirizzo.id,
+                desc: t.indirizzo.desc,
+              },
+              dataDiConseguimento: t.dataConseguiento,
+              istituto: t.istituto,
               luogo: '',
               provincia: '',
               comune: '',
@@ -52,26 +55,25 @@ export class StepTitoliDiStudioComponent implements OnInit {
               isOkToInsert: false,
               isEditing: false,
             };
-          }
+
+            this.titoliDiStudioDichiarati = [obj].concat(this.titoliDiStudioDichiarati);
 
 
-
-         // this.titoliDiStudioDichiarati = [dataDialog.data].concat(this.titoliDiStudioDichiarati);
-
-
+          });
         }
-
-
+      }
     );
+
   }
 
   ngOnInit() {
+
   }
 
 
   openDialogEditDati(index) {
     this.titoliDiStudioDichiarati[index].isEditing = true;
-    let dialogRef = this.aggiungiDatiDialog.open(AggiungiDatiComponent, {
+    const dialogRef = this.aggiungiDatiDialog.open(AggiungiDatiComponent, {
       height: 'auto',
       width: '1300px',
       data: {data: this.titoliDiStudioDichiarati[index]},
@@ -93,9 +95,18 @@ export class StepTitoliDiStudioComponent implements OnInit {
 
   openDialogAggiungiDati() {
     const obj = {
-      tipologia: '',
-      titoloDiStudio: '',
-      indirizzo: '',
+      tipologia: {
+        id: '',
+        desc: '',
+      },
+      titoloDiStudio: {
+        id: '',
+        desc: '',
+      },
+      indirizzo: {
+        id: '',
+        desc: ''
+      },
       dataDiConseguimento: '',
       istituto: '',
       luogo: '',
@@ -106,7 +117,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
       isEditing: false,
     };
 
-    let dialogRef = this.aggiungiDatiDialog.open(AggiungiDatiComponent, {
+    const dialogRef = this.aggiungiDatiDialog.open(AggiungiDatiComponent, {
       height: 'auto',
       width: '1300px',
       disableClose: true,

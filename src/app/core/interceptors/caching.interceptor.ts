@@ -25,7 +25,6 @@ import {environment} from '../../../environments/environment.dev';
 @Injectable()
 export class CachingInterceptor implements HttpInterceptor {
   constructor(private cache: RequestCache) {
-    console.log('cache interceptors');
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {

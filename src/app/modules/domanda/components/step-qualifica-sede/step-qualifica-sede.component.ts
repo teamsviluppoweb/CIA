@@ -55,43 +55,37 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.restApi.getListaSedi()
-        .pipe(
-            concatMap( (Sedi: SediApiLSt[]) => {
+    this.restApi.getListaSedi().subscribe(
+        (Sedi: SediApiLSt[]) => {
 
-              this.listaSedi = Sedi;
-              this.setInitialValue(this.filtroSedi);
+            console.log(Sedi);
 
-              // Gli passo un array di stringhe contenente solo i nomi delle province
-              this.filtroSedi.next(this.listaSedi.map(nome => nome.desc).slice());
-              this.listaDescrizioneSedi = this.listaSedi.map(nome => nome.desc).slice();
+            this.listaSedi = Sedi;
 
-              return this.restApi.getDomanda();
-            })
-        )  .subscribe(
-        (x) => {
+            // Gli passo un array di stringhe contenente solo i nomi delle province
+            this.filtroSedi.next(this.listaSedi.map(nome => nome.desc).slice());
+            this.listaDescrizioneSedi = this.listaSedi.map(nome => nome.desc).slice();
+            this.setInitialValue(this.filtroSedi);
+
             if (this.restApi.domanda.stato === 1) {
-              this.sedeGiuridica.patchValue(this.restApi.domanda.anagCandidato.sede.desc);
+              this.sedeGiuridica.patchValue(this.restApi.domanda.anagCandidato.sedeAttuale.desc,  { emitEvent: false });
             }
         }
     );
 
-    this.restApi.getListaQualifiche().pipe(
-        concatMap( (Qualifiche: QualificheApiLst[]) => {
+    this.restApi.getListaQualifiche().subscribe(
+        (Qualifiche: QualificheApiLst[]) => {
 
-          this.listaQualifiche = Qualifiche;
-          this.setInitialValue(this.filtroQualifiche);
+            this.listaQualifiche = Qualifiche;
 
-          // Gli passo un array di stringhe contenente solo i nomi delle province
-          this.filtroQualifiche.next(this.listaQualifiche.map(nome => nome.desc).slice());
-          this.listaDescrizioneQualifiche = this.listaQualifiche.map(nome => nome.desc).slice();
+            // Gli passo un array di stringhe contenente solo i nomi delle province
+            this.filtroQualifiche.next(this.listaQualifiche.map(nome => nome.desc).slice());
+            this.setInitialValue(this.filtroQualifiche);
 
-          return this.restApi.getDomanda();
-        })
-    )  .subscribe(
-        (z) => {
-          if (this.restApi.domanda.stato === 1) {
-            this.qualifica.patchValue(this.restApi.domanda.anagCandidato.qualifica.desc);
+            this.listaDescrizioneQualifiche = this.listaQualifiche.map(nome => nome.desc).slice();
+
+            if (this.restApi.domanda.stato === 1) {
+            this.qualifica.patchValue(this.restApi.domanda.anagCandidato.qualificaAttuale.desc,  { emitEvent: false });
           }
         }
     );
@@ -144,7 +138,6 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
   onChanges() {
 
       this.sedeGiuridica.valueChanges.subscribe((x) => {
-          console.log(x);
       });
 
     // Analizza i cambiamenti del testo nel campo di ricerca del dropdown search dei comuni

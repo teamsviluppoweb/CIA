@@ -1,4 +1,11 @@
-import {QualificheApiLst, SediApiLSt} from "./api.interface";
+import {
+    QualificheApiLst,
+    SediApiLSt,
+    TipologiaTitoliDiStudioLSt,
+    TitoliDiStudioIndirizzoLSt,
+    TitoliDiStudioLSt
+} from "./api.interface";
+import {IndirizzoModel, LuogoIstitutoModel, TipologiaModel, TitoloModel} from "./domanda.model";
 
 export interface DomandaInterface {
     id: string;
@@ -22,21 +29,25 @@ export interface AnagCandidatoInterface {
     domicilio: string;
     telefono: string;
     email: string;
-    qualifica: QualificheApiLst;
-    sede: SediApiLSt;
+    qualificaAttuale: QualificheApiLst;
+    sedeAttuale: SediApiLSt;
 }
 export interface TitoliStudioPossedutiInterface {
-    idTipologia: number;
-    tipologia: string;
-    idTS: string;
-    descTS: string;
-    idIndirizzoTS: string;
-    indirizzoTS: string;
-    dataConseguimento: string;
+    tipologia: TipologiaModel;
+    titolo: TitoloModel;
+    indirizzo: IndirizzoModel;
+    dataConseguiento: string;
     istituto: string;
-    luogo: string;
+    luogoIstituto: LuogoIstitutoInterface;
     durataAnni: string;
 }
+
+export interface LuogoIstitutoInterface {
+    codice: string;
+    nome: string;
+    codiceProvincia: string;
+}
+
 export interface CorsiAggAmmInterface {
     idCorso: string;
     tipologiaCorso: string;

@@ -24,7 +24,6 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(cloned).pipe(
         tap(
             succ => {
-                console.log('Good Token');
             },
             err => {
               if (err.status === 401) {

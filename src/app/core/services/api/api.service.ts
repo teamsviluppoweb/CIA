@@ -83,7 +83,6 @@ export class ApiService {
     return this.http.get<TipologiaTitoliDiStudioLSt>(environment.endpoints.backendLocation + environment.endpoints.tipologieTitoliStudio, options).pipe(
         tap(
             (x) => {
-              console.log('tipologia', x);
             }
         ),
         catchError(this.handleError('Get lista tipologia di studio', []))
@@ -98,7 +97,6 @@ export class ApiService {
     return this.http.get<TitoliDiStudioLSt>(environment.endpoints.backendLocation + environment.endpoints.titoliTitoloStudio +  id, options).pipe(
         tap(
             (x) => {
-              console.log('titoli', x);
             }
         ),
         catchError(this.handleError('Get lista titoli di studio', []))
@@ -114,7 +112,6 @@ export class ApiService {
     return this.http.get<TitoliDiStudioIndirizzoLSt[]>(environment.endpoints.backendLocation + environment.endpoints.indirizziTitoliStudio +  id,  options).pipe(
         tap(
             (x) => {
-              console.log('indirizzi', x);
             }
         ),
         catchError(this.handleError('Get lista titoli di studio', []))
@@ -129,7 +126,6 @@ export class ApiService {
     return this.http.get<ProvinceLSt>(environment.endpoints.backendLocation + environment.endpoints.province, options).pipe(
         tap(
             (x) => {
-              console.log('province', x);
             }
         ),
         catchError(this.handleError('Get lista province', []))
@@ -144,7 +140,6 @@ export class ApiService {
     return this.http.get<ComuniLSt>(environment.endpoints.backendLocation + environment.endpoints.comuni + codiceProvincia, options).pipe(
         tap(
             (x) => {
-              console.log('comuni', x);
             }
         ),
         catchError(this.handleError('Get lista comuni', []))
@@ -159,7 +154,6 @@ export class ApiService {
     return this.http.get<DomandaModel>(environment.endpoints.backendLocation + environment.endpoints.visualizzaDomanda, options).pipe(
          tap( (response: DomandaModel) => {
             response = response['domanda'];
-            console.log(response);
 
             this.domanda.id = response.id;
             this.domanda.idDomanda = response.idDomanda;
@@ -170,7 +164,6 @@ export class ApiService {
             this.domanda.titoliStudioPosseduti = response.titoliStudioPosseduti;
             this.domanda.corsiAggAmm = response.corsiAggAmm;
 
-            console.log(this.domanda);
          }),
          catchError(this.handleError('Get domanda', []))
     );

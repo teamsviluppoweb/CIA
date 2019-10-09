@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "local-start": "ng serve --host 172.16.26.72 --configuration=node",
+    "local-start": "ng serve --host 172.16.26.72 --configuration=uffweb",
     "build": "ng build",
     "test": "ng test --code-coverage ",
     "lint": "ng lint",
