@@ -46,7 +46,7 @@ export class StepAnagraficaComponent implements OnInit {
             nome: this.restApi.domanda.anagCandidato.nome,
             cognome: this.restApi.domanda.anagCandidato.cognome,
             dataNascita: this.restApi.domanda.anagCandidato.dataNascita,
-            comuneNascita: this.restApi.domanda.anagCandidato.comuneNascita,
+            comuneNascita: this.restApi.domanda.anagCandidato.comuneNascita.nome + ' ' + this.restApi.domanda.anagCandidato.comuneNascita.codiceProvincia,
             domicilio: this.restApi.domanda.anagCandidato.domicilio,
             codiceFiscale: this.restApi.domanda.anagCandidato.codiceFiscale,
             telefono: this.restApi.domanda.anagCandidato.telefono,

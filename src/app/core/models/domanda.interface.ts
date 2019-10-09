@@ -5,7 +5,14 @@ import {
     TitoliDiStudioIndirizzoLSt,
     TitoliDiStudioLSt
 } from "./api.interface";
-import {IndirizzoModel, LuogoIstitutoModel, TipologiaModel, TitoloModel} from "./domanda.model";
+import {
+    ComuneNascita,
+    IndirizzoModel,
+    LuogoIstitutoModel,
+    Qualifica, Sede,
+    TipologiaModel,
+    TitoloModel
+} from "./domanda.model";
 
 export interface DomandaInterface {
     id: string;
@@ -23,15 +30,21 @@ export interface AnagCandidatoInterface {
     cognome: string;
     nome: string;
     dataNascita: string;
-    codComuneNascita: string;
-    comuneNascita: string;
-    codprovNascita: string;
+    comuneNascita: ComuneNascitaInterface;
     domicilio: string;
     telefono: string;
     email: string;
-    qualificaAttuale: QualificheApiLst;
-    sedeAttuale: SediApiLSt;
+    qualificaAttuale: Qualifica;
+    sedeAttuale: Sede;
 }
+
+
+export interface ComuneNascitaInterface {
+    codice: string;
+    nome: string;
+    codiceProvincia: string;
+}
+
 export interface TitoliStudioPossedutiInterface {
     tipologia: TipologiaModel;
     titolo: TitoloModel;

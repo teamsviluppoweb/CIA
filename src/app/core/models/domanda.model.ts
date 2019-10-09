@@ -38,14 +38,18 @@ export class AnagCandidatoModel implements  AnagCandidatoInterface {
         cognome: string;
         nome: string;
         dataNascita: string;
-        codComuneNascita: string;
-        comuneNascita: string;
-        codprovNascita: string;
+        comuneNascita: ComuneNascita;
         domicilio: string;
         telefono: string;
         email: string;
         qualificaAttuale: Qualifica;
         sedeAttuale: Sede;
+}
+
+export class ComuneNascita {
+        codice: string;
+        nome: string;
+        codiceProvincia: string;
 }
 
 export class Qualifica implements  QualificheApiLst {
