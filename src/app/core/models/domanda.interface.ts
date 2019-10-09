@@ -49,7 +49,7 @@ export interface TitoliStudioPossedutiInterface {
     tipologia: TipologiaModel;
     titolo: TitoloModel;
     indirizzo: IndirizzoModel;
-    dataConseguiento: string;
+    dataConseguimento: string;
     istituto: string;
     luogoIstituto: LuogoIstitutoInterface;
     durataAnni: string;

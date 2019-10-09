@@ -144,9 +144,10 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
                 this.descrizioneTipologiaTitoli = this.tipologiaTitoli_lst.map(nome => nome.desc).slice();
 
                 if (this.dataDialog.data.isEditing) {
+                    console.log(this.dataDialog.data);
                     this.form.patchValue({
                         tipologia: this.dataDialog.data.tipologia.desc,
-                        dataDiConseguimento: this.dataDialog.data.dataDiConseguimento,
+                        dataConseguimento: this.dataDialog.data.dataConseguimento,
                         istituto: this.dataDialog.data.istituto,
                         luogo: this.dataDialog.data.luogo,
                         periodoConseguimento: this.dataDialog.data.periodoConseguimento,
@@ -347,6 +348,7 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
         });
 
         this.dataDiConseguimento.valueChanges.subscribe((x) => {
+            console.log(x);
             this.dataDialog.data.dataDiConseguimento = x;
         });
 

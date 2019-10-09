@@ -46,7 +46,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
                 id: t.indirizzo.id,
                 desc: t.indirizzo.desc,
               },
-              dataDiConseguimento: t.dataConseguiento,
+              dataConseguimento: t.dataConseguimento,
               istituto: t.istituto,
               luogo: '',
               provincia: '',
@@ -56,6 +56,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
               isEditing: false,
             };
 
+            console.log(obj);
             this.titoliDiStudioDichiarati = [obj].concat(this.titoliDiStudioDichiarati);
 
 
@@ -107,7 +108,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
         id: '',
         desc: ''
       },
-      dataDiConseguimento: '',
+      dataConseguimento: '',
       istituto: '',
       luogo: '',
       provincia: '',

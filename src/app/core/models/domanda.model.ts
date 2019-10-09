@@ -66,7 +66,7 @@ export class TitoliStudioPossedutiModel implements  TitoliStudioPossedutiInterfa
         tipologia: TipologiaModel;
         titolo: TitoloModel;
         indirizzo: IndirizzoModel;
-        dataConseguiento: string;
+        dataConseguimento: string;
         istituto: string;
         luogoIstituto: LuogoIstitutoModel;
         durataAnni: string;
