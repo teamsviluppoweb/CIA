@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
-import {catchError, tap} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {HandleError, HttpErrorHandler} from '..';
 import {
   ComuniLSt,
@@ -37,7 +37,10 @@ function createHttpOptions(refresh = true, observe = false) {
 export class ApiService {
   private handleError: HandleError;
 
-  constructor(private http: HttpClient, private router: Router, httpErrorHandler: HttpErrorHandler) {
+  domanda: DomandaModel;
+
+  constructor(private http: HttpClient, private router: Router, httpErrorHandler: HttpErrorHandler, private d: DomandaModel) {
+    this.domanda = d;
     this.handleError = httpErrorHandler.createHandleError('ApiService');
   }
 
@@ -148,20 +151,35 @@ export class ApiService {
     );
   }
 
-  getDomanda(observe = false, refresh = false): Observable<any[] | HttpResponse<DomandaInterface>> {
+  getDomanda(observe = false, refresh = false): Observable<any[] | DomandaModel | HttpResponse<DomandaInterface>> {
 
     const options = createHttpOptions(refresh, false);
 
 
-    return this.http.get<HttpResponse<DomandaInterface>>(environment.endpoints.backendLocation + environment.endpoints.visualizzaDomanda, options).pipe(
-        catchError(this.handleError('Get domanda', []))
+    return this.http.get<DomandaModel>(environment.endpoints.backendLocation + environment.endpoints.visualizzaDomanda, options).pipe(
+         tap( (response: DomandaModel) => {
+            response = response['domanda'];
+            console.log(response);
+
+            this.domanda.id = response.id;
+            this.domanda.idDomanda = response.idDomanda;
+            this.domanda.versione = response.versione;
+            this.domanda.stato = response.stato;
+            this.domanda.dataInvio = response.dataInvio;
+            this.domanda.anagCandidato = response.anagCandidato;
+            this.domanda.titoliStudioPosseduti = response.titoliStudioPosseduti;
+            this.domanda.corsiAggAmm = response.corsiAggAmm;
+
+            console.log(this.domanda);
+         }),
+         catchError(this.handleError('Get domanda', []))
     );
   }
 
-  salvaDomanda(domanda: DomandaModel): Observable<any[] | DomandaInterface> {
+  salvaDomanda(): Observable<any[] | DomandaInterface> {
 
 
-    return this.http.post<DomandaInterface>(environment.endpoints.backendLocation + environment.endpoints.salvaDomanda, domanda).pipe(
+    return this.http.post<DomandaInterface>(environment.endpoints.backendLocation + environment.endpoints.salvaDomanda, this.domanda).pipe(
         catchError(this.handleError('Salva domanda', []))
     );
   }

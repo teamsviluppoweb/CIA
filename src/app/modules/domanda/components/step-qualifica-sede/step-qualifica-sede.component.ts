@@ -59,63 +59,6 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
-    this.restApi.getListaSedi()
-        .pipe(
-            concatMap( (Sedi: SediApiLSt[]) => {
-
-              this.listaSedi = Sedi;
-              this.setInitialValue(this.filtroSedi);
-
-              // Gli passo un array di stringhe contenente solo i nomi delle province
-              this.filtroSedi.next(this.listaSedi.map(nome => nome.desc).slice());
-              this.listaDescrizioneSedi = this.listaSedi.map(nome => nome.desc).slice();
-
-              return this.restApi.getDomanda();
-            })
-        )  .subscribe(
-        (x) => {
-            x = x['domanda'];
-            console.log(x['stato']);
-          if (x['stato'] === 1) {
-
-              let ang =  x['anagCandidato'];
-
-              let sede = this.listaSedi.filter(x => x.id === ang['codSede']).reduce(x => x.desc);
-              console.log(sede);
-              this.sedeGiuridica.patchValue(sede.desc);
-
-          }
-        }
-    );
-
-    this.restApi.getListaQualifiche().pipe(
-        concatMap( (Qualifiche: QualificheApiLst[]) => {
-
-          this.listaQualifiche = Qualifiche;
-          this.setInitialValue(this.filtroQualifiche);
-
-          // Gli passo un array di stringhe contenente solo i nomi delle province
-          this.filtroQualifiche.next(this.listaQualifiche.map(nome => nome.desc).slice());
-          this.listaDescrizioneQualifiche = this.listaQualifiche.map(nome => nome.desc).slice();
-
-          return this.restApi.getDomanda();
-        })
-    )  .subscribe(
-        (x) => {
-            x = x['domanda'];
-            console.log(x['stato']);
-            if (x['stato'] === 1) {
-
-                let ang =  x['anagCandidato'];
-
-                let qualifica = this.listaQualifiche.filter(x => x.id === ang['codQualifica']).reduce(x => x.desc);
-                console.log(qualifica);
-                this.qualifica.patchValue(qualifica.desc);
-
-            }        }
-    );
-
     this.onChanges();
   }
 

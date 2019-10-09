@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {ApiService} from "../../../../core/services/api/api.service";
-import {AnagCandidatoInterface, DomandaInterface} from "../../../../core/models/domanda.interface";
-import {HttpResponse} from "@angular/common/http";
-import {DomandaModel} from "../../../../core/models";
+import {ApiService} from '../../../../core/services/api/api.service';
+
 
 @Component({
   selector: 'app-step-anagrafica',
@@ -13,6 +11,7 @@ import {DomandaModel} from "../../../../core/models";
 export class StepAnagraficaComponent implements OnInit {
 
   form: FormGroup;
+
 
   constructor(private fb: FormBuilder, private restApi: ApiService) {
     this.form = this.fb.group({
@@ -26,6 +25,16 @@ export class StepAnagraficaComponent implements OnInit {
       email: [''],
       sedeServizio: ['']
     });
+
+    this.nome.disable();
+    this.cognome.disable();
+    this.dataNascita.disable();
+    this.comuneNascita.disable();
+    this.domicilio.disable();
+    this.codiceFiscale.disable();
+    this.sedeServizio.disable();
+
+    this.onChangesForm();
   }
 
 
@@ -33,20 +42,15 @@ export class StepAnagraficaComponent implements OnInit {
 
     this.restApi.getDomanda().subscribe(
         (data) => {
-
-
-          let ang = data['domanda'];
-          ang =  ang['anagCandidato'];
           this.form.patchValue({
-            nome: ang.nome,
-            cognome: ang.cognome,
-            dataNascita: ang.dataNascita,
-            comuneNascita: ang.comuneNascita,
-            domicilio: ang.domicilio,
-            codiceFiscale: ang.codiceFiscale,
-            telefono: ang.telefono,
-            email: ang.email,
-            sedeServizio: ang.descSede,
+            nome: this.restApi.domanda.anagCandidato.nome,
+            cognome: this.restApi.domanda.anagCandidato.cognome,
+            dataNascita: this.restApi.domanda.anagCandidato.dataNascita,
+            comuneNascita: this.restApi.domanda.anagCandidato.comuneNascita,
+            domicilio: this.restApi.domanda.anagCandidato.domicilio,
+            codiceFiscale: this.restApi.domanda.anagCandidato.codiceFiscale,
+            telefono: this.restApi.domanda.anagCandidato.telefono,
+            email: this.restApi.domanda.anagCandidato.email,
           });
 
         }
@@ -56,6 +60,19 @@ export class StepAnagraficaComponent implements OnInit {
 
   }
 
+  onChangesForm() {
+    this.telefono.valueChanges.subscribe(
+        (x) => {
+          this.restApi.domanda.anagCandidato.telefono = x;
+        }
+    );
+
+    this.email.valueChanges.subscribe(
+        (x) => {
+          this.restApi.domanda.anagCandidato.email = x;
+        }
+    );
+  }
 
   get nome() {
     return this.form.get('nome');

@@ -1,3 +1,5 @@
+import {QualificheApiLst, SediApiLSt} from "./api.interface";
+
 export interface DomandaInterface {
     id: string;
     idDomanda: string;
@@ -19,11 +21,8 @@ export interface AnagCandidatoInterface {
     domicilio: string;
     telefono: string;
     email: string;
-    codQualifica: string;
-    descQualifica: string;
-    nomeQualifica: string;
-    codSede: string;
-    descSede: string;
+    qualifica: QualificheApiLst;
+    sede: SediApiLSt;
 }
 export interface TitoliStudioPossedutiInterface {
     idTipologia: number;

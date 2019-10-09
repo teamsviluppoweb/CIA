@@ -27,7 +27,43 @@ export class StepTitoliDiStudioComponent implements OnInit {
   TitoliDiStudioHeader: string[] = tabellaHeader;
 
   constructor(private restApi: ApiService,
-              public aggiungiDatiDialog: MatDialog) {}
+              public aggiungiDatiDialog: MatDialog) {
+    this.restApi.getDomanda().subscribe(
+        (data) => {
+
+          let tit = data['domanda'];
+          tit =  tit['titoliStudioPosseduti'];
+
+          console.log(tit.length);
+
+          for (let titKey in tit) {
+            let volatileData = tit[titKey];
+
+            const obj = {
+              tipologia: '',
+              titoloDiStudio: '',
+              indirizzo: '',
+              dataDiConseguimento: '',
+              istituto: '',
+              luogo: '',
+              provincia: '',
+              comune: '',
+              periodoConseguimento: '',
+              isOkToInsert: false,
+              isEditing: false,
+            };
+          }
+
+
+
+         // this.titoliDiStudioDichiarati = [dataDialog.data].concat(this.titoliDiStudioDichiarati);
+
+
+        }
+
+
+    );
+  }
 
   ngOnInit() {
   }
