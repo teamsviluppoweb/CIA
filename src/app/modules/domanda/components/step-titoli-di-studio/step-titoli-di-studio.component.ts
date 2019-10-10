@@ -10,6 +10,9 @@ import { TitoliStudioPossedutiInterface} from '../../../../core/models/domanda.i
 // tslint:disable-next-line:max-line-length
 const tabellaHeader = ['anno', 'titolo-di-studio', 'conseguito-presso', 'delete', 'edit'];
 
+
+
+
 @Component({
   selector: 'app-step-titoli-di-studio',
   templateUrl: './step-titoli-di-studio.component.html',
@@ -29,6 +32,9 @@ export class StepTitoliDiStudioComponent implements OnInit {
   constructor(private restApi: ApiService,
               public aggiungiDatiDialog: MatDialog) {
 
+    /*
+    i flag editing mi servono per gestire la logica nel modal, durante il popolamento delle dropdown list dipendenti
+     */
     this.restApi.getDomanda().subscribe( x => {
         if (this.restApi.domanda.stato === 1) {
           this.restApi.domanda.titoliStudioPosseduti.map(t => {
@@ -57,6 +63,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
               isEditing: false,
               isTitoloE: false,
               isIndirizzoE: false,
+              isComuneE: false,
             };
 
             this.titoliDiStudioDichiarati = [obj].concat(this.titoliDiStudioDichiarati);
@@ -77,6 +84,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
     this.titoliDiStudioDichiarati[index].isEditing = true;
     this.titoliDiStudioDichiarati[index].isTitoloE = true;
     this.titoliDiStudioDichiarati[index].isIndirizzoE = true;
+    this.titoliDiStudioDichiarati[index].isComuneE = true;
     const dialogRef = this.aggiungiDatiDialog.open(AggiungiDatiComponent, {
       height: 'auto',
       width: '1300px',
@@ -91,7 +99,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
           this.titoliDiStudioDichiarati = this.titoliDiStudioDichiarati.slice();
           this.restApi.domanda.titoliStudioPosseduti = this.titoliDiStudioDichiarati;
 
-          console.log(this.restApi.domanda.titoliStudioPosseduti);
+          console.log(this.restApi.domanda);
 
         }
       }
@@ -126,6 +134,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
       isEditing: false,
       isTitoloE: false,
       isIndirizzoE: false,
+      isComuneE: false,
     };
 
     const dialogRef = this.aggiungiDatiDialog.open(AggiungiDatiComponent, {
@@ -141,6 +150,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
 
           this.titoliDiStudioDichiarati = [dataDialog.data].concat(this.titoliDiStudioDichiarati);
           this.restApi.domanda.titoliStudioPosseduti = this.titoliDiStudioDichiarati;
+          console.log(this.restApi.domanda);
         }
       }
 

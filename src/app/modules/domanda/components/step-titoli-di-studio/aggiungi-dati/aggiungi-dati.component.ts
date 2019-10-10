@@ -367,8 +367,8 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
                 this.comuniNomi = this.comuni_lst.map(nomes => nomes.nome).slice();
 
 
-                if (this.dataDialog.data.isEditing) {
-                    this.comune.patchValue(this.dataDialog.data.comune);
+                if (this.dataDialog.data.isComuneE) {
+                    this.comune.patchValue(this.dataDialog.data.luogo.nome);
                 }
 
             });
