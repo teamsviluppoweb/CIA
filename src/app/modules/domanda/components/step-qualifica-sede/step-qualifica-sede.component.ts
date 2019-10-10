@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {QualificaSede, QualificheApiLst, SediApiLSt} from '../../../../core/models/api.interface';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {Observable, ReplaySubject, Subject} from 'rxjs';
@@ -42,8 +42,8 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
     this.$sediLst = this.restApi.getListaSedi();
 
     this.form = this.fb.group({
-      sedeGiuridica: [''],
-      qualifica: [''],
+      sedeGiuridica: ['',  Validators.required],
+      qualifica: ['', Validators.required],
 
       sedeDropdown: [''],
       qualificaDropdown: [''],
