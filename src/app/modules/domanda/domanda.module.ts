@@ -14,7 +14,7 @@ import {
   AggiungiDatiComponent,
   AggiungiCorsiComponent } from './components';
 import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
-import { VisualizzaDomandaComponent } from './components/visualizza-domanda/visualizza-domanda.component';
+import { VisualizzaDomandaComponent } from './components';
 
 
 
