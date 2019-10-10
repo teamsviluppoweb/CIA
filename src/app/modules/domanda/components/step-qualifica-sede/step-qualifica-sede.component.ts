@@ -1,9 +1,9 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {QualificaSede, QualificheApiLst, SediApiLSt} from '../../../../core/models/api.interface';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {Observable, ReplaySubject, Subject} from 'rxjs';
-import {MatSelect} from '@angular/material';
+import {MatSelect, MatStepper} from '@angular/material';
 import {concatMap, filter, map, take, takeUntil} from 'rxjs/operators';
 
 @Component({
@@ -15,7 +15,8 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
 
   @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
 
-  form: FormGroup;
+  @Input() parent: FormGroup;
+  @ViewChild('stepper', { static: false }) private myStepper: MatStepper;
 
   // Lista delle qualifiche filtrate dalle parole chiavi nel campo
   $sediLst: Observable<any[] | SediApiLSt>;
@@ -41,19 +42,12 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
     this.$qualificheLst = this.restApi.getListaQualifiche();
     this.$sediLst = this.restApi.getListaSedi();
 
-    this.form = this.fb.group({
-      sedeGiuridica: ['',  Validators.required],
-      qualifica: ['', Validators.required],
-
-      sedeDropdown: [''],
-      qualificaDropdown: [''],
-    });
-
-    this.onChanges();
 
   }
 
   ngOnInit() {
+
+    this.onChanges();
 
     this.restApi.getListaSedi().subscribe(
         (Sedi: SediApiLSt[]) => {
@@ -167,22 +161,24 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
   }
 
 
-
+  get sediQualifiche() {
+      return this.parent.get('sediQualifiche');
+  }
 
   get qualifica() {
-    return this.form.get('qualifica');
+    return this.parent.get('sediQualifiche.qualifica');
   }
 
   get sedeGiuridica() {
-    return this.form.get('sedeGiuridica');
+    return this.parent.get('sediQualifiche.sedeGiuridica');
   }
 
   get sedeDropdown() {
-    return this.form.get('sedeDropdown');
+    return this.parent.get('sediQualifiche.sedeDropdown');
   }
 
   get qualificaDropdown() {
-    return this.form.get('qualificaDropdown');
+    return this.parent.get('sediQualifiche.qualificaDropdown');
   }
 
 }

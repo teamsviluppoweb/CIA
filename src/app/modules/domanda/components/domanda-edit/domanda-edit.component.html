@@ -4,8 +4,8 @@
       <app-step-anagrafica  [parent]="moduloDomanda"></app-step-anagrafica>
     </mat-step>
 
-    <mat-step label="Qualifica e Sede giuridica">
-      <app-step-qualifica-sede></app-step-qualifica-sede>
+    <mat-step label="Qualifica e Sede giuridica" [stepControl]="qualificaSedeValidity">
+      <app-step-qualifica-sede [parent]="moduloDomanda"  ></app-step-qualifica-sede>
     </mat-step>
 
 

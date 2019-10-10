@@ -30,10 +30,18 @@ export class DomandaEditComponent implements OnInit {
         telefono: ['', Validators.required],
         email: ['', Validators.required],
         sedeServizio: ['']
-      })
+      }),
+      sediQualifiche: this.fb.group({
+        sedeGiuridica: ['',  Validators.required],
+        qualifica: ['', Validators.required],
+
+        sedeDropdown: [''],
+        qualificaDropdown: [''],
+      }),
     });
 
     this.anagraficaValidity =  this.moduloDomanda.controls.anagrafica;
+    this.qualificaSedeValidity =  this.moduloDomanda.controls.sediQualifiche;
 
   }
 
