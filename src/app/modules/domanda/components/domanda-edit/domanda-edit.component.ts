@@ -16,6 +16,7 @@ export class DomandaEditComponent implements OnInit {
   @ViewChild(StepAnagraficaComponent, { static: false }) StepAnagraficaComponent: StepAnagraficaComponent;
 
   anagraficaValidity;
+  qualificaSedeValidity;
 
   constructor(private fb: FormBuilder, private restApi: ApiService, private router: Router) {
     this.moduloDomanda = this.fb.group({

@@ -9,7 +9,6 @@ import {
   StepQualificaSedeComponent,
   StepTitoliDiStudioComponent,
   StepDichiarazoiniComponent,
-  StepQualificaProfessionaleComponent,
   StepCorsiDiFormazioneComponent,
   AggiungiDatiComponent,
   AggiungiCorsiComponent } from './components';
@@ -26,7 +25,6 @@ import { VisualizzaDomandaComponent } from './components';
     StepTitoliDiStudioComponent,
     StepDichiarazoiniComponent,
     AggiungiDatiComponent,
-    StepQualificaProfessionaleComponent,
     StepCorsiDiFormazioneComponent,
     AggiungiCorsiComponent,
     VisualizzaDomandaComponent,
