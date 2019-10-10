@@ -45,60 +45,88 @@ export class ApiService {
   }
 
 
-  getListaCorsi(): Observable<any[] | CorsiApiLst> {
+  getListaCorsi(): Observable<any[] | CorsiApiLst[]> {
     const refresh = false;
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<CorsiApiLst>( environment.endpoints.backendLocation + environment.endpoints.corsi, options).pipe(
+    return this.http.get<CorsiApiLst[]>( environment.endpoints.backendLocation + environment.endpoints.corsi, options).pipe(
+        map(corsi => {
+            return corsi
+                .map(x => x)
+                .sort((a, b) => {
+                    return a.desc.length - b.desc.length;
+                });
+             }),
         catchError(this.handleError('Get lista corsi', []))
+
     );
   }
 
-  getListaQualifiche(): Observable<any[] | QualificheApiLst> {
+  getListaQualifiche(): Observable<any[] | QualificheApiLst[]> {
     const refresh = false;
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<QualificheApiLst>(environment.endpoints.backendLocation + environment.endpoints.qualifiche, options).pipe(
+    return this.http.get<QualificheApiLst[]>(environment.endpoints.backendLocation + environment.endpoints.qualifiche, options).pipe(
+        map(qualifiche => {
+            return qualifiche
+                .map(x => x)
+                .sort((a, b) => {
+                    return a.desc.length - b.desc.length;
+                });
+        }),
         catchError(this.handleError('Get lista qualifiche', []))
     );
   }
 
-  getListaSedi(): Observable<any[] | SediApiLSt> {
+  getListaSedi(): Observable<any[] | SediApiLSt[]> {
     const refresh = false;
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<SediApiLSt>(environment.endpoints.backendLocation + environment.endpoints.sedi, options).pipe(
+    return this.http.get<SediApiLSt[]>(environment.endpoints.backendLocation + environment.endpoints.sedi, options).pipe(
+        map(sedi => {
+            return sedi
+                .map(x => x)
+                .sort((a, b) => {
+                    return a.desc.length - b.desc.length;
+                });
+        }),
         catchError(this.handleError('Get lista sedi', []))
     );
   }
 
-  getTipologiaTitoliDiStudio(): Observable<any[] | TipologiaTitoliDiStudioLSt> {
+  getTipologiaTitoliDiStudio(): Observable<any[] | TipologiaTitoliDiStudioLSt[]> {
     const refresh = false;
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<TipologiaTitoliDiStudioLSt>(environment.endpoints.backendLocation + environment.endpoints.tipologieTitoliStudio, options).pipe(
-        tap(
-            (x) => {
-            }
-        ),
+    return this.http.get<TipologiaTitoliDiStudioLSt[]>(environment.endpoints.backendLocation + environment.endpoints.tipologieTitoliStudio, options).pipe(
+        map(tipologia => {
+            return tipologia
+                .map(x => x)
+                .sort((a, b) => {
+                    return a.desc.length - b.desc.length;
+                });
+        }),
         catchError(this.handleError('Get lista tipologia di studio', []))
     );
   }
 
-  getTitoli(id: string): Observable<any[] | TitoliDiStudioLSt> {
+  getTitoli(id: string): Observable<any[] | TitoliDiStudioLSt[]> {
     const refresh = false;
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<TitoliDiStudioLSt>(environment.endpoints.backendLocation + environment.endpoints.titoliTitoloStudio +  id, options).pipe(
-        tap(
-            (x) => {
-            }
-        ),
+    return this.http.get<TitoliDiStudioLSt[]>(environment.endpoints.backendLocation + environment.endpoints.titoliTitoloStudio +  id, options).pipe(
+        map(titoli => {
+            return titoli
+                .map(x => x)
+                .sort((a, b) => {
+                    return a.desc.length - b.desc.length;
+                });
+        }),
         catchError(this.handleError('Get lista titoli di studio', []))
     );
   }
@@ -110,10 +138,13 @@ export class ApiService {
 
     // tslint:disable-next-line:max-line-length
     return this.http.get<TitoliDiStudioIndirizzoLSt[]>(environment.endpoints.backendLocation + environment.endpoints.indirizziTitoliStudio +  id,  options).pipe(
-        tap(
-            (x) => {
-            }
-        ),
+        map(indirizzi => {
+            return indirizzi
+                .map(x => x)
+                .sort((a, b) => {
+                    return a.desc.length - b.desc.length;
+                });
+        }),
         catchError(this.handleError('Get lista titoli di studio', []))
     );
   }
