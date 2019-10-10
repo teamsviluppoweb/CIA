@@ -55,7 +55,6 @@
        </mat-form-field>
 
        <mat-form-field appearance="outline" fxFlex="0 0 25" fxFlex.xs="auto">
-         <mat-label>Data di nascita</mat-label>
          <label>
            <input name="data-di-nascita"
                   matInput
@@ -76,6 +75,10 @@
                  formControlName="domicilio"
           >
         </label>
+        <mat-error *ngIf="domicilio.hasError('required')">
+          <mat-icon matSuffix>error</mat-icon>
+          Il campo è <strong>Obbligatorio</strong>
+        </mat-error>
       </mat-form-field>
 
       <div fxLayout="row" fxLayout.xs="column" >
@@ -88,6 +91,10 @@
                    formControlName="telefono"
             >
           </label>
+          <mat-error *ngIf="telefono.hasError('required')">
+            <mat-icon matSuffix>error</mat-icon>
+            Il campo è <strong>Obbligatorio</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="0 0 60" fxFlex.xs="auto">
@@ -98,6 +105,10 @@
                    formControlName="email"
             >
           </label>
+          <mat-error *ngIf="email.hasError('required')">
+            <mat-icon matSuffix>error</mat-icon>
+            Il campo è <strong>Obbligatorio</strong>
+          </mat-error>
         </mat-form-field>
       </div>
 

@@ -5,6 +5,7 @@
 
 
     <mat-form-field appearance="outline" fxFlex="0 0 50" fxFlex.xs="auto">
+      <mat-label> <mat-icon>edit</mat-icon> Sede Giuridica</mat-label>
       <mat-select #singleSelect
                   formControlName="sedeGiuridica"
                   placeholder="Seleziona sede">
@@ -15,12 +16,17 @@
           {{sede}}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="sedeGiuridica.hasError('required')">
+        <mat-icon matSuffix>error</mat-icon>
+        Il campo è <strong>Obbligatorio</strong>
+      </mat-error>
     </mat-form-field>
 
 
 
 
     <mat-form-field appearance="outline" fxFlex="0 0 50" fxFlex.xs="auto">
+      <mat-label> <mat-icon>edit</mat-icon> Qualifica</mat-label>
       <mat-select #singleSelect
                   formControlName="qualifica"
                   placeholder="Seleziona qualifica">
@@ -31,6 +37,10 @@
           {{qualifica}}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="qualifica.hasError('required')">
+        <mat-icon matSuffix>error</mat-icon>
+        Il campo è <strong>Obbligatorio</strong>
+      </mat-error>
     </mat-form-field>
 
 

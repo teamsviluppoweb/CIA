@@ -1,10 +1,18 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {QualificaSede, QualificheApiLst, SediApiLSt} from '../../../../core/models/api.interface';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {Observable, ReplaySubject, Subject} from 'rxjs';
-import {MatSelect, MatStepper} from '@angular/material';
+import {ErrorStateMatcher, MatSelect, MatStepper} from '@angular/material';
 import {concatMap, filter, map, take, takeUntil} from 'rxjs/operators';
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+        const isSubmitted = form && form.submitted;
+        return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+    }
+}
 
 @Component({
   selector: 'app-step-qualifica-sede',
