@@ -17,7 +17,7 @@ import {map} from 'rxjs/operators';
 
     canActivate(): Observable<boolean> | Promise<boolean> | boolean {
 
-        return this.restApi.getDomanda().pipe(
+        return this.restApi.getDomanda(false, true).pipe(
             map( (x) => {
                 if (x['operazione'] === 0) {
                     console.log('permissione not ok');

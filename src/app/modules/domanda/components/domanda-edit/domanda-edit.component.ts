@@ -68,9 +68,10 @@ export class DomandaEditComponent implements OnInit {
   inviaDomanda() {
     console.log(this.restApi.domanda);
     this.restApi.salvaDomanda().subscribe(
-        () => {
+        (x) => {
           this.router.navigate(['/domanda/visualizza']);
           console.log('inviata con successo');
+          console.log(x);
         }
     );
   }

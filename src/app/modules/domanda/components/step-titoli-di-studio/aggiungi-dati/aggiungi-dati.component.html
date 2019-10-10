@@ -34,20 +34,19 @@
 
 
 
-    <!-- TODO: ngIf crea errori non fa caricare la dropdown lista la prima volta -->
-    <mat-form-field appearance="outline"  fxFlex.xs="auto">
-      <mat-select #singleSelect
-                  formControlName="indirizzo"
-                  placeholder="Seleziona indirizzo">
-        <ngx-mat-select-search formControlName="indirizzoStudioDropdown"
-                               [noEntriesFoundLabel]="'Nessun risultato'"
-                               [placeholderLabel]="'Cerca indirizzo'"></ngx-mat-select-search>
-        <mat-option *ngFor="let indirizzo of (indirzzoStudioFilter | async)" [value]="indirizzo">
-          {{indirizzo}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
+     <!-- TODO: ngIf crea errori non fa caricare la dropdown lista la prima volta -->
+     <mat-form-field *ngIf="displayIndirizzi"  appearance="outline"  fxFlex.xs="auto">
+       <mat-select #singleSelect
+                   formControlName="indirizzo"
+                   placeholder="Seleziona indirizzo">
+         <ngx-mat-select-search formControlName="indirizzoStudioDropdown"
+                                [noEntriesFoundLabel]="'Nessun risultato'"
+                                [placeholderLabel]="'Cerca indirizzo'"></ngx-mat-select-search>
+         <mat-option *ngFor="let indirizzo of (indirzzoStudioFilter | async)" [value]="indirizzo">
+           {{indirizzo}}
+         </mat-option>
+       </mat-select>
+     </mat-form-field>
 
   </div>
 

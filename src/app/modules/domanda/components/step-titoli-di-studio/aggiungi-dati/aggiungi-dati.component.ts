@@ -53,9 +53,9 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
     comuniNomi: string[];
 
 
-    test;
     private onDetroy = new Subject<void>();
 
+    displayIndirizzi = false;
 
     ngOnDestroy() {
         this.onDetroy.next();
@@ -131,7 +131,7 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
 
-        this.test = this.restApi.getTipologiaTitoliDiStudio().subscribe(
+        this.restApi.getTipologiaTitoliDiStudio().subscribe(
             (Titoli: TitoliDiStudioLSt[]) => {
 
                 this.tipologiaTitoli_lst = Titoli;
@@ -328,6 +328,11 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
             concatMap(id => this.restApi.getIndirizzoTitoli(id))
         ).subscribe((value: any[]) => {
 
+            if (value.length > 0) {
+                this.displayIndirizzi = true;
+            } else {
+                this.displayIndirizzi = false;
+            }
 
             this.indirizzoStudio_lst = value;
 

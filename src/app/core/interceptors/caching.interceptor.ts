@@ -51,7 +51,7 @@ function isCachable(req: HttpRequest<any>) {
   // Only GET requests are cachable
   return req.method === 'GET' &&
     // Only the search of application forms result are cachable in this app
-    -1 < req.url.indexOf(environment.endpoints.backendLocation);
+    -1 < req.url.indexOf('http://webpc.dipvvf.it:6001/');
 }
 
 /**
