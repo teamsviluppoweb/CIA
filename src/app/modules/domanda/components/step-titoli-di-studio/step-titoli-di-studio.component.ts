@@ -29,6 +29,8 @@ export class StepTitoliDiStudioComponent implements OnInit {
 
   TitoliDiStudioHeader: string[] = tabellaHeader;
 
+
+
   constructor(private restApi: ApiService,
               public aggiungiDatiDialog: MatDialog) {
 
@@ -53,7 +55,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
               },
               dataConseguimento: t.dataConseguimento,
               istituto: t.istituto,
-              luogo: {
+              luogoIstituto: {
                 codice: t.luogoIstituto.codiceProvincia,
                 nome: t.luogoIstituto.nome,
                 codiceProvincia: t.luogoIstituto.codiceProvincia,
@@ -97,7 +99,25 @@ export class StepTitoliDiStudioComponent implements OnInit {
 
           this.titoliDiStudioDichiarati[index] = dataDialog.data;
           this.titoliDiStudioDichiarati = this.titoliDiStudioDichiarati.slice();
+
+
           this.restApi.domanda.titoliStudioPosseduti = this.titoliDiStudioDichiarati;
+
+          // Cancello le chiavi non necessarie
+          const key1 = 'isOkToInsert';
+          const key2 = 'isEditing';
+          const key3 = 'isTitoloE';
+          const key4 = 'isIndirizzoE';
+          const key5 = 'isComuneE';
+
+          this.restApi.domanda.titoliStudioPosseduti.map(x => {
+            delete x[key1];
+            delete x[key2];
+            delete x[key3];
+            delete x[key4];
+            delete x[key5];
+          });
+
 
           console.log(this.restApi.domanda);
 
@@ -124,7 +144,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
       },
       dataConseguimento: '',
       istituto: '',
-      luogo: {
+      luogoIstituto: {
         codice: '',
         nome: '',
         codiceProvincia: '',
@@ -150,6 +170,22 @@ export class StepTitoliDiStudioComponent implements OnInit {
 
           this.titoliDiStudioDichiarati = [dataDialog.data].concat(this.titoliDiStudioDichiarati);
           this.restApi.domanda.titoliStudioPosseduti = this.titoliDiStudioDichiarati;
+
+          // Cancello le chiavi non necessarie
+          const key1 = 'isOkToInsert';
+          const key2 = 'isEditing';
+          const key3 = 'isTitoloE';
+          const key4 = 'isIndirizzoE';
+          const key5 = 'isComuneE';
+
+          this.restApi.domanda.titoliStudioPosseduti.map(x => {
+            delete x[key1];
+            delete x[key2];
+            delete x[key3];
+            delete x[key4];
+            delete x[key5];
+          });
+
           console.log(this.restApi.domanda);
         }
       }

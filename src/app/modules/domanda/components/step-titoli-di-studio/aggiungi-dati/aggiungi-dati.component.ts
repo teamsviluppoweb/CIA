@@ -147,7 +147,6 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
                         tipologia: this.dataDialog.data.tipologia.desc,
                         dataConseguimento: this.dataDialog.data.dataConseguimento,
                         istituto: this.dataDialog.data.istituto,
-                        luogo: this.dataDialog.data.luogo,
                         durataAnni: this.dataDialog.data.durataAnni,
                     }, {emitEvent: true});
                 }
@@ -171,7 +170,7 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
                 (domanda) => {
                    if (this.dataDialog.data.isEditing) {
                        const nomeProvincia = this.province_lst.
-                       filter(selected => selected.codice === this.dataDialog.data.luogo.codiceProvincia)
+                       filter(selected => selected.codice === this.dataDialog.data.luogoIstituto.codiceProvincia)
                            .map(selected => selected.nome)
                            .reduce(selected => selected);
 
@@ -196,6 +195,9 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
 
         this.dataDialog.data.durataAnni = this.durataAnni.value;
 
+        // Patch istituto
+
+        this.dataDialog.data.istituto = this.istituto.value;
 
         // Patch tipologia
 
@@ -237,13 +239,15 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
 
         // PATCH LUOGO
 
-        this.dataDialog.data.luogo = this.comuni_lst.
+        this.dataDialog.data.luogoIstituto = this.comuni_lst.
             filter(selected => selected.nome === this.comune.value)
             .map(selected => selected)
             .reduce(selected => selected);
 
         this.dataDialog.data.isOkToInsert = true;
         this.dataDialog.data.isEditing = false;
+
+        console.log(this.dataDialog.data);
     }
 
     isFormReady() {
@@ -368,7 +372,7 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
 
 
                 if (this.dataDialog.data.isComuneE) {
-                    this.comune.patchValue(this.dataDialog.data.luogo.nome);
+                    this.comune.patchValue(this.dataDialog.data.luogoIstituto.nome);
                 }
 
             });
@@ -386,15 +390,12 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
         });
 
         this.istituto.valueChanges.subscribe((x) => {
-            this.dataDialog.data.istituto = x;
         });
 
         this.provincia.valueChanges.subscribe((x) => {
-            this.dataDialog.data.provincia = x;
         });
 
         this.comune.valueChanges.subscribe((x) => {
-            this.dataDialog.data.comune = x;
         });
 
         this.durataAnni.valueChanges.subscribe((x) => {
@@ -444,9 +445,6 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
         return this.form.get('comune');
     }
 
-    get luogo() {
-        return this.form.get('luogo');
-    }
 
     get durataAnni() {
         return this.form.get('durataAnni');
