@@ -58,7 +58,6 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
     this.restApi.getListaSedi().subscribe(
         (Sedi: SediApiLSt[]) => {
 
-            console.log(Sedi);
 
             this.listaSedi = Sedi;
 
@@ -166,6 +165,9 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
         });
 
   }
+
+
+
 
   get qualifica() {
     return this.form.get('qualifica');

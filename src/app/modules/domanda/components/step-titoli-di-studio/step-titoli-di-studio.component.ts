@@ -55,9 +55,10 @@ export class StepTitoliDiStudioComponent implements OnInit {
               durataAnni: t.durataAnni,
               isOkToInsert: false,
               isEditing: false,
+              isTitoloE: false,
+              isIndirizzoE: false,
             };
 
-            console.log(obj);
             this.titoliDiStudioDichiarati = [obj].concat(this.titoliDiStudioDichiarati);
 
 
@@ -74,6 +75,8 @@ export class StepTitoliDiStudioComponent implements OnInit {
 
   openDialogEditDati(index) {
     this.titoliDiStudioDichiarati[index].isEditing = true;
+    this.titoliDiStudioDichiarati[index].isTitoloE = true;
+    this.titoliDiStudioDichiarati[index].isIndirizzoE = true;
     const dialogRef = this.aggiungiDatiDialog.open(AggiungiDatiComponent, {
       height: 'auto',
       width: '1300px',
@@ -84,11 +87,11 @@ export class StepTitoliDiStudioComponent implements OnInit {
       if (dataDialog) {
         if (dataDialog.data.isOkToInsert) {
 
-          console.log(dataDialog.data);
-
           this.titoliDiStudioDichiarati[index] = dataDialog.data;
           this.titoliDiStudioDichiarati = this.titoliDiStudioDichiarati.slice();
           this.restApi.domanda.titoliStudioPosseduti = this.titoliDiStudioDichiarati;
+
+          console.log(this.restApi.domanda.titoliStudioPosseduti);
 
         }
       }
@@ -121,6 +124,8 @@ export class StepTitoliDiStudioComponent implements OnInit {
       durataAnni: '',
       isOkToInsert: false,
       isEditing: false,
+      isTitoloE: false,
+      isIndirizzoE: false,
     };
 
     const dialogRef = this.aggiungiDatiDialog.open(AggiungiDatiComponent, {
@@ -134,7 +139,6 @@ export class StepTitoliDiStudioComponent implements OnInit {
       if (dataDialog) {
         if (dataDialog.data.isOkToInsert) {
 
-          console.log(dataDialog.data);
           this.titoliDiStudioDichiarati = [dataDialog.data].concat(this.titoliDiStudioDichiarati);
           this.restApi.domanda.titoliStudioPosseduti = this.titoliDiStudioDichiarati;
         }

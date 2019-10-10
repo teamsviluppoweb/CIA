@@ -143,8 +143,6 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
                 this.descrizioneTipologiaTitoli = this.tipologiaTitoli_lst.map(nome => nome.desc).slice();
 
                 if (this.dataDialog.data.isEditing) {
-                    console.log(this.dataDialog.data);
-                    console.log(this.tipologiaTitoli_lst);
                     this.form.patchValue({
                         tipologia: this.dataDialog.data.tipologia.desc,
                         dataConseguimento: this.dataDialog.data.dataConseguimento,
@@ -171,7 +169,14 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
             )
             .subscribe(
                 (domanda) => {
-                   // this.provincia.patchValue(this.dataDialog.data.provincia);
+                   if (this.dataDialog.data.isEditing) {
+                       const nomeProvincia = this.province_lst.
+                       filter(selected => selected.codice === this.dataDialog.data.luogo.codiceProvincia)
+                           .map(selected => selected.nome)
+                           .reduce(selected => selected);
+
+                       this.provincia.patchValue(nomeProvincia);
+                   }
                 }
             );
 
@@ -186,6 +191,11 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
         // Patch data conseguimento
 
         this.dataDialog.data.dataConseguimento = this.dataConseguimento.value;
+
+        // Patch durata anni
+
+        this.dataDialog.data.durataAnni = this.durataAnni.value;
+
 
         // Patch tipologia
 
@@ -225,9 +235,12 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
         }
 
 
-        console.log('??');
-        console.log(this.dataDialog.data);
+        // PATCH LUOGO
 
+        this.dataDialog.data.luogo = this.comuni_lst.
+            filter(selected => selected.nome === this.comune.value)
+            .map(selected => selected)
+            .reduce(selected => selected);
 
         this.dataDialog.data.isOkToInsert = true;
         this.dataDialog.data.isEditing = false;
@@ -265,12 +278,14 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
             filter(() => this.tipologia.valid),
             map((x) => {
 
-                console.log(x, 'mapped', this.tipologiaTitoli_lst);
+
 
                 return this.tipologiaTitoli_lst
                     .filter(selected => selected.desc === this.tipologia.value)
                     .map(selected => selected.id)
                     .reduce(selected => selected);
+
+
             }),
             // Mi ricavo i titoli di studio
             concatMap(id => this.restApi.getTitoli(id))
@@ -287,19 +302,22 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
             this.descrizioneTitoliStudio = this.titoliStudio_lst.map(nome => nome.desc).slice();
 
 
-            if (this.dataDialog.data.isEditing) {
+            if (this.dataDialog.data.isTitoloE) {
                 this.titolo.patchValue(this.dataDialog.data.titolo.desc);
+                this.dataDialog.data.isTitoloE = false;
             }
         });
 
         this.titolo.valueChanges.pipe(
-            filter(() => this.indirizzo.valid),
+            filter(() => this.titolo.valid),
             map(() => {
 
-                return this.titoliStudio_lst
-                    .filter(selected => selected.desc === this.titolo.value)
-                    .map(selected => selected.id)
-                    .reduce(selected => selected);
+
+
+                    return this.titoliStudio_lst
+                        .filter(selected => selected.desc === this.titolo.value)
+                        .map(selected => selected.id)
+                        .reduce(selected => selected);
 
             }),
             // Mi ricavo i titoli di studio
@@ -316,9 +334,9 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
 
             this.descrizioneIndirizzoStudio = this.indirizzoStudio_lst.map(nome => nome.desc).slice();
 
-            if (this.dataDialog.data.isEditing) {
+            if (this.dataDialog.data.isIndirizzoE) {
                 this.indirizzo.patchValue(this.dataDialog.data.indirizzo.desc);
-                this.dataDialog.data.isEditing = false;
+                this.dataDialog.data.isIndirizzoE = false;
             }
         });
 
@@ -380,7 +398,6 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
         });
 
         this.durataAnni.valueChanges.subscribe((x) => {
-            this.dataDialog.data.durataAnni = x;
         });
 
         // Analizza i cambiamenti del testo nel campo di ricerca del dropdown search dei comuni
