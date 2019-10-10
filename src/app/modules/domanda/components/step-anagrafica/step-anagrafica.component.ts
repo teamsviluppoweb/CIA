@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ApiService} from '../../../../core/services/api/api.service';
+import {MatStepper} from "@angular/material";
 
 
 @Component({
@@ -10,39 +11,21 @@ import {ApiService} from '../../../../core/services/api/api.service';
 })
 export class StepAnagraficaComponent implements OnInit {
 
-  form: FormGroup;
+  @Input() parent: FormGroup;
+  @ViewChild('stepper', { static: false }) private myStepper: MatStepper;
 
 
   constructor(private fb: FormBuilder, private restApi: ApiService) {
-    this.form = this.fb.group({
-      nome: [''],
-      cognome: [''],
-      dataNascita: [''],
-      comuneNascita: [''],
-      domicilio: [''],
-      codiceFiscale: [''],
-      telefono: [''],
-      email: [''],
-      sedeServizio: ['']
-    });
-
-    this.nome.disable();
-    this.cognome.disable();
-    this.dataNascita.disable();
-    this.comuneNascita.disable();
-    this.domicilio.disable();
-    this.codiceFiscale.disable();
-    this.sedeServizio.disable();
-
-    this.onChangesForm();
   }
 
 
   ngOnInit() {
+    this.onChangesForm();
 
     this.restApi.getDomanda().subscribe(
         (data) => {
-          this.form.patchValue({
+
+          this.anagrafica.patchValue({
             nome: this.restApi.domanda.anagCandidato.nome,
             cognome: this.restApi.domanda.anagCandidato.cognome,
             dataNascita: this.restApi.domanda.anagCandidato.dataNascita,
@@ -52,6 +35,8 @@ export class StepAnagraficaComponent implements OnInit {
             telefono: this.restApi.domanda.anagCandidato.telefono,
             email: this.restApi.domanda.anagCandidato.email,
           });
+
+
 
         }
 
@@ -75,40 +60,44 @@ export class StepAnagraficaComponent implements OnInit {
     );
   }
 
+  get anagrafica() {
+    return this.parent.get('anagrafica');
+  }
+
   get nome() {
-    return this.form.get('nome');
+    return this.parent.get('anagrafica.nome');
   }
 
   get cognome() {
-    return this.form.get('cognome');
+    return this.parent.get('anagrafica.cognome');
   }
 
   get dataNascita() {
-    return this.form.get('dataNascita');
+    return this.parent.get('anagrafica.dataNascita');
   }
 
   get comuneNascita() {
-    return this.form.get('comuneNascita');
+    return this.parent.get('anagrafica.comuneNascita');
   }
 
   get domicilio() {
-    return this.form.get('domicilio');
+    return this.parent.get('anagrafica.domicilio');
   }
 
   get codiceFiscale() {
-    return this.form.get('codiceFiscale');
+    return this.parent.get('anagrafica.codiceFiscale');
   }
 
   get telefono() {
-    return this.form.get('telefono');
+    return this.parent.get('anagrafica.telefono');
   }
 
   get email() {
-    return this.form.get('email');
+    return this.parent.get('anagrafica.email');
   }
 
   get sedeServizio() {
-    return this.form.get('sedeServizio');
+    return this.parent.get('anagrafica.sedeServizio');
   }
 
 

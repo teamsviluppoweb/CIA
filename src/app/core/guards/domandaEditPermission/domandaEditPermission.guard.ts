@@ -20,6 +20,7 @@ import {map} from 'rxjs/operators';
         return this.restApi.getDomanda().pipe(
             map( (x) => {
                 if (x['operazione'] === 2) {
+                    console.log('====');
                     this.router.navigate(['/domanda/visualizza']);
                     return false;
                 } else {

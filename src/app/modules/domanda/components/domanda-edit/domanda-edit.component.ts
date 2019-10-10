@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {Router} from '@angular/router';
+import {StepAnagraficaComponent} from "..";
 
 @Component({
   selector: 'app-domanda-edit',
@@ -10,14 +11,32 @@ import {Router} from '@angular/router';
 })
 export class DomandaEditComponent implements OnInit {
 
-  public form: FormGroup;
+  public moduloDomanda: FormGroup;
 
-  constructor(private fb: FormBuilder, private restApi: ApiService, private router: Router) { }
+  @ViewChild(StepAnagraficaComponent, { static: false }) StepAnagraficaComponent: StepAnagraficaComponent;
 
-  ngOnInit(): void {
-    this.form = this.fb.group({
+  anagraficaValidity;
+
+  constructor(private fb: FormBuilder, private restApi: ApiService, private router: Router) {
+    this.moduloDomanda = this.fb.group({
+      anagrafica: this.fb.group({
+        nome: [''],
+        cognome: [''],
+        dataNascita: [''],
+        comuneNascita: [''],
+        domicilio: ['', Validators.required],
+        codiceFiscale: [''],
+        telefono: ['', Validators.required],
+        email: ['', Validators.required],
+        sedeServizio: ['']
+      })
     });
+
+    this.anagraficaValidity =  this.moduloDomanda.controls.anagrafica;
+
   }
+
+  ngOnInit(): void {}
 
   inviaDomanda() {
     console.log(this.restApi.domanda);
@@ -28,5 +47,6 @@ export class DomandaEditComponent implements OnInit {
         }
     );
   }
+
 
 }

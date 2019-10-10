@@ -1,7 +1,7 @@
-<form [formGroup]="form"  (ngSubmit)="inviaDomanda()">
-  <mat-vertical-stepper #stepper [linear]="false">
-    <mat-step label="Informazioni personali">
-      <app-step-anagrafica></app-step-anagrafica>
+<form [formGroup]="moduloDomanda"  >
+  <mat-vertical-stepper #stepper [linear]="true">
+    <mat-step label="Informazioni personali" [stepControl]="anagraficaValidity">
+      <app-step-anagrafica  [parent]="moduloDomanda"></app-step-anagrafica>
     </mat-step>
 
     <mat-step label="Qualifica e Sede giuridica">
@@ -28,7 +28,7 @@
 
 
     <mat-step label="Invia Domanda">
-      <button type="submit">Submit</button>
+      <button (click)="inviaDomanda()">Submit</button>
     </mat-step>
 
   </mat-vertical-stepper>

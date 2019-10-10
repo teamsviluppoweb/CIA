@@ -1,7 +1,7 @@
-<div class="container">
-  <form>
+<div class="container"[formGroup]="parent">
+  <form formGroupName="anagrafica">
 
-    <div fxLayout="column" fxLayoutGap="10px" [formGroup]="form">
+    <div fxLayout="column" fxLayoutGap="10px" >
 
       <div fxLayout="row" fxLayout.xs="column" >
 
@@ -11,6 +11,7 @@
           <input name="cognome"
                  matInput
                  formControlName="cognome"
+                 readonly
           >
         </label>
       </mat-form-field>
@@ -21,6 +22,7 @@
             <input name="nome"
                    matInput
                    formControlName="nome"
+                   readonly
             >
           </label>
         </mat-form-field>
@@ -36,6 +38,7 @@
             <input name="comune-di-nascita"
                    matInput
                    formControlName="comuneNascita"
+                   readonly
             >
           </label>
         </mat-form-field>
@@ -46,6 +49,7 @@
            <input name="codice-fiscale"
                   matInput
                   formControlName="codiceFiscale"
+                  readonly
            >
          </label>
        </mat-form-field>
@@ -56,6 +60,7 @@
            <input name="data-di-nascita"
                   matInput
                   formControlName="dataNascita"
+                  readonly
            >
          </label>
        </mat-form-field>
@@ -64,7 +69,7 @@
 
 
       <mat-form-field appearance="outline" fxFlex="1 0">
-        <mat-label>Domicilio</mat-label>
+        <mat-label> <mat-icon>edit</mat-icon> Domicilio</mat-label>
         <label>
           <input name="domicilio"
                  matInput
@@ -76,7 +81,7 @@
       <div fxLayout="row" fxLayout.xs="column" >
 
         <mat-form-field appearance="outline" fxFlex="0 0 40" fxFlex.xs="auto">
-          <mat-label>Telefono</mat-label>
+          <mat-label> <mat-icon>edit</mat-icon> Telefono</mat-label>
           <label>
             <input name="telefono"
                    matInput
@@ -86,7 +91,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="0 0 60" fxFlex.xs="auto">
-          <mat-label>mail</mat-label>
+          <mat-label> <mat-icon>edit</mat-icon> mail</mat-label>
           <label>
             <input name="mail"
                    matInput
