@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {Router} from '@angular/router';
-import {StepAnagraficaComponent} from "..";
+import {StepAnagraficaComponent, StepDichiarazoiniComponent, StepQualificaSedeComponent} from "..";
 
 @Component({
   selector: 'app-domanda-edit',
@@ -14,9 +14,12 @@ export class DomandaEditComponent implements OnInit {
   public moduloDomanda: FormGroup;
 
   @ViewChild(StepAnagraficaComponent, { static: false }) StepAnagraficaComponent: StepAnagraficaComponent;
+  @ViewChild(StepQualificaSedeComponent, { static: false }) StepQualificaSedeComponent: StepQualificaSedeComponent;
+  @ViewChild(StepDichiarazoiniComponent, { static: false }) StepDichiarazoiniComponent: StepDichiarazoiniComponent;
 
   anagraficaValidity;
   qualificaSedeValidity;
+  dichiarazioneValidity;
 
   constructor(private fb: FormBuilder, private restApi: ApiService, private router: Router) {
     this.moduloDomanda = this.fb.group({
@@ -38,10 +41,14 @@ export class DomandaEditComponent implements OnInit {
         sedeDropdown: [''],
         qualificaDropdown: [''],
       }),
+      dichiarazione: this.fb.group({
+        uno: ['', Validators.required],
+      }),
     });
 
     this.anagraficaValidity =  this.moduloDomanda.controls.anagrafica;
     this.qualificaSedeValidity =  this.moduloDomanda.controls.sediQualifiche;
+    this.dichiarazioneValidity =  this.moduloDomanda.controls.dichiarazione;
 
   }
 

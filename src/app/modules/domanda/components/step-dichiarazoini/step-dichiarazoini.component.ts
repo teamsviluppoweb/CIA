@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {FormGroup} from "@angular/forms";
+import {MatStepper} from "@angular/material";
 
 @Component({
   selector: 'app-step-dichiarazoini',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StepDichiarazoiniComponent implements OnInit {
 
+  @Input() parent: FormGroup;
+  @ViewChild('stepper', { static: false }) private myStepper: MatStepper;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  get dichiarazione() {
+    return this.parent.get('dichiarazione');
+  }
+
+  get uno() {
+    return this.parent.get('dichiarazione.uno');
   }
 
 }

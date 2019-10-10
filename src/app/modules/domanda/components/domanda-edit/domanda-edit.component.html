@@ -9,8 +9,8 @@
     </mat-step>
 
 
-    <mat-step label="Dichiarazioni">
-    <app-step-dichiarazoini></app-step-dichiarazoini>
+    <mat-step label="Dichiarazioni" [stepControl]="dichiarazioneValidity">
+    <app-step-dichiarazoini [parent]="moduloDomanda"></app-step-dichiarazoini>
     </mat-step>
 
     <mat-step label="Titoli di studio valutabili">
