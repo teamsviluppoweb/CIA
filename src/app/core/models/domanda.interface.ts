@@ -1,18 +1,17 @@
 import {
-    QualificheApiLst,
-    SediApiLSt,
-    TipologiaTitoliDiStudioLSt,
-    TitoliDiStudioIndirizzoLSt,
-    TitoliDiStudioLSt
-} from "./api.interface";
-import {
-    ComuneNascita,
+    ComuneNascita, DomandaModel,
     IndirizzoModel,
     LuogoIstitutoModel,
     Qualifica, Sede,
     TipologiaModel,
     TitoloModel
 } from "./domanda.model";
+
+export interface DomandaObjectInterface {
+    domanda: DomandaModel;
+    errore: string;
+    operazione: number;
+}
 
 export interface DomandaInterface {
     id: string;

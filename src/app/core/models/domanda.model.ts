@@ -1,8 +1,8 @@
 import {
-    AnagCandidatoInterface,
-    CorsiAggAmmInterface,
-    DomandaInterface, ProtocolloInterface,
-    TitoliStudioPossedutiInterface
+        AnagCandidatoInterface,
+        CorsiAggAmmInterface,
+        DomandaInterface, DomandaObjectInterface, ProtocolloInterface,
+        TitoliStudioPossedutiInterface
 } from './domanda.interface';
 import {Injectable} from "@angular/core";
 import {
@@ -11,12 +11,20 @@ import {
         TipologiaTitoliDiStudioLSt,
         TitoliDiStudioIndirizzoLSt,
         TitoliDiStudioLSt
-} from "./api.interface";
+} from './api.interface';
+
 @Injectable({
         providedIn: 'root',
 })
+export class DomandaObject implements DomandaObjectInterface{
+        domanda: DomandaModel;
+        errore: string;
+        operazione: number;
+}
 
-
+@Injectable({
+        providedIn: 'root',
+})
 export class DomandaModel implements DomandaInterface {
         id: null;
         idDomanda: null;
