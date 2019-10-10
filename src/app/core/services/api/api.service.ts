@@ -15,7 +15,7 @@ import {
   TipologiaTitoliDiStudioLSt, TitoliDiStudioIndirizzoLSt, TitoliDiStudioLSt
 } from '../../models/api.interface';
 import {DomandaInterface} from '../../models/domanda.interface';
-import {DomandaModel} from '../../models';
+import {DomandaModel, DomandaObject} from '../../models';
 import {environment} from '../../../../environments/environment';
 
 // To use if we don't want cached application forms response
@@ -118,43 +118,48 @@ export class ApiService {
     );
   }
 
-  getProvince(): Observable<any[] | ProvinceLSt> {
+  getProvince(): Observable<any[] | ProvinceLSt[]> {
     const refresh = false;
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<ProvinceLSt>(environment.endpoints.backendLocation + environment.endpoints.province, options).pipe(
-        tap(
-            (x) => {
-            }
-        ),
+    return this.http.get<ProvinceLSt[]>(environment.endpoints.backendLocation + environment.endpoints.province, options).pipe(
+        map((province: ProvinceLSt[]) => {
+            return province
+                .map(x => x)
+                .sort((a, b) => {
+                    return a.nome.length - b.nome.length;
+                });
+        }),
         catchError(this.handleError('Get lista province', []))
     );
   }
 
-  getComuni(codiceProvincia: string): Observable<any[] | ComuniLSt> {
+  getComuni(codiceProvincia: string): Observable<any[] | ComuniLSt[]> {
     const refresh = false;
 
     const options = createHttpOptions(refresh);
 
-    return this.http.get<ComuniLSt>(environment.endpoints.backendLocation + environment.endpoints.comuni + codiceProvincia, options).pipe(
-        tap(
-            (x) => {
-            }
-        ),
+    return this.http.get<ComuniLSt[]>(environment.endpoints.backendLocation + environment.endpoints.comuni + codiceProvincia, options).pipe(
+        map((comuni: ComuniLSt[]) => {
+            return comuni
+                .map(x => x)
+                .sort((a, b) => {
+                    return a.nome.length - b.nome.length;
+                });
+        }),
         catchError(this.handleError('Get lista comuni', []))
     );
   }
 
-  getDomanda(observe = false, refresh = false): Observable<any[] | DomandaModel | HttpResponse<DomandaInterface>> {
+  getDomanda(observe = false, refresh = false): Observable<any[] | DomandaObject | HttpResponse<DomandaObject>> {
 
     const options = createHttpOptions(refresh, false);
 
 
-    return this.http.get<DomandaModel>(environment.endpoints.backendLocation + environment.endpoints.visualizzaDomanda, options).pipe(
-         tap( (response: DomandaModel) => {
-            response = response['domanda'];
-
+    return this.http.get<DomandaObject>(environment.endpoints.backendLocation + environment.endpoints.visualizzaDomanda, options).pipe(
+         tap( (data: DomandaObject) => {
+            const response = data.domanda;
             this.domanda.id = response.id;
             this.domanda.idDomanda = response.idDomanda;
             this.domanda.versione = response.versione;
