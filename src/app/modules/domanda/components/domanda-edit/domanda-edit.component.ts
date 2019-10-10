@@ -42,7 +42,18 @@ export class DomandaEditComponent implements OnInit {
         qualificaDropdown: [''],
       }),
       dichiarazione: this.fb.group({
-        uno: ['', Validators.required],
+        uno: ['', [(control) => {
+          return !control.value ? { 'required': true } : null;
+        }]],
+        due: ['', [(control) => {
+          return !control.value ? { 'required': true } : null;
+        }]],
+        tre: ['', [(control) => {
+          return !control.value ? { 'required': true } : null;
+        }]],
+        quattro: ['', [(control) => {
+          return !control.value ? { 'required': true } : null;
+        }]],
       }),
     });
 

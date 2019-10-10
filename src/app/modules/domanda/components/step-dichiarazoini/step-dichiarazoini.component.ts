@@ -25,4 +25,16 @@ export class StepDichiarazoiniComponent implements OnInit {
     return this.parent.get('dichiarazione.uno');
   }
 
+  get due() {
+    return this.parent.get('dichiarazione.due');
+  }
+
+  get tre() {
+    return this.parent.get('dichiarazione.tre');
+  }
+
+  get quattro() {
+    return this.parent.get('dichiarazione.quattro');
+  }
+
 }
