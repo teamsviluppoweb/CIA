@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {ApiService} from "../../../../core/services/api/api.service";
 
 @Component({
   selector: 'app-domanda-edit',
@@ -10,7 +11,7 @@ export class DomandaEditComponent implements OnInit {
 
   public form: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private restApi: ApiService) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -18,7 +19,12 @@ export class DomandaEditComponent implements OnInit {
   }
 
   inviaDomanda() {
-    console.log(this.form);
+    console.log(this.restApi.domanda);
+    this.restApi.salvaDomanda().subscribe(
+        () => {
+          console.log('inviata con successo');
+        }
+    );
   }
 
 }

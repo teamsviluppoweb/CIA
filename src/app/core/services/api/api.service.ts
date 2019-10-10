@@ -173,6 +173,11 @@ export class ApiService {
 
 
     return this.http.post<DomandaInterface>(environment.endpoints.backendLocation + environment.endpoints.salvaDomanda, this.domanda).pipe(
+        tap(
+            () => {
+                console.log('post');
+            }
+        ),
         catchError(this.handleError('Salva domanda', []))
     );
   }
