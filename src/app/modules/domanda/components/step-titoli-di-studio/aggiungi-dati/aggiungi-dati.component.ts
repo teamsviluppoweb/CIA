@@ -357,10 +357,6 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
             this.dataDialog.data.istituto = x;
         });
 
-        this.luogo.valueChanges.subscribe((x) => {
-            this.dataDialog.data.luogo = x;
-        });
-
         this.provincia.valueChanges.subscribe((x) => {
             this.dataDialog.data.provincia = x;
         });
