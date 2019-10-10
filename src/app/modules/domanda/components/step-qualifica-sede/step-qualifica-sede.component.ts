@@ -138,6 +138,17 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
   onChanges() {
 
       this.sedeGiuridica.valueChanges.subscribe((x) => {
+          this.restApi.domanda.anagCandidato.sedeAttuale = this.listaSedi.
+          filter(selected => selected.desc === this.sedeGiuridica.value)
+              .map(selected => selected)
+              .reduce(selected => selected);
+      });
+
+      this.qualifica.valueChanges.subscribe((x) => {
+          this.restApi.domanda.anagCandidato.qualificaAttuale = this.listaQualifiche.
+          filter(selected => selected.desc === this.qualifica.value)
+              .map(selected => selected)
+              .reduce(selected => selected);
       });
 
     // Analizza i cambiamenti del testo nel campo di ricerca del dropdown search dei comuni
@@ -155,24 +166,6 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
         });
 
   }
-
-
-    SerializeData() {
-        this.restApi.domanda.anagCandidato.qualificaAttuale = this.listaQualifiche.
-            filter(selected => selected.desc === this.qualifica.value)
-            .map(selected => selected)
-            .reduce(selected => selected);
-
-        this.restApi.domanda.anagCandidato.sedeAttuale = this.listaSedi.
-        filter(selected => selected.desc === this.sedeGiuridica.value)
-            .map(selected => selected)
-            .reduce(selected => selected);
-
-
-        console.log(
-            this.restApi.domanda
-        );
-    }
 
   get qualifica() {
     return this.form.get('qualifica');
