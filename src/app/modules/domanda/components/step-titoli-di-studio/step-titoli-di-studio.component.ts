@@ -5,8 +5,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {Observable, of} from 'rxjs';
 import {Formazione} from '../../../../core/models/api.interface';
-import {DomandaInterface, TitoliStudioPossedutiInterface} from '../../../../core/models/domanda.interface';
-import {DomandaModel} from '../../../../core/models';
+import { TitoliStudioPossedutiInterface} from '../../../../core/models/domanda.interface';
 
 // tslint:disable-next-line:max-line-length
 const tabellaHeader = ['anno', 'titolo-di-studio', 'conseguito-presso', 'delete', 'edit'];
@@ -68,7 +67,6 @@ export class StepTitoliDiStudioComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
 
