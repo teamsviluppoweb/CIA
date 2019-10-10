@@ -93,14 +93,13 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
     private createForm() {
         return this.fb.group({
             tipologia: ['', Validators.required],
-            titoloDiStudio: ['', Validators.required],
+            titolo: ['', Validators.required],
             indirizzo: [''],
-            dataDiConseguimento: ['', Validators.required],
+            dataConseguimento: ['', Validators.required],
             istituto: ['', Validators.required],
-            luogo: ['', Validators.required],
             provincia: [''],
             comune: [''],
-            periodoConseguimento: ['', Validators.required],
+            durataAnni: ['', Validators.required],
 
             tipologiaTitoliDropdown: [''],
             titoliStudioDropdown: [''],
@@ -145,12 +144,13 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
 
                 if (this.dataDialog.data.isEditing) {
                     console.log(this.dataDialog.data);
+                    console.log(this.tipologiaTitoli_lst);
                     this.form.patchValue({
                         tipologia: this.dataDialog.data.tipologia.desc,
                         dataConseguimento: this.dataDialog.data.dataConseguimento,
                         istituto: this.dataDialog.data.istituto,
                         luogo: this.dataDialog.data.luogo,
-                        periodoConseguimento: this.dataDialog.data.periodoConseguimento,
+                        durataAnni: this.dataDialog.data.durataAnni,
                     }, {emitEvent: true});
                 }
             }
@@ -183,16 +183,24 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
 
     sendData() {
 
+        // Patch data conseguimento
+
+        this.dataDialog.data.dataConseguimento = this.dataConseguimento.value;
+
+        // Patch tipologia
+
         this.dataDialog.data.tipologia = this.tipologiaTitoli_lst.
             filter(selected => selected.desc === this.tipologia.value)
             .map(selected => selected)
             .reduce(selected => selected);
 
-        if (this.titoloDiStudio.value) {
-            this.dataDialog.data.titoloDiStudio = this.titoliStudio_lst.filter(selected => selected.desc === this.titoloDiStudio.value)
-                .map(selected => selected)
-                .reduce(selected => selected);
-        }
+        // Patch titoli
+
+
+        this.dataDialog.data.titolo = this.titoliStudio_lst.
+        filter(selected => selected.desc === this.titolo.value)
+            .map(selected => selected)
+            .reduce(selected => selected);
 
 
         /*
@@ -200,11 +208,13 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
         mi triggera un errore in console
          */
 
-        const isArrayIndirizziEmpty = this.indirizzoStudio_lst.
+
+        const hasIndirizzoValue = this.indirizzoStudio_lst.
         filter(selected => selected.desc === this.indirizzo.value)
             .map(selected => selected).length > 0;
 
-        if (!isArrayIndirizziEmpty) {
+
+        if (hasIndirizzoValue) {
             this.dataDialog.data.indirizzo = this.indirizzoStudio_lst.
             filter(selected => selected.desc === this.indirizzo.value)
                 .map(selected => selected)
@@ -213,6 +223,10 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
             this.dataDialog.data.indirizzo.desc = '';
             this.dataDialog.data.indirizzo.id = '';
         }
+
+
+        console.log('??');
+        console.log(this.dataDialog.data);
 
 
         this.dataDialog.data.isOkToInsert = true;
@@ -249,7 +263,9 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
 
         this.tipologia.valueChanges.pipe(
             filter(() => this.tipologia.valid),
-            map(() => {
+            map((x) => {
+
+                console.log(x, 'mapped', this.tipologiaTitoli_lst);
 
                 return this.tipologiaTitoli_lst
                     .filter(selected => selected.desc === this.tipologia.value)
@@ -272,16 +288,16 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
 
 
             if (this.dataDialog.data.isEditing) {
-                this.titoloDiStudio.patchValue(this.dataDialog.data.titoloDiStudio.desc);
+                this.titolo.patchValue(this.dataDialog.data.titolo.desc);
             }
         });
 
-        this.titoloDiStudio.valueChanges.pipe(
+        this.titolo.valueChanges.pipe(
             filter(() => this.indirizzo.valid),
             map(() => {
 
                 return this.titoliStudio_lst
-                    .filter(selected => selected.desc === this.titoloDiStudio.value)
+                    .filter(selected => selected.desc === this.titolo.value)
                     .map(selected => selected.id)
                     .reduce(selected => selected);
 
@@ -342,15 +358,13 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
         this.tipologia.valueChanges.subscribe((x) => {
         });
 
-        this.titoloDiStudio.valueChanges.subscribe((x) => {
+        this.titolo.valueChanges.subscribe((x) => {
         });
 
         this.indirizzo.valueChanges.subscribe((x) => {
         });
 
-        this.dataDiConseguimento.valueChanges.subscribe((x) => {
-            console.log(x);
-            this.dataDialog.data.dataDiConseguimento = x;
+        this.dataConseguimento.valueChanges.subscribe((x) => {
         });
 
         this.istituto.valueChanges.subscribe((x) => {
@@ -365,8 +379,8 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
             this.dataDialog.data.comune = x;
         });
 
-        this.periodoConseguimento.valueChanges.subscribe((x) => {
-            this.dataDialog.data.periodoConseguimento = x;
+        this.durataAnni.valueChanges.subscribe((x) => {
+            this.dataDialog.data.durataAnni = x;
         });
 
         // Analizza i cambiamenti del testo nel campo di ricerca del dropdown search dei comuni
@@ -389,16 +403,16 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
         return this.form.get('tipologia');
     }
 
-    get titoloDiStudio() {
-        return this.form.get('titoloDiStudio');
+    get titolo() {
+        return this.form.get('titolo');
     }
 
     get indirizzo() {
         return this.form.get('indirizzo');
     }
 
-    get dataDiConseguimento() {
-        return this.form.get('dataDiConseguimento');
+    get dataConseguimento() {
+        return this.form.get('dataConseguimento');
     }
 
     get istituto() {
@@ -417,8 +431,8 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
         return this.form.get('luogo');
     }
 
-    get periodoConseguimento() {
-        return this.form.get('periodoConseguimento');
+    get durataAnni() {
+        return this.form.get('durataAnni');
     }
 
     get tipologiaTitoliDropdown() {

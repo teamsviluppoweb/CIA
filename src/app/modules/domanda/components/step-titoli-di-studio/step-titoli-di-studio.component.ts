@@ -37,7 +37,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
                 id: t.tipologia.id,
                 desc: t.tipologia.desc,
               },
-              titoloDiStudio: {
+              titolo: {
                 id: t.titolo.id,
                 desc: t.titolo.desc,
               },
@@ -52,9 +52,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
                 nome: t.luogoIstituto.nome,
                 codiceProvincia: t.luogoIstituto.codiceProvincia,
               },
-              provincia: '',
-              comune: '',
-              periodoConseguimento: '',
+              durataAnni: t.durataAnni,
               isOkToInsert: false,
               isEditing: false,
             };
@@ -86,8 +84,11 @@ export class StepTitoliDiStudioComponent implements OnInit {
       if (dataDialog) {
         if (dataDialog.data.isOkToInsert) {
 
+          console.log(dataDialog.data);
+
           this.titoliDiStudioDichiarati[index] = dataDialog.data;
           this.titoliDiStudioDichiarati = this.titoliDiStudioDichiarati.slice();
+          this.restApi.domanda.titoliStudioPosseduti = this.titoliDiStudioDichiarati;
 
         }
       }
@@ -102,7 +103,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
         id: '',
         desc: '',
       },
-      titoloDiStudio: {
+      titolo: {
         id: '',
         desc: '',
       },
@@ -117,7 +118,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
         nome: '',
         codiceProvincia: '',
       },
-      periodoConseguimento: '',
+      durataAnni: '',
       isOkToInsert: false,
       isEditing: false,
     };
@@ -135,6 +136,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
 
           console.log(dataDialog.data);
           this.titoliDiStudioDichiarati = [dataDialog.data].concat(this.titoliDiStudioDichiarati);
+          this.restApi.domanda.titoliStudioPosseduti = this.titoliDiStudioDichiarati;
         }
       }
 

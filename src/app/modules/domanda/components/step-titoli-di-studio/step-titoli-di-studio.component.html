@@ -13,19 +13,19 @@
       <!-- Colonna tipologia laurea-->
       <ng-container matColumnDef="anno">
         <th *matHeaderCellDef mat-header-cell>Anno</th>
-        <td *matCellDef="let row" mat-cell>{{row.dataDiConseguimento | date: 'dd/MM/yyyy'}}</td>
+        <td *matCellDef="let row" mat-cell>{{row.dataConseguimento | date: 'dd/MM/yyyy'}}</td>
       </ng-container>
 
       <!-- Colonna titolo di studio -->
       <ng-container matColumnDef="titolo-di-studio">
         <th *matHeaderCellDef mat-header-cell>Titolo di studio</th>
-        <td *matCellDef="let row" mat-cell>{{row.tipologia}}}</td>
+        <td *matCellDef="let row" mat-cell>{{row.tipologia.desc}}</td>
       </ng-container>
 
       <!-- Colonna conseguito presso -->
       <ng-container matColumnDef="conseguito-presso">
         <th *matHeaderCellDef mat-header-cell>Conseguito presso</th>
-        <td *matCellDef="let row" mat-cell> {{row.titoloDiStudio}}  {{row?.indirizzo}}</td>
+        <td *matCellDef="let row" mat-cell> {{row.titolo.desc}}  {{row?.indirizzo?.desc}}</td>
       </ng-container>
 
       <!-- Colonna delete -->

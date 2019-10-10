@@ -21,7 +21,7 @@
 
     <mat-form-field appearance="outline"  fxFlex.xs="auto">
       <mat-select #singleSelect
-                  formControlName="titoloDiStudio"
+                  formControlName="titolo"
                   placeholder="Seleziona sede">
         <ngx-mat-select-search formControlName="titoliStudioDropdown"
                                [noEntriesFoundLabel]="'Nessun risultato'"
@@ -55,24 +55,23 @@
 
     <mat-form-field appearance="outline" fxFlex="0 0 20" fxFlex.xs="auto">
       <mat-label>Data conseguimento</mat-label>
-      <input name="dataDiConseguimento"
+      <input name="dataConseguimento"
                [matDatepicker]="pickerDataConseguimento"
                 matInput
-               formControlName="dataDiConseguimento"
+               formControlName="dataConseguimento"
         >
         <mat-datepicker-toggle matSuffix [for]="pickerDataConseguimento"></mat-datepicker-toggle>
         <mat-datepicker #pickerDataConseguimento></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" fxFlex="0 0 20" fxFlex.xs="auto">
-      <mat-label>Periodo Conseguimento</mat-label>
-      <input name="periodoConseguimento"
-             [matDatepicker]="pickerPeriodoConseguimento"
-             matInput
-             formControlName="periodoConseguimento"
-      >
-      <mat-datepicker-toggle matSuffix [for]="pickerPeriodoConseguimento"></mat-datepicker-toggle>
-      <mat-datepicker #pickerPeriodoConseguimento></mat-datepicker>
+    <mat-form-field appearance="outline" fxFlex fxFlex.xs="auto">
+      <mat-label>Durata anni</mat-label>
+      <label>
+        <input name="durataAnni"
+               matInput
+               formControlName="durataAnni"
+        >
+      </label>
     </mat-form-field>
 
 
