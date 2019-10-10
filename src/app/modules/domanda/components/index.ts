@@ -1,4 +1,5 @@
 export * from './domanda-edit/domanda-edit.component';
+export * from './visualizza-domanda/visualizza-domanda.component';
 export * from './step-anagrafica/step-anagrafica.component';
 export * from './step-corsi-di-formazione/step-corsi-di-formazione.component';
 export * from './step-dichiarazoini/step-dichiarazoini.component';

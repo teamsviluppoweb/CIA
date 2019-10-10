@@ -1,0 +1,224 @@
+<div class="container" [formGroup]="form">
+    <form formGroupName="anagrafica">
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>La tua domanda</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div fxLayout="column" fxLayoutGap="10px" >
+
+                    <div fxLayout="row" fxLayout.xs="column" >
+
+                        <mat-form-field appearance="outline" fxFlex="0 0 35" fxFlex.xs="auto">
+                            <mat-label>Cognome</mat-label>
+                            <label>
+                                <input name="cognome"
+                                       matInput
+                                       formControlName="cognome"
+                                >
+                            </label>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="0 0 35" fxFlex.xs="auto">
+                            <mat-label>Nome</mat-label>
+                            <label>
+                                <input name="nome"
+                                       matInput
+                                       formControlName="nome"
+                                >
+                            </label>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="0 0 30" fxFlex.xs="auto">
+                            <mat-label>Codice fiscale</mat-label>
+                            <label>
+                                <input name="codice-fiscale"
+                                       matInput
+                                       formControlName="codiceFiscale"
+                                >
+                            </label>
+                        </mat-form-field>
+
+                    </div>
+
+
+                    <div fxLayout="row" fxLayout.xs="column" >
+
+                        <mat-form-field appearance="outline" fxFlex="0 0 35" fxFlex.xs="auto">
+                            <mat-label>Comune di nascita</mat-label>
+                            <label>
+                                <input name="comune-di-nascita"
+                                       matInput
+                                       formControlName="luogo"
+                                >
+                            </label>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="0 0 35" fxFlex.xs="auto">
+                            <mat-label>Domicilio</mat-label>
+                            <label>
+                                <input name="domicilio"
+                                       matInput
+                                       formControlName="luogo"
+                                >
+                            </label>
+                        </mat-form-field>
+
+
+                        <mat-form-field appearance="outline" fxFlex="0 0 30" fxFlex.xs="auto">
+                            <mat-label>Data di nascita</mat-label>
+                            <label>
+                                <input name="data-di-nascita"
+                                       matInput
+                                       formControlName="dataNascita"
+                                >
+                            </label>
+                        </mat-form-field>
+
+                    </div>
+
+
+                    <div fxLayout="row" fxLayout.xs="column" >
+
+                        <mat-form-field appearance="outline" fxFlex="0 0 40" fxFlex.xs="auto">
+                            <mat-label>Telefono</mat-label>
+                            <label>
+                                <input name="telefono"
+                                       matInput
+                                       formControlName="telefono"
+                                >
+                            </label>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="0 0 60" fxFlex.xs="auto">
+                            <mat-label>mail</mat-label>
+                            <label>
+                                <input name="mail"
+                                       matInput
+                                       formControlName="email"
+                                >
+                            </label>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayout.xs="column" >
+
+                        <mat-form-field appearance="outline" fxFlex="0 0 40" fxFlex.xs="auto">
+                            <mat-label>Qualifica</mat-label>
+                            <label>
+                                <input name="qualifica"
+                                       matInput
+                                       formControlName="qualifica"
+                                >
+                            </label>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="0 0 60" fxFlex.xs="auto">
+                            <mat-label>Sede</mat-label>
+                            <label>
+                                <input name="sede"
+                                       matInput
+                                       formControlName="sede"
+                                >
+                            </label>
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+                <div class="container" fxLayout="column">
+                    <form>
+
+                        <table [dataSource]="titoliDiStudioDichiarati"
+                               cdkDropList
+                               #table
+                               [cdkDropListData]="titoliDiStudioDichiarati"
+                               id="tabDatiDichiarati"
+                               fxFill mat-table>
+
+                            <!-- Colonna tipologia laurea-->
+                            <ng-container matColumnDef="anno">
+                                <th *matHeaderCellDef mat-header-cell>Anno</th>
+                                <td *matCellDef="let row" mat-cell>{{row.dataConseguimento | date: 'dd/MM/yyyy'}}</td>
+                            </ng-container>
+
+                            <!-- Colonna titolo di studio -->
+                            <ng-container matColumnDef="titolo-di-studio">
+                                <th *matHeaderCellDef mat-header-cell>Titolo di studio</th>
+                                <td *matCellDef="let row" mat-cell>{{row.tipologia.desc}}</td>
+                            </ng-container>
+
+                            <!-- Colonna conseguito presso -->
+                            <ng-container matColumnDef="conseguito-presso">
+                                <th *matHeaderCellDef mat-header-cell>Conseguito presso</th>
+                                <td *matCellDef="let row" mat-cell> {{row.titolo.desc}}  {{row?.indirizzo?.desc}}</td>
+                            </ng-container>
+
+                            <tr *matHeaderRowDef="TitoliDiStudioHeader" mat-header-row></tr>
+                            <tr *matRowDef="let row; columns: TitoliDiStudioHeader; let i = index" mat-row  cdkDrag [cdkDragData]="row"></tr>
+                        </table>
+
+                    </form>
+
+                </div>
+
+                <table [dataSource]="corsiDichiarati"
+                       cdkDropList
+                       #table
+                       [cdkDropListData]="corsiDichiarati"
+                       fxFill mat-table>
+
+
+                    <!-- Colonna nome corso-->
+                    <ng-container matColumnDef="nomeCorso">
+                        <th *matHeaderCellDef mat-header-cell>Nome corso</th>
+                        <td *matCellDef="let row" mat-cell>{{row.codiceCorso}}</td>
+                    </ng-container>
+
+                    <!-- Colonna durata corso -->
+                    <ng-container matColumnDef="durataCorso">
+                        <th *matHeaderCellDef mat-header-cell>Durata corso</th>
+                        <td *matCellDef="let row" mat-cell>{{row.dataInizio | date: 'dd/MM/yyyy'}} - {{row.dataFine | date: 'dd/MM/yyyy'}}</td>
+                    </ng-container>
+
+                    <!-- Colonna data di conseguimento-->
+                    <ng-container matColumnDef="dataDiConseguimento">
+                        <th *matHeaderCellDef mat-header-cell>Ore corso</th>
+                        <td *matCellDef="let row" mat-cell>{{row.dataDiConseguimento}}</td>
+                    </ng-container>
+
+                    <!-- Colonna istituto  -->
+                    <ng-container matColumnDef="istituto">
+                        <th *matHeaderCellDef mat-header-cell>Istituto</th>
+                        <td *matCellDef="let row" mat-cell>{{row.idCorso}}</td>
+                    </ng-container>
+
+                    <!-- Colonna luogo -->
+                    <ng-container matColumnDef="luogo">
+                        <th *matHeaderCellDef mat-header-cell>Desc</th>
+                        <td *matCellDef="let row" mat-cell>{{row.descCorso}}</td>
+                    </ng-container>
+
+                    <!-- Colonna periodo di conseguimento -->
+                    <ng-container matColumnDef="periodoConseguimento">
+                        <th *matHeaderCellDef mat-header-cell>Giorni corso</th>
+                        <td *matCellDef="let row" mat-cell>{{row.giorniCorso}}</td>
+                    </ng-container>
+
+
+                    <tr *matHeaderRowDef="CorsiHeader" mat-header-row></tr>
+                    <tr *matRowDef="let row; columns: CorsiHeader; let i = index" mat-row  cdkDrag [cdkDragData]="row"></tr>
+                </table>
+            </mat-card-content>
+        </mat-card>
+
+        </form>
+
+
+
+</div>
+
+
+

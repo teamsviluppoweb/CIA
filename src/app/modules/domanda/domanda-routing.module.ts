@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {DomandaEditComponent} from './components';
+import {DomandaEditComponent, VisualizzaDomandaComponent} from './components';
 
 export const routes: Routes = [
   {
     path: 'edit',
     component: DomandaEditComponent,
+  },
+  {
+    path: 'visualizza',
+    component: VisualizzaDomandaComponent,
   },
 ];
 

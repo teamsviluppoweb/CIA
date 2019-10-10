@@ -18,7 +18,6 @@ const tabellaHeaderEdit = ['nomeCorso', 'durataCorso', 'dataDiConseguimento', 'i
 export class StepCorsiDiFormazioneComponent implements OnInit {
   @ViewChild('table', {static: false}) table: MatTable<Formazione>;
 
-  corsiRisultanti: Corsi[] = [];
 
   corsiDichiarati: Corsi[] = [];
 
