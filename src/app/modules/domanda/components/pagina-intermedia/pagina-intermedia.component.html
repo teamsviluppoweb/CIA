@@ -1,0 +1,35 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <div fxLayout="row">
+                <h4 id="benvenuto">Benvenuto&nbsp;</h4>
+                <h4 id="nomeCognome">{{nomeCognomeCandidato}}</h4>
+             </div>
+
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+        <div>
+            <h4>Ecco lo storico delle tue attivita</h4>
+                <ul>
+                    <li fxLayout="row">
+                        <p>Domanda inviata il:&nbsp;</p> <p class="info">{{dataInvio  | date: 'dd/MM/yyyy'}}</p>
+                    </li>
+                    <li fxLayout="row">
+                        <p>Ultima modifica:&nbsp;</p> <p class="info">{{utlimaModifica  | date: 'dd/MM/yyyy'}}</p>
+                    </li>
+                    <li fxLayout="row">
+                        <p>Stato domanda:&nbsp;</p> <p class="info">{{statoDomanda}}</p>
+                    </li>
+                </ul>
+        </div>
+
+
+
+    </mat-card-content>
+    <mat-card-actions>
+        <button fxFlex="0 10 50" mat-button color="primary"(click)="modifica()" ><a>MODIFICA DOMANDA</a></button>
+        <button fxFlex="0 10 50" mat-button color="primary" (click)="visualizza()"><a>VISUALIZZA DOMANDA</a></button>
+    </mat-card-actions>
+</mat-card>

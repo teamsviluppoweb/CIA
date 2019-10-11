@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {DomandaEditComponent, VisualizzaDomandaComponent} from './components';
 import {DomandaViewPermissionGuard} from '../../core/guards/domandaViewPermission/domandaViewPermission.guard';
 import {DomandaEditPermissionGuard} from '../../core/guards/domandaEditPermission/domandaEditPermission.guard';
+import {PaginaIntermediaComponent} from "./components/pagina-intermedia/pagina-intermedia.component";
 
 export const routes: Routes = [
   {
@@ -15,6 +16,11 @@ export const routes: Routes = [
     component: VisualizzaDomandaComponent,
     canActivate: [DomandaViewPermissionGuard],
 
+  },
+  {
+    path: 'info',
+    component: PaginaIntermediaComponent,
+    canActivate: [DomandaViewPermissionGuard],
   },
 ];
 

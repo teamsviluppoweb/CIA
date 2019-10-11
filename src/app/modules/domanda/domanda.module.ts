@@ -14,6 +14,7 @@ import {
   AggiungiCorsiComponent } from './components';
 import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 import { VisualizzaDomandaComponent } from './components';
+import { PaginaIntermediaComponent } from './components/pagina-intermedia/pagina-intermedia.component';
 
 
 
@@ -28,6 +29,7 @@ import { VisualizzaDomandaComponent } from './components';
     StepCorsiDiFormazioneComponent,
     AggiungiCorsiComponent,
     VisualizzaDomandaComponent,
+    PaginaIntermediaComponent,
   ],
   imports: [
     CommonModule,

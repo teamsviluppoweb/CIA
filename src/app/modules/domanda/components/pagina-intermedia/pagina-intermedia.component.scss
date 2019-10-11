@@ -1,0 +1,27 @@
+#benvenuto {
+  font-weight:200;
+  line-height: 40px; /* change this value as needed */
+}
+
+#nomeCognome {
+  font-weight:400;
+  line-height: 40px; /* change this value as needed */
+}
+
+::ng-deep mat-card-header {
+  display: flow-root;
+}
+
+::ng-deep mat-card-title{
+  display: flow-root;
+}
+
+
+
+p {
+  font-weight:300;
+}
+
+.info {
+  font-weight: 500;
+}
