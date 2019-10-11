@@ -65,15 +65,10 @@
                             </label>
                         </mat-form-field>
 
-
                         <mat-form-field appearance="outline" fxFlex="0 0 30" fxFlex.xs="auto">
                             <mat-label>Data di nascita</mat-label>
-                            <label>
-                                <input name="data-di-nascita"
-                                       matInput
-                                       formControlName="dataNascita"
-                                >
-                            </label>
+                            <input matInput [matDatepicker]="picker" placeholder="Data nascita" formControlName="dataNascita">
+                            <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
 
                     </div>

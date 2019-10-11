@@ -20,7 +20,6 @@ import {delay, map} from 'rxjs/operators';
         console.log('ok');
 
         return this.restApi.getDomanda(false, true).pipe(
-            delay(2000),
             map( (x) => {
                 if (x['operazione'] === 0) {
                     console.log('permissione not ok');
