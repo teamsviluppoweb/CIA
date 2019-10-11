@@ -6,6 +6,7 @@ import {DomandaEditPermissionGuard} from '../../core/guards/domandaEditPermissio
 import {PaginaIntermediaComponent} from "./components/pagina-intermedia/pagina-intermedia.component";
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'info', pathMatch: 'full' },
   {
     path: 'edit',
     component: DomandaEditComponent,

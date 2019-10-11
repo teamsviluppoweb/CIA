@@ -6,6 +6,10 @@ import {GuestComponent} from './layouts/guest/guest.component';
 import {NgModule} from '@angular/core';
 
 const routes: Routes = [
+  { path: '',
+    redirectTo: 'domanda',
+    canActivate: [AuthGuard], // Should be replaced with actual auth guard
+    pathMatch: 'full' },
   {
     path: '',
     component: UserComponent,
