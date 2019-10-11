@@ -6,6 +6,7 @@
 
   <div fxLayout="column" fxLayout.xs="column" >
     <mat-form-field appearance="outline"  fxFlex.xs="auto">
+      <mat-label> <mat-icon>edit</mat-icon> Tipologia titolo studio</mat-label>
       <mat-select #singleSelect
                   formControlName="tipologia"
                   placeholder="Seleziona sede">
@@ -16,10 +17,15 @@
           {{sede}}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="tipologia.hasError('required')">
+        <mat-icon matSuffix>error</mat-icon>
+        Il campo è <strong>Obbligatorio</strong>
+      </mat-error>
     </mat-form-field>
 
 
-    <mat-form-field appearance="outline"  fxFlex.xs="auto">
+    <mat-form-field  *ngIf="displayTitoli"  appearance="outline" fxFlex.xs="auto">
+      <mat-label> <mat-icon>edit</mat-icon>Titolo di studio</mat-label>
       <mat-select #singleSelect
                   formControlName="titolo"
                   placeholder="Seleziona sede">
@@ -30,12 +36,17 @@
           {{titoli}}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="titolo.hasError('required')">
+        <mat-icon matSuffix>error</mat-icon>
+        Il campo è <strong>Obbligatorio</strong>
+      </mat-error>
     </mat-form-field>
 
 
 
      <!-- TODO: ngIf crea errori non fa caricare la dropdown lista la prima volta -->
      <mat-form-field *ngIf="displayIndirizzi"  appearance="outline"  fxFlex.xs="auto">
+       <mat-label> <mat-icon>edit</mat-icon> Indirizzo titolo studio</mat-label>
        <mat-select #singleSelect
                    formControlName="indirizzo"
                    placeholder="Seleziona indirizzo">
@@ -46,14 +57,17 @@
            {{indirizzo}}
          </mat-option>
        </mat-select>
+       <mat-error *ngIf="indirizzo.hasError('required')">
+         <mat-icon matSuffix>error</mat-icon>
+         Il campo è <strong>Obbligatorio</strong>
+       </mat-error>
      </mat-form-field>
-
   </div>
 
   <div fxLayout="row" fxLayout.xs="column" >
 
     <mat-form-field appearance="outline" fxFlex="0 0 20" fxFlex.xs="auto">
-      <mat-label>Data conseguimento</mat-label>
+      <mat-label> <mat-icon>edit</mat-icon> Indirizzo titolo studio</mat-label>
       <input name="dataConseguimento"
                [matDatepicker]="pickerDataConseguimento"
                 matInput
@@ -61,9 +75,14 @@
         >
         <mat-datepicker-toggle matSuffix [for]="pickerDataConseguimento"></mat-datepicker-toggle>
         <mat-datepicker #pickerDataConseguimento></mat-datepicker>
+      <mat-error *ngIf="dataConseguimento.hasError('required')">
+        <mat-icon matSuffix>error</mat-icon>
+        Il campo è <strong>Obbligatorio</strong>
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" fxFlex fxFlex.xs="auto">
+      <mat-label> <mat-icon>edit</mat-icon> Durata anni</mat-label>
       <mat-label>Durata anni</mat-label>
       <label>
         <input name="durataAnni"
@@ -71,6 +90,10 @@
                formControlName="durataAnni"
         >
       </label>
+      <mat-error *ngIf="durataAnni.hasError('required')">
+        <mat-icon matSuffix>error</mat-icon>
+        Il campo è <strong>Obbligatorio</strong>
+      </mat-error>
     </mat-form-field>
 
 
@@ -80,6 +103,7 @@
 
 
     <mat-form-field appearance="outline" fxFlex fxFlex.xs="auto">
+      <mat-label> <mat-icon>edit</mat-icon> Durata anni</mat-label>
       <mat-label>Nome Istituto</mat-label>
       <label>
         <input name="istituto"
@@ -87,6 +111,10 @@
                formControlName="istituto"
         >
       </label>
+      <mat-error *ngIf="istituto.hasError('required')">
+        <mat-icon matSuffix>error</mat-icon>
+        Il campo è <strong>Obbligatorio</strong>
+      </mat-error>
     </mat-form-field>
 
   </div>
@@ -94,6 +122,7 @@
   <div fxLayout="row" fxLayout.xs="column" >
 
     <mat-form-field appearance="outline" fxFlex="0 0 50" fxFlex.xs="auto">
+      <mat-label> <mat-icon>edit</mat-icon>Provincia dell'istituo</mat-label>
       <mat-select #singleSelect
                   [formControl]="provincia"
                   placeholder="Seleziona Provincia">
@@ -105,10 +134,15 @@
           {{prov}}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="provincia.hasError('required')">
+        <mat-icon matSuffix>error</mat-icon>
+        Il campo è <strong>Obbligatorio</strong>
+      </mat-error>
     </mat-form-field>
 
 
     <mat-form-field appearance="outline" fxFlex="0 0 50" fxFlex.xs="auto">
+      <mat-label> <mat-icon>edit</mat-icon>Comune dell'istituto</mat-label>
       <mat-select #singleSelect
                   [formControl]="comune"
                   placeholder="Seleziona Comune">
@@ -120,6 +154,10 @@
           {{com}}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="comune.hasError('required')">
+        <mat-icon matSuffix>error</mat-icon>
+        Il campo è <strong>Obbligatorio</strong>
+      </mat-error>
     </mat-form-field>
   </div>
 

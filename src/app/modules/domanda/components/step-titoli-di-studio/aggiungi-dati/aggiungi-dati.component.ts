@@ -56,6 +56,7 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
     private onDetroy = new Subject<void>();
 
     displayIndirizzi = false;
+    displayTitoli = false;
 
     ngOnDestroy() {
         this.onDetroy.next();
@@ -97,8 +98,8 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
             indirizzo: [''],
             dataConseguimento: ['', Validators.required],
             istituto: ['', Validators.required],
-            provincia: [''],
-            comune: [''],
+            provincia: ['', Validators.required],
+            comune: ['', Validators.required],
             durataAnni: ['', Validators.required],
 
             tipologiaTitoliDropdown: [''],
@@ -295,6 +296,15 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
             concatMap(id => this.restApi.getTitoli(id))
         ).subscribe((value: any[]) => {
 
+            if (value.length > 0) {
+                this.displayTitoli = true;
+                this.indirizzo.setValidators(Validators.required);
+
+            } else {
+                this.displayTitoli = false;
+                this.indirizzo.clearValidators();
+            }
+
 
             this.titoliStudio_lst = value;
 
@@ -330,9 +340,14 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
 
             if (value.length > 0) {
                 this.displayIndirizzi = true;
+                this.indirizzo.setValidators(Validators.required);
+
             } else {
                 this.displayIndirizzi = false;
+                this.indirizzo.clearValidators();
             }
+
+            this.indirizzo.updateValueAndValidity();
 
             this.indirizzoStudio_lst = value;
 
