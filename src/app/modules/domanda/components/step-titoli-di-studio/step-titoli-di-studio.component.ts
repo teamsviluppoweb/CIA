@@ -206,6 +206,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
     this.titoliDiStudioDichiarati.splice(index, 1);
     // trigger updated array in mat data table
     this.titoliDiStudioDichiarati = this.titoliDiStudioDichiarati.slice();
+    this.restApi.domanda.titoliStudioPosseduti = this.titoliDiStudioDichiarati;
   }
 
   edit(index) {

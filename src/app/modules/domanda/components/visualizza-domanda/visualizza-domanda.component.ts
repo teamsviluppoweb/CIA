@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ApiService} from '../../../../core/services/api/api.service';
-import {MatTable} from "@angular/material";
-import {Corsi, Formazione} from "../../../../core/models/api.interface";
-import {Observable, of} from "rxjs";
+import {MatTable} from '@angular/material';
+import {Corsi, Formazione} from '../../../../core/models/api.interface';
+import {Observable, of} from 'rxjs';
 import {TitoliStudioPossedutiInterface} from '../../../../core/models/domanda.interface';
 
 
@@ -22,6 +22,8 @@ export class VisualizzaDomandaComponent implements OnInit {
 
   @ViewChild('table', {static: false}) table: MatTable<Formazione>;
 
+  visualizzaCorsi = true;
+  visualizzaTitoli = true;
 
   titoliDiStudioDichiarati = [];
   TitoliDiStudioHeader: string[] = tabellaHeader;
@@ -32,6 +34,9 @@ export class VisualizzaDomandaComponent implements OnInit {
 
 
   constructor(private formBuilder: FormBuilder, private restApi: ApiService) {
+    this.visualizzaCorsi = (this.restApi.domanda.corsiAggAmm.length > 0);
+    this.visualizzaTitoli = (this.restApi.domanda.titoliStudioPosseduti.length > 0);
+
     this.form = this.formBuilder.group({
       anagrafica: this.formBuilder.group({
         codiceFiscale: [this.restApi.domanda.anagCandidato.codiceFiscale],

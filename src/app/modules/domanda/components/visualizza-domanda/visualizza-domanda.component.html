@@ -1,12 +1,12 @@
 <div class="container" [formGroup]="form">
     <form formGroupName="anagrafica">
-
+        <h2>La tua domanda</h2>
         <mat-card>
             <mat-card-header>
-                <mat-card-title>La tua domanda</mat-card-title>
             </mat-card-header>
             <mat-card-content>
                 <div fxLayout="column" fxLayoutGap="10px" >
+                    <h4>Anagrafica</h4>
 
                     <div fxLayout="row" fxLayout.xs="column" >
 
@@ -81,7 +81,7 @@
 
                     <div fxLayout="row" fxLayout.xs="column" >
 
-                        <mat-form-field appearance="outline" fxFlex="0 0 40" fxFlex.xs="auto">
+                        <mat-form-field appearance="outline" fxFlex="0 0 35" fxFlex.xs="auto">
                             <mat-label>Telefono</mat-label>
                             <label>
                                 <input name="telefono"
@@ -91,7 +91,7 @@
                             </label>
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline" fxFlex="0 0 60" fxFlex.xs="auto">
+                        <mat-form-field appearance="outline" fxFlex="0 0 35" fxFlex.xs="auto">
                             <mat-label>mail</mat-label>
                             <label>
                                 <input name="mail"
@@ -104,7 +104,7 @@
 
                     <div fxLayout="row" fxLayout.xs="column" >
 
-                        <mat-form-field appearance="outline" fxFlex="0 0 40" fxFlex.xs="auto">
+                        <mat-form-field appearance="outline" fxFlex="0 0 35" fxFlex.xs="auto">
                             <mat-label>Qualifica</mat-label>
                             <label>
                                 <input name="qualifica"
@@ -114,7 +114,7 @@
                             </label>
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline" fxFlex="0 0 60" fxFlex.xs="auto">
+                        <mat-form-field appearance="outline" fxFlex="0 0 35" fxFlex.xs="auto">
                             <mat-label>Sede</mat-label>
                             <label>
                                 <input name="sede"
@@ -129,9 +129,11 @@
                 </div>
 
                 <div class="container" fxLayout="column">
+                    <h4>Titoli dichiarati</h4>
                     <form>
 
-                        <table [dataSource]="titoliDiStudioDichiarati"
+                        <table  *ngIf="visualizzaTitoli"
+                                [dataSource]="titoliDiStudioDichiarati"
                                cdkDropList
                                #table
                                [cdkDropListData]="titoliDiStudioDichiarati"
@@ -159,12 +161,16 @@
                             <tr *matHeaderRowDef="TitoliDiStudioHeader" mat-header-row></tr>
                             <tr *matRowDef="let row; columns: TitoliDiStudioHeader; let i = index" mat-row  cdkDrag [cdkDragData]="row"></tr>
                         </table>
+                        <p *ngIf="!visualizzaTitoli"> Nessuno</p>
+
 
                     </form>
 
                 </div>
 
-                <table [dataSource]="corsiDichiarati"
+                <h4>Corsi aggiornamento dichiarati</h4>
+                <table *ngIf="visualizzaCorsi"
+                        [dataSource]="corsiDichiarati"
                        cdkDropList
                        #table
                        [cdkDropListData]="corsiDichiarati"
@@ -211,6 +217,7 @@
                     <tr *matHeaderRowDef="CorsiHeader" mat-header-row></tr>
                     <tr *matRowDef="let row; columns: CorsiHeader; let i = index" mat-row  cdkDrag [cdkDragData]="row"></tr>
                 </table>
+                <p *ngIf="!visualizzaCorsi"> Nessuno</p>
             </mat-card-content>
         </mat-card>
 
