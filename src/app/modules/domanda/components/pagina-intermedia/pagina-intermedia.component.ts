@@ -23,10 +23,10 @@ export class PaginaIntermediaComponent implements OnInit {
           this.dataInvio = x.dataInvio;
           this.utlimaModifica = x.dataModifica;
 
-          if (x.stato === 1) {
+          if (this.restApi.operazioneAttuale === 1) {
             this.statoDomanda = 'Inviata (modificabile)';
           }
-          if (x.stato === 2) {
+          if (this.restApi.operazioneAttuale === 2) {
             this.statoDomanda = 'inviata (non modificabile)';
           }
 

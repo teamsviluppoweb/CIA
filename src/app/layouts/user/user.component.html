@@ -11,7 +11,7 @@
 
             <mat-toolbar  style="background-color: #ba1b21; color: white;cursor: pointer;">
                 <mat-icon >person</mat-icon>
-                <p style="font-weight: 400; font-size: 14px">{{utente}}</p>
+                <p style="font-weight: 400; font-size: 14px">&nbsp;{{utente}}</p>
                 <span class="spacer"></span>
                 <mat-icon (click)="CloseNavBar()">close</mat-icon>
             </mat-toolbar>
@@ -34,7 +34,7 @@
                     <mat-icon style="padding-right: 1em;">edit</mat-icon>
                     Modifica domanda
                 </a>
-                <a *ngIf="showPrint()" href="javascript:window.print()" mat-list-item style="font-size: 14px">
+                <a *ngIf="showPrint()" (click)="print()" mat-list-item style="font-size: 14px">
                     <mat-icon style="padding-right: 1em;">print</mat-icon>
                     Stampa domanda</a>
             </mat-nav-list>

@@ -7,6 +7,8 @@ import {MatDrawer} from "@angular/material";
 import {Router} from "@angular/router";
 import {AuthService} from "../../core/services";
 
+
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -32,7 +34,7 @@ export class UserComponent  {
               private authService: AuthService,
               private breakpointObserver: BreakpointObserver,
               private router: Router) {
-    switch (this.restApi.domanda.stato) {
+    switch (this.restApi.operazioneAttuale) {
       case 0:
         this.statoDomanda = 'Da inviare';
         break;
@@ -57,16 +59,11 @@ export class UserComponent  {
     return false;
   }
 
-  MenuStatoDomanda() {
-    this.menuInfoState = !this.menuInfoState;
-  }
-
-  MenuStatoMain() {
-    this.menuMainInfo = !this.menuMainInfo;
-  }
-
-  MenuStatoAltro() {
-    this.menuAltroInfo = !this.menuAltroInfo;
+  print() {
+    this.topbarDrawer.toggle();
+    setTimeout(() => {
+      (window as any).print();
+    }, 400);
   }
 
   MenuIconState() {
@@ -93,8 +90,6 @@ export class UserComponent  {
   Logout() {
     this.authService.logout();
   }
-
-
 
   closeDialog() {
     this.topbarDrawer.toggle();

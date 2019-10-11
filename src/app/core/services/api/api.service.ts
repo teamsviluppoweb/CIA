@@ -38,6 +38,7 @@ export class ApiService {
   private handleError: HandleError;
 
   domanda: DomandaModel;
+  operazioneAttuale;
 
   constructor(private http: HttpClient, private router: Router, httpErrorHandler: HttpErrorHandler, private d: DomandaModel) {
     this.domanda = d;
@@ -190,6 +191,7 @@ export class ApiService {
 
     return this.http.get<DomandaObject>(environment.endpoints.backendLocation + environment.endpoints.visualizzaDomanda, options).pipe(
          tap( (data: DomandaObject) => {
+             this.operazioneAttuale = data['operazione'];
             const response = data.domanda;
             this.domanda.id = response.id;
             this.domanda.idDomanda = response.idDomanda;
