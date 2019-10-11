@@ -1,6 +1,5 @@
 <div class="container" [formGroup]="form">
     <form formGroupName="anagrafica">
-        <h2>La tua domanda</h2>
         <mat-card>
             <mat-card-header>
             </mat-card-header>
@@ -15,6 +14,7 @@
                             <label>
                                 <input name="cognome"
                                        matInput
+                                       readonly
                                        formControlName="cognome"
                                 >
                             </label>
@@ -24,7 +24,7 @@
                             <mat-label>Nome</mat-label>
                             <label>
                                 <input name="nome"
-                                       matInput
+                                       matInput readonly
                                        formControlName="nome"
                                 >
                             </label>
@@ -34,7 +34,7 @@
                             <mat-label>Codice fiscale</mat-label>
                             <label>
                                 <input name="codice-fiscale"
-                                       matInput
+                                       matInput readonly
                                        formControlName="codiceFiscale"
                                 >
                             </label>
@@ -49,7 +49,7 @@
                             <mat-label>Comune di nascita</mat-label>
                             <label>
                                 <input name="comune-di-nascita"
-                                       matInput
+                                       matInput readonly
                                        formControlName="luogo"
                                 >
                             </label>
@@ -59,7 +59,7 @@
                             <mat-label>Domicilio</mat-label>
                             <label>
                                 <input name="domicilio"
-                                       matInput
+                                       matInput readonly
                                        formControlName="luogo"
                                 >
                             </label>
@@ -67,7 +67,7 @@
 
                         <mat-form-field appearance="outline" fxFlex="0 0 30" fxFlex.xs="auto">
                             <mat-label>Data di nascita</mat-label>
-                            <input matInput [matDatepicker]="picker" placeholder="Data nascita" formControlName="dataNascita">
+                            <input matInput readonly [matDatepicker]="picker" placeholder="Data nascita" formControlName="dataNascita">
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
 
@@ -80,7 +80,7 @@
                             <mat-label>Telefono</mat-label>
                             <label>
                                 <input name="telefono"
-                                       matInput
+                                       matInput readonly
                                        formControlName="telefono"
                                 >
                             </label>
@@ -90,7 +90,7 @@
                             <mat-label>mail</mat-label>
                             <label>
                                 <input name="mail"
-                                       matInput
+                                       matInput readonly
                                        formControlName="email"
                                 >
                             </label>
@@ -103,7 +103,7 @@
                             <mat-label>Qualifica</mat-label>
                             <label>
                                 <input name="qualifica"
-                                       matInput
+                                       matInput readonly
                                        formControlName="qualifica"
                                 >
                             </label>
@@ -113,7 +113,7 @@
                             <mat-label>Sede</mat-label>
                             <label>
                                 <input name="sede"
-                                       matInput
+                                       matInput readonly
                                        formControlName="sede"
                                 >
                             </label>
