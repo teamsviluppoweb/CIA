@@ -9,7 +9,7 @@
     </mat-step>
 
 
-    <mat-step label="Dichiarazioni" [stepControl]="dichiarazioneValidity">
+    <mat-step label="Dichiarazioni" *ngIf="displayDichiarazioni" [stepControl]="dichiarazioneValidity">
     <app-step-dichiarazoini [parent]="moduloDomanda"></app-step-dichiarazoini>
     </mat-step>
 

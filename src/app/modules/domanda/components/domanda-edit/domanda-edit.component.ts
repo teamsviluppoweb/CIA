@@ -21,7 +21,12 @@ export class DomandaEditComponent implements OnInit {
   qualificaSedeValidity;
   dichiarazioneValidity;
 
+  displayDichiarazioni = true;
+
   constructor(private fb: FormBuilder, private restApi: ApiService, private router: Router) {
+
+    this.displayDichiarazioni = (this.restApi.domanda.stato === 0);
+
     this.moduloDomanda = this.fb.group({
       anagrafica: this.fb.group({
         nome: [''],
