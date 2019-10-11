@@ -1,28 +1,34 @@
 <form [formGroup]="moduloDomanda"  >
   <mat-vertical-stepper #stepper [linear]="true">
     <mat-step label="Informazioni personali" [stepControl]="anagraficaValidity">
+      <ng-template matStepLabel><h2 class="stepper-title">Informazioni personali</h2></ng-template>
       <app-step-anagrafica  [parent]="moduloDomanda"></app-step-anagrafica>
     </mat-step>
 
     <mat-step label="Qualifica e Sede giuridica" [stepControl]="qualificaSedeValidity">
+      <ng-template matStepLabel><h2 class="stepper-title">Qualifica e Sede giuridica</h2></ng-template>
       <app-step-qualifica-sede [parent]="moduloDomanda"  ></app-step-qualifica-sede>
     </mat-step>
 
 
     <mat-step label="Dichiarazioni" *ngIf="displayDichiarazioni" [stepControl]="dichiarazioneValidity">
-    <app-step-dichiarazoini [parent]="moduloDomanda"></app-step-dichiarazoini>
+      <ng-template matStepLabel><h2 class="stepper-title">Dichiarazioni</h2></ng-template>
+      <app-step-dichiarazoini [parent]="moduloDomanda"></app-step-dichiarazoini>
     </mat-step>
 
     <mat-step label="Titoli di studio valutabili">
+      <ng-template matStepLabel><h2 class="stepper-title">Titoli di studio valutabili</h2></ng-template>
       <app-step-titoli-di-studio></app-step-titoli-di-studio>
     </mat-step>
 
     <mat-step label="Corsi di formazione">
+      <ng-template matStepLabel><h2 class="stepper-title">Corsi di formazione</h2></ng-template>
       <app-step-corsi-di-formazione></app-step-corsi-di-formazione>
     </mat-step>
 
 
     <mat-step label="Invia Domanda">
+      <ng-template matStepLabel><h2 class="stepper-title">Invia domanda</h2></ng-template>
       <button (click)="inviaDomanda()">Submit</button>
     </mat-step>
 

@@ -2,7 +2,7 @@ import {Observable, of} from 'rxjs';
 import {CanActivate, Router} from '@angular/router';
 import {Injectable} from '@angular/core';
 import {ApiService} from '../../services/api/api.service';
-import {map} from 'rxjs/operators';
+import {delay, map} from 'rxjs/operators';
 
 
 @Injectable({
@@ -17,7 +17,10 @@ import {map} from 'rxjs/operators';
 
     canActivate(): Observable<boolean> | Promise<boolean> | boolean {
 
+        console.log('ok');
+
         return this.restApi.getDomanda(false, true).pipe(
+            delay(2000),
             map( (x) => {
                 if (x['operazione'] === 0) {
                     console.log('permissione not ok');
