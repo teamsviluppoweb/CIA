@@ -17,11 +17,11 @@ export class PaginaIntermediaComponent implements OnInit {
   constructor(private restApi: ApiService,
               private router: Router)  {
     this.restApi.getDomanda().subscribe(
-        (x: DomandaModel) => {
-          x =  x.domanda;
+        (x) => {
+          x =  x['domanda'];
           this.nomeCognomeCandidato = x.anagCandidato.cognome + ' ' + x.anagCandidato.nome;
-          this.dataInvio = x.dataInvio;
-          this.utlimaModifica = x.dataModifica;
+          this.dataInvio = x['dataInvio'];
+          this.utlimaModifica = x['dataModifica'];
 
           if (this.restApi.operazioneAttuale === 1) {
             this.statoDomanda = 'Inviata (modificabile)';
