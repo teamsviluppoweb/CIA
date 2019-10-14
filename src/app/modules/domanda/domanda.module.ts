@@ -4,7 +4,6 @@ import {CommonModule} from '@angular/common';
 import {SharedModule} from '../../shared/modules/shared.module';
 
 import {
-  DomandaEditComponent,
   StepAnagraficaComponent,
   StepQualificaSedeComponent,
   StepTitoliDiStudioComponent,
@@ -15,6 +14,7 @@ import {
 import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 import { VisualizzaDomandaComponent } from './components';
 import { PaginaIntermediaComponent } from './components/pagina-intermedia/pagina-intermedia.component';
+import {DomandaEditComponent} from "./components/domanda-edit/domanda-edit.component";
 
 
 

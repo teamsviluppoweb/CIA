@@ -31,6 +31,7 @@ export class DomandaModel implements DomandaInterface {
         versione: number;
         stato: number;
         dataInvio: string;
+        dataModifica: string;
         anagCandidato: AnagCandidatoModel;
         protocollo: ProtocolloModel;
         titoliStudioPosseduti?: (TitoliStudioPossedutiModel)[] | null;

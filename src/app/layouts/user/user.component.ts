@@ -5,7 +5,7 @@ import {map, share} from "rxjs/operators";
 import {ApiService} from "../../core/services/api/api.service";
 import {MatDrawer} from "@angular/material";
 import {Router} from "@angular/router";
-import {AuthService} from "../../core/services";
+import {AuthService} from "../../core/services/auth-service/auth.service";
 
 
 
