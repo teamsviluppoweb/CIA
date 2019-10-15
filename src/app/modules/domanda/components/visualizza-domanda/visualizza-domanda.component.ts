@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {MatTable} from '@angular/material';
-import {Corsi, Formazione} from '../../../../core/models/api.interface';
+import {Corsi, Formazione, StatoDOmandaObject} from '../../../../core/models/api.interface';
 import {Observable, of} from 'rxjs';
 import {TitoliStudioPossedutiInterface} from '../../../../core/models/domanda.interface';
 import {DomandaObject} from '../../../../core/models';
@@ -72,6 +72,15 @@ export class VisualizzaDomandaComponent implements OnInit {
             qualifica: [x.domanda.anagCandidato.qualificaAttuale.desc],
             sede: [x.domanda.anagCandidato.sedeAttuale.desc]
           });
+
+          // Invio lo stato della domanda
+          const stato: StatoDOmandaObject = {
+            inviataInData: x.domanda.dataInvio,
+            ultimaModifica: x.domanda.dataModifica,
+            statoDomanda: x.operazione,
+          };
+
+          this.restApi.sendStato(stato);
         }
     );
 

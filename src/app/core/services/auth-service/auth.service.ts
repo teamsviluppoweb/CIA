@@ -3,6 +3,8 @@ import {Router} from '@angular/router';
 import {Observable, of} from 'rxjs';
 import {catchError, first, map} from 'rxjs/operators';
 import {ApiService} from "../api/api.service";
+import {StatoDOmandaObject} from "../../models/api.interface";
+import {DomandaObject} from "../../models";
 
 @Injectable({
   providedIn: 'root'
@@ -32,10 +34,18 @@ export class AuthService {
 
   validateJwt(): Observable<any> {
     return this.restApi.getDomanda(true,false).pipe(
-        map( (response) => {
+        map( (x: DomandaObject) => {
 
+          // Invio lo stato della domanda
+          const stato: StatoDOmandaObject = {
+            inviataInData: x.domanda.dataInvio,
+            ultimaModifica: x.domanda.dataModifica,
+            statoDomanda: x.operazione,
+          };
+
+          this.restApi.sendStato(stato);
             // Se il token è sbagliato ci pensa l'interceptor a fare il logout all'utente
-            return true;
+          return true;
         }),
         catchError((err: Response) => {
           return of(false);

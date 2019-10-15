@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {Router} from '@angular/router';
 import {catchError, map, tap} from 'rxjs/operators';
 import {HandleError, HttpErrorHandler} from '..';
 import {
-  ComuniLSt,
-  Corsi,
-  CorsiApiLst,
-  Formazione, ProvinceLSt,
-  QualificaSede,
-  QualificheApiLst,
-  SediApiLSt,
-  TipologiaTitoliDiStudioLSt, TitoliDiStudioIndirizzoLSt, TitoliDiStudioLSt
+    ComuniLSt,
+    Corsi,
+    CorsiApiLst,
+    Formazione, ProvinceLSt,
+    QualificaSede,
+    QualificheApiLst,
+    SediApiLSt, StatoDOmandaObject,
+    TipologiaTitoliDiStudioLSt, TitoliDiStudioIndirizzoLSt, TitoliDiStudioLSt
 } from '../../models/api.interface';
 import {DomandaInterface} from '../../models/domanda.interface';
 import {DomandaModel, DomandaObject} from '../../models';
@@ -40,11 +40,24 @@ export class ApiService {
   domanda: DomandaModel;
   operazioneAttuale;
 
+  private statoDomandaObj = new Subject<any>();
+
   constructor(private http: HttpClient, private router: Router, httpErrorHandler: HttpErrorHandler, private d: DomandaModel) {
     this.domanda = d;
     this.handleError = httpErrorHandler.createHandleError('ApiService');
   }
 
+    sendStato(message: StatoDOmandaObject) {
+        this.statoDomandaObj.next({ text: message });
+    }
+
+    clearStato() {
+        this.statoDomandaObj.next();
+    }
+
+    getMessage(): Observable<any> {
+        return this.statoDomandaObj.asObservable();
+    }
 
   getListaCorsi(): Observable<any[] | CorsiApiLst[]> {
     const refresh = false;

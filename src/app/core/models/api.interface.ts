@@ -62,3 +62,8 @@ export interface ComuniLSt {
   codiceProvincia: string;
 }
 
+export interface StatoDOmandaObject {
+  statoDomanda: any;
+  inviataInData: any;
+  ultimaModifica: any;
+}

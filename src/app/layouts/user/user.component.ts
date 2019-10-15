@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {map, share, timestamp} from "rxjs/operators";
 import {ApiService} from "../../core/services/api/api.service";
@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../../core/services/auth-service/auth.service";
 import {DomandaObject} from "../../core/models";
 import * as moment from 'moment';
+import {StatoDOmandaObject} from "../../core/models/api.interface";
 
 
 @Component({
@@ -27,6 +28,9 @@ export class UserComponent  {
   menuMainInfo = true;
   menuAltroInfo = true;
 
+  subscriptionStato: Subscription;
+
+
   utente: string;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -39,26 +43,32 @@ export class UserComponent  {
               private breakpointObserver: BreakpointObserver,
               private router: Router) {
 
-    this.restApi.getDomanda(false, false).subscribe(
-        (x: DomandaObject) => {
-          this.inviataInData = moment(x.domanda.dataInvio).lang("it-IT").format('dddd d MMMM YYYY HH:mm');
-          this.ultimaModifica = moment(x.domanda.dataModifica).lang("it-IT").format('dddd d MMMM YYYY HH:mm');
-        }
-    );
+    this.subscriptionStato =  this.restApi.getMessage().subscribe((message: StatoDOmandaObject) => {
+      if (message) {
+        message = message['text'];
+        this.inviataInData = moment(message.inviataInData).lang("it-IT").format('dddd d MMMM YYYY HH:mm');
+        this.ultimaModifica = moment(message.ultimaModifica).lang("it-IT").format('dddd d MMMM YYYY HH:mm');
 
-    switch (this.restApi.operazioneAttuale) {
-      case 0:
-        this.statoDomanda = 'Da inviare';
-        break;
-      case 1:
-        this.statoDomanda = 'Inviata (modificabile)';
-        break;
-      case 2:
-        this.statoDomanda = 'Inviata (non modificabile)';
-        break;
-      default:
-        this.statoDomanda = '';
-    }
+
+        switch (message.statoDomanda as number) {
+          case 0:
+            this.statoDomanda = 'Da inviare';
+            break;
+          case 1:
+            this.statoDomanda = 'Inviata (modificabile)';
+            break;
+          case 2:
+            this.statoDomanda = 'Inviata (non modificabile)';
+            break;
+          default:
+            this.statoDomanda = '';
+        }
+
+      } else {
+        // clear messages when empty message received
+        message = null;
+      }
+    });
 
     this.utente = ' ' + this.restApi.domanda.anagCandidato.nome + ' ' + this.restApi.domanda.anagCandidato.cognome;
   }
