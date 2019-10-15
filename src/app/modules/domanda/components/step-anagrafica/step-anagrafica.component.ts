@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm} from '@angular/forms';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {ErrorStateMatcher, MatStepper} from "@angular/material";
+import * as moment from 'moment';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class StepAnagraficaComponent implements OnInit {
           this.anagrafica.patchValue({
             nome: this.restApi.domanda.anagCandidato.nome,
             cognome: this.restApi.domanda.anagCandidato.cognome,
-            dataNascita: this.restApi.domanda.anagCandidato.dataNascita,
+            dataNascita: [moment(this.restApi.domanda.anagCandidato.dataNascita).format('DD-MM-YYYY')],
             comuneNascita: this.restApi.domanda.anagCandidato.comuneNascita.nome + ' ' + this.restApi.domanda.anagCandidato.comuneNascita.codiceProvincia,
             domicilio: this.restApi.domanda.anagCandidato.domicilio,
             codiceFiscale: this.restApi.domanda.anagCandidato.codiceFiscale,
