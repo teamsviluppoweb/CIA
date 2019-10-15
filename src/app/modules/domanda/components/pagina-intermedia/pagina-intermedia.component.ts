@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {DomandaModel, DomandaObject} from '../../../../core/models';
 import {Router} from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-pagina-intermedia',
@@ -16,11 +17,11 @@ export class PaginaIntermediaComponent implements OnInit {
   statoDomanda;
   constructor(private restApi: ApiService,
               private router: Router)  {
-    this.restApi.getDomanda().subscribe(
+    this.restApi.getDomanda(false,false).subscribe(
         (x: DomandaObject) => {
           this.nomeCognomeCandidato = x.domanda.anagCandidato.cognome + ' ' + x.domanda.anagCandidato.nome;
-          this.dataInvio = x.domanda.dataInvio;
-          this.utlimaModifica = x.domanda.dataModifica;
+          this.dataInvio = moment(x.domanda.dataInvio).lang("it-IT").format('dddd d MMMM YYYY HH:mm');
+          this.utlimaModifica = moment(x.domanda.dataModifica).lang("it-IT").format('dddd d MMMM YYYY HH:mm');
 
           if (this.restApi.operazioneAttuale === 1) {
             this.statoDomanda = 'Inviata (modificabile)';

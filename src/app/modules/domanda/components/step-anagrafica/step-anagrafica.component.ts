@@ -22,7 +22,7 @@ export class StepAnagraficaComponent implements OnInit {
   ngOnInit() {
     this.onChangesForm();
 
-    this.restApi.getDomanda().subscribe(
+    this.restApi.getDomanda(false, false).subscribe(
         (data) => {
 
           this.anagrafica.patchValue({

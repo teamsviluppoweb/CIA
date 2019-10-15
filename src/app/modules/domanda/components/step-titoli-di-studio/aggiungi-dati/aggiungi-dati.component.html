@@ -1,4 +1,4 @@
-
+<mat-dialog-content>
 <h3>Inserisci qui le informazioni non risultanti in sipec info</h3>
 
 
@@ -158,15 +158,14 @@
       </mat-error>
     </mat-form-field>
   </div>
+</div>
+</mat-dialog-content>
 
-  <div fxLayout="row"  fxLayoutGap="20px">
-    <button mat-flat-button color="primary"
-            [disabled]="!isFormReady()"
-            (click)="sendData()"
-            [mat-dialog-close]="dataDialog"> Inserisci</button>
+<div fxLayout="row"  fxLayoutGap="20px">
+  <button mat-flat-button color="primary"
+          [disabled]="!isFormReady()"
+          (click)="sendData()"
+          [mat-dialog-close]="dataDialog"> Inserisci</button>
 
-    <button mat-flat-button id="discard" (click)="onNoClick()" >Esci</button>
-  </div>
-
-
+  <button mat-flat-button id="discard" (click)="onNoClick()" >Esci</button>
 </div>

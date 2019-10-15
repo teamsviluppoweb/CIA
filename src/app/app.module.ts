@@ -14,6 +14,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import {MAT_DATE_LOCALE} from "@angular/material";
+import {RouterModule} from "@angular/router";
+import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import {MAT_DATE_LOCALE} from "@angular/material";
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'it-IT'},
-  ],
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

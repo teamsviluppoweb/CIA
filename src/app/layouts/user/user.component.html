@@ -16,11 +16,18 @@
                 <mat-icon (click)="CloseNavBar()">close</mat-icon>
             </mat-toolbar>
 
-            <p style="font-weight: 200; text-align: center; margin-bottom: 1px; padding-bottom: 0">INFO ULTIMA DOMANDA</p>
+            <p style="font-weight: 200; text-align: center; margin-bottom: 1px; padding-bottom: 0"><mat-icon style="padding-right: 1em;">info</mat-icon> INFO DOMANDA</p>
             <mat-nav-list>
+
+
                 <a mat-list-item style="font-size: 14px">
-                    <mat-icon style="padding-right: 1em;">info</mat-icon>
-                    {{statoDomanda}}</a>
+                    <p>Data invio:&nbsp;</p>{{inviataInData}}</a>
+
+                <a mat-list-item style="font-size: 14px">
+                    <p>Ultima modifica:&nbsp;</p>{{ultimaModifica }}</a>
+
+                <a mat-list-item style="font-size: 14px">
+                    <p>Stato:&nbsp;</p>{{statoDomanda}}</a>
             </mat-nav-list>
 
             <mat-divider style="margin: 10px"></mat-divider>

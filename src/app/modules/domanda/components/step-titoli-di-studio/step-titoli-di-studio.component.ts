@@ -37,7 +37,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
     /*
     i flag editing mi servono per gestire la logica nel modal, durante il popolamento delle dropdown list dipendenti
      */
-    this.restApi.getDomanda().subscribe( x => {
+    this.restApi.getDomanda(false,false).subscribe( x => {
         if (this.restApi.domanda.stato === 1) {
           this.restApi.domanda.titoliStudioPosseduti.map(t => {
             const obj = {

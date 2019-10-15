@@ -184,7 +184,7 @@ export class ApiService {
     );
   }
 
-  getDomanda(observe = false, refresh = false): Observable<any[] | DomandaObject | HttpResponse<DomandaObject>> {
+  getDomanda(observe = false, refresh): Observable<any[] | DomandaObject | HttpResponse<DomandaObject>> {
 
     const options = createHttpOptions(refresh, false);
 

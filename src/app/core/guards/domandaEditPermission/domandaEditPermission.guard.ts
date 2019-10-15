@@ -17,7 +17,7 @@ import {map} from 'rxjs/operators';
 
     canActivate(): Observable<boolean> | Promise<boolean> | boolean {
 
-        return this.restApi.getDomanda().pipe(
+        return this.restApi.getDomanda(false,false).pipe(
             map( (x) => {
                 if (x['operazione'] === 2) {
                     console.log('====');

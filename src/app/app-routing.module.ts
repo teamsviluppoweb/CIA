@@ -19,6 +19,7 @@ const routes: Routes = [
   {
     path: 'guest',
     component: GuestComponent,
+    canActivate: [AuthGuard], // Should be replaced with actual auth guard
     loadChildren: () => import('src/app/modules/guest/guest.module').then(m => m.GuestModule)
   },
   // Fallback when no prior routes is matched
@@ -26,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: false})],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule],
   providers: []
 })

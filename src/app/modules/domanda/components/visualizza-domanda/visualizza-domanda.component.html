@@ -5,7 +5,7 @@
             </mat-card-header>
             <mat-card-content>
                 <div fxLayout="column" fxLayoutGap="10px" >
-                    <h4>Anagrafica</h4>
+                    <h2>Anagrafica</h2>
 
                     <div fxLayout="row" fxLayout.xs="column" >
 
@@ -124,7 +124,7 @@
                 </div>
 
                 <div class="container" fxLayout="column">
-                    <h4>Titoli dichiarati</h4>
+                    <h2>Titoli dichiarati</h2>
                     <form>
 
                         <table  *ngIf="visualizzaTitoli"
@@ -163,7 +163,7 @@
 
                 </div>
 
-                <h4>Corsi aggiornamento dichiarati</h4>
+                <h2>Corsi aggiornamento dichiarati</h2>
                 <table *ngIf="visualizzaCorsi"
                         [dataSource]="corsiDichiarati"
                        cdkDropList

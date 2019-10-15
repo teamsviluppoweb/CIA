@@ -5,6 +5,7 @@ import {MatTable} from '@angular/material';
 import {Corsi, Formazione} from '../../../../core/models/api.interface';
 import {Observable, of} from 'rxjs';
 import {TitoliStudioPossedutiInterface} from '../../../../core/models/domanda.interface';
+import {DomandaObject} from '../../../../core/models';
 
 
 // tslint:disable-next-line:max-line-length
@@ -34,30 +35,54 @@ export class VisualizzaDomandaComponent implements OnInit {
 
 
   constructor(private formBuilder: FormBuilder, private restApi: ApiService) {
+
+
     this.visualizzaCorsi = (this.restApi.domanda.corsiAggAmm.length > 0);
     this.visualizzaTitoli = (this.restApi.domanda.titoliStudioPosseduti.length > 0);
 
     this.form = this.formBuilder.group({
       anagrafica: this.formBuilder.group({
-        codiceFiscale: [this.restApi.domanda.anagCandidato.codiceFiscale],
-        cognome: [this.restApi.domanda.anagCandidato.cognome],
-        nome: [this.restApi.domanda.anagCandidato.nome],
-        dataNascita: [this.restApi.domanda.anagCandidato.dataNascita],
-        luogo: [(this.restApi.domanda.anagCandidato.comuneNascita.nome + ' (' + this.restApi.domanda.anagCandidato.comuneNascita.codiceProvincia + ')')],
-        domicilio: [this.restApi.domanda.anagCandidato.domicilio],
-        telefono: [this.restApi.domanda.anagCandidato.telefono],
-        email: [this.restApi.domanda.anagCandidato.email],
-        qualifica: [this.restApi.domanda.anagCandidato.qualificaAttuale.desc],
-        sede: [this.restApi.domanda.anagCandidato.sedeAttuale.desc]
+        codiceFiscale: [],
+        cognome: [],
+        nome: [],
+        dataNascita: [],
+        luogo: [],
+        domicilio: [],
+        telefono: [],
+        email: [],
+        qualifica: [],
+        sede: []
       })
     });
 
     this.titoliDiStudioDichiarati =  this.restApi.domanda.titoliStudioPosseduti;
     this.corsiDichiarati  = this.restApi.domanda.corsiAggAmm;
-}
+
+    this.restApi.getDomanda(false, true).subscribe(
+        (x: DomandaObject) => {
+          this.anagrafica().patchValue({
+            codiceFiscale: [x.domanda.anagCandidato.codiceFiscale],
+            cognome: [x.domanda.anagCandidato.cognome],
+            nome: [x.domanda.anagCandidato.nome],
+            dataNascita: [x.domanda.anagCandidato.dataNascita],
+            luogo: [(x.domanda.anagCandidato.comuneNascita.nome + ' (' + x.domanda.anagCandidato.comuneNascita.codiceProvincia + ')')],
+            domicilio: [x.domanda.anagCandidato.domicilio],
+            telefono: [x.domanda.anagCandidato.telefono],
+            email: [x.domanda.anagCandidato.email],
+            qualifica: [x.domanda.anagCandidato.qualificaAttuale.desc],
+            sede: [x.domanda.anagCandidato.sedeAttuale.desc]
+          });
+        }
+    );
+
+  }
 
   ngOnInit() {
 
+  }
+
+  anagrafica() {
+    return this.form.get('anagrafica');
   }
 
 }

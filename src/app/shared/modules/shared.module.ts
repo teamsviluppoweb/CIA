@@ -12,7 +12,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     ReactiveFormsModule,
     RouterModule,
     FlexLayoutModule,
-    MaterialModule
+    MaterialModule,
 
   ],
   exports: [
@@ -20,7 +20,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     ReactiveFormsModule,
     RouterModule,
     FlexLayoutModule,
-    MaterialModule
+    MaterialModule,
   ]
 })
 export class SharedModule { }

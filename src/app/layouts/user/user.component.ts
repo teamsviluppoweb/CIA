@@ -1,12 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
-import {map, share} from "rxjs/operators";
+import {map, share, timestamp} from "rxjs/operators";
 import {ApiService} from "../../core/services/api/api.service";
 import {MatDrawer} from "@angular/material";
 import {Router} from "@angular/router";
 import {AuthService} from "../../core/services/auth-service/auth.service";
-
+import {DomandaObject} from "../../core/models";
+import * as moment from 'moment';
 
 
 @Component({
@@ -19,6 +20,9 @@ export class UserComponent  {
   @ViewChild('drawer', { static: true }) topbarDrawer: MatDrawer;
 
   statoDomanda;
+  inviataInData;
+  ultimaModifica;
+
   menuInfoState = true;
   menuMainInfo = true;
   menuAltroInfo = true;
@@ -34,6 +38,14 @@ export class UserComponent  {
               private authService: AuthService,
               private breakpointObserver: BreakpointObserver,
               private router: Router) {
+
+    this.restApi.getDomanda(false, false).subscribe(
+        (x: DomandaObject) => {
+          this.inviataInData = moment(x.domanda.dataInvio).lang("it-IT").format('dddd d MMMM YYYY HH:mm');
+          this.ultimaModifica = moment(x.domanda.dataModifica).lang("it-IT").format('dddd d MMMM YYYY HH:mm');
+        }
+    );
+
     switch (this.restApi.operazioneAttuale) {
       case 0:
         this.statoDomanda = 'Da inviare';
