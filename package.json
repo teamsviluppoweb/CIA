@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "local-start": "ng serve --host 172.16.26.72 --configuration=uffweb",
-    "build": "ng build --prod -configuration=uffweb",
+    "build": "ng build --prod --configuration=uffweb",
     "test": "ng test --code-coverage ",
     "lint": "ng lint",
     "e2e": "ng e2e"
