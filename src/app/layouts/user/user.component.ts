@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../../core/services/auth-service/auth.service";
 import {DomandaObject} from "../../core/models";
 import * as moment from 'moment';
-import {StatoDOmandaObject} from "../../core/models/api.interface";
+import {StatoDomandaObject} from "../../core/models/api.interface";
 
 
 @Component({
@@ -43,7 +43,7 @@ export class UserComponent  {
               private breakpointObserver: BreakpointObserver,
               private router: Router) {
 
-    this.subscriptionStato =  this.restApi.getMessage().subscribe((message: StatoDOmandaObject) => {
+    this.subscriptionStato =  this.restApi.getMessage().subscribe((message: StatoDomandaObject) => {
       if (message) {
         message = message['text'];
         this.inviataInData = moment(message.inviataInData).lang("it-IT").format('dddd d MMMM YYYY HH:mm');

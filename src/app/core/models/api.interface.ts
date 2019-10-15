@@ -62,7 +62,7 @@ export interface ComuniLSt {
   codiceProvincia: string;
 }
 
-export interface StatoDOmandaObject {
+export interface StatoDomandaObject {
   statoDomanda: any;
   inviataInData: any;
   ultimaModifica: any;

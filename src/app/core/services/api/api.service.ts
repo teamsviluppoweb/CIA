@@ -11,7 +11,7 @@ import {
     Formazione, ProvinceLSt,
     QualificaSede,
     QualificheApiLst,
-    SediApiLSt, StatoDOmandaObject,
+    SediApiLSt, StatoDomandaObject,
     TipologiaTitoliDiStudioLSt, TitoliDiStudioIndirizzoLSt, TitoliDiStudioLSt
 } from '../../models/api.interface';
 import {DomandaInterface} from '../../models/domanda.interface';
@@ -47,7 +47,7 @@ export class ApiService {
     this.handleError = httpErrorHandler.createHandleError('ApiService');
   }
 
-    sendStato(message: StatoDOmandaObject) {
+    sendStato(message: StatoDomandaObject) {
         this.statoDomandaObj.next({ text: message });
     }
 
@@ -214,6 +214,16 @@ export class ApiService {
             this.domanda.anagCandidato = response.anagCandidato;
             this.domanda.titoliStudioPosseduti = response.titoliStudioPosseduti;
             this.domanda.corsiAggAmm = response.corsiAggAmm;
+
+
+             // Invio lo stato della domanda
+             const stato: StatoDomandaObject = {
+                 inviataInData: data.domanda.dataInvio,
+                 ultimaModifica: data.domanda.dataModifica,
+                 statoDomanda: data.operazione,
+             };
+
+             this.sendStato(stato);
 
          }),
          catchError(this.handleError('Get domanda', []))
