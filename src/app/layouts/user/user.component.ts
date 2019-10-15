@@ -58,7 +58,7 @@ export class UserComponent  {
             this.statoDomanda = 'Inviata (modificabile)';
             break;
           case 2:
-            this.statoDomanda = 'Inviata (non modificabile)';
+            this.statoDomanda = 'Inviata (non modificabile concorso scaduto)';
             break;
           default:
             this.statoDomanda = '';
@@ -99,15 +99,6 @@ export class UserComponent  {
     this.topbarDrawer.toggle();
   }
 
-  miaDomanda() {
-    this.router.navigate(['domanda/visualizza']);
-    this.topbarDrawer.toggle();
-
-  }
-  modificaDOmanda() {
-    this.router.navigate(['domanda/edit']);
-    this.topbarDrawer.toggle();
-  }
 
   Logout() {
     this.authService.logout();

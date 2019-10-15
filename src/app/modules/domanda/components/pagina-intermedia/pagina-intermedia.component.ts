@@ -15,6 +15,7 @@ export class PaginaIntermediaComponent implements OnInit {
   dataInvio;
   utlimaModifica;
   statoDomanda;
+
   constructor(private restApi: ApiService,
               private router: Router)  {
     this.restApi.getDomanda(false,false).subscribe(

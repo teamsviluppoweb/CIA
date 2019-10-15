@@ -21,26 +21,31 @@
 
 
                 <a mat-list-item style="font-size: 14px">
-                    <p>Data invio:&nbsp;</p>{{inviataInData}}</a>
+                    <b>Data invio:&nbsp;</b>{{inviataInData}}</a>
 
                 <a mat-list-item style="font-size: 14px">
-                    <p>Ultima modifica:&nbsp;</p>{{ultimaModifica }}</a>
+                    <b>Ultima modifica:&nbsp;</b>{{ultimaModifica }}</a>
 
                 <a mat-list-item style="font-size: 14px">
-                    <p>Stato:&nbsp;</p>{{statoDomanda}}</a>
+                    <b>Stato:&nbsp;</b>{{statoDomanda}}</a>
             </mat-nav-list>
 
             <mat-divider style="margin: 10px"></mat-divider>
 
             <p style="font-weight: 200; text-align: center; margin-bottom: 1px; padding-bottom: 0">Azioni Domanda</p>
             <mat-nav-list *ngIf="menuMainInfo">
-                <a (click)="miaDomanda()" mat-list-item style="font-size: 14px">
+                <a [routerLink]="['/domanda/visualizza']" mat-list-item style="font-size: 14px">
                     <mat-icon style="padding-right: 1em;">notes</mat-icon>
                     Visualizza domanda</a>
-                <a (click)="modificaDOmanda()" mat-list-item style="font-size: 14px">
+                <a [routerLink]="['/domanda/edit']" mat-list-item style="font-size: 14px">
                     <mat-icon style="padding-right: 1em;">edit</mat-icon>
                     Modifica domanda
                 </a>
+                <a [routerLink]="['/domanda/info']" mat-list-item style="font-size: 14px">
+                    <mat-icon style="padding-right: 1em;">info</mat-icon>
+                    Info domanda
+                </a>
+
                 <a *ngIf="showPrint()" (click)="print()" mat-list-item style="font-size: 14px">
                     <mat-icon style="padding-right: 1em;">print</mat-icon>
                     Stampa domanda</a>
