@@ -21,8 +21,8 @@ export class PaginaIntermediaComponent implements OnInit {
     this.restApi.getDomanda(false,false).subscribe(
         (x: DomandaObject) => {
           this.nomeCognomeCandidato = x.domanda.anagCandidato.cognome + ' ' + x.domanda.anagCandidato.nome;
-          this.dataInvio = moment(x.domanda.dataInvio).lang("it-IT").format('dddd d MMMM YYYY HH:mm');
-          this.utlimaModifica = moment(x.domanda.dataModifica).lang("it-IT").format('dddd d MMMM YYYY HH:mm');
+          this.dataInvio = moment(x.domanda.dataInvio).locale("it-IT").format('dddd d MMMM YYYY HH:mm');
+          this.utlimaModifica = moment(x.domanda.dataModifica).locale("it-IT").format('dddd d MMMM YYYY HH:mm');
 
           if (this.restApi.operazioneAttuale === 1) {
             this.statoDomanda = 'Inviata (modificabile)';

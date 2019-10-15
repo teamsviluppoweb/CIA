@@ -6,6 +6,7 @@ import {Corsi, Formazione, StatoDomandaObject} from '../../../../core/models/api
 import {Observable, of} from 'rxjs';
 import {TitoliStudioPossedutiInterface} from '../../../../core/models/domanda.interface';
 import {DomandaObject} from '../../../../core/models';
+import * as moment from 'moment';
 
 
 // tslint:disable-next-line:max-line-length
@@ -60,11 +61,14 @@ export class VisualizzaDomandaComponent implements OnInit {
 
     this.restApi.getDomanda(false, true).subscribe(
         (x: DomandaObject) => {
+
+          console.log(x);
+
           this.anagrafica().patchValue({
             codiceFiscale: [x.domanda.anagCandidato.codiceFiscale],
             cognome: [x.domanda.anagCandidato.cognome],
             nome: [x.domanda.anagCandidato.nome],
-            dataNascita: [x.domanda.anagCandidato.dataNascita],
+            dataNascita: [moment(x.domanda.anagCandidato.dataNascita).format('DD-MM-YYYY')],
             luogo: [(x.domanda.anagCandidato.comuneNascita.nome + ' (' + x.domanda.anagCandidato.comuneNascita.codiceProvincia + ')')],
             domicilio: [x.domanda.anagCandidato.domicilio],
             telefono: [x.domanda.anagCandidato.telefono],

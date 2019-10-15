@@ -46,8 +46,8 @@ export class UserComponent  {
     this.subscriptionStato =  this.restApi.getMessage().subscribe((message: StatoDomandaObject) => {
       if (message) {
         message = message['text'];
-        this.inviataInData = moment(message.inviataInData).lang("it-IT").format('dddd d MMMM YYYY HH:mm');
-        this.ultimaModifica = moment(message.ultimaModifica).lang("it-IT").format('dddd d MMMM YYYY HH:mm');
+        this.inviataInData = moment(message.inviataInData).locale("it-IT").format('dddd d MMMM YYYY HH:mm');
+        this.ultimaModifica = moment(message.ultimaModifica).locale("it-IT").format('dddd d MMMM YYYY HH:mm');
 
 
         switch (message.statoDomanda as number) {
