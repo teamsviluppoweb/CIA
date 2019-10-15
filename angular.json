@@ -15,7 +15,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "ngx-build-plus:browser",
           "options": {
             "outputPath": "dist/CIA",
             "index": "src/index.html",
@@ -39,7 +39,6 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -57,7 +56,6 @@
                 }
               ]
             },
-
             "dev": {
               "fileReplacements": [
                 {
@@ -130,12 +128,10 @@
                 }
               ]
             }
-
-
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "ngx-build-plus:dev-server",
           "options": {
             "browserTarget": "CIA:build"
           },
@@ -147,7 +143,7 @@
               "browserTarget": "CIA:build:dev"
             },
             "dev": {
-            "browserTarget": "CIA:build:dev"
+              "browserTarget": "CIA:build:dev"
             },
             "uffweb": {
               "browserTarget": "CIA:build:uffweb"
@@ -161,7 +157,7 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "ngx-build-plus:karma",
           "options": {
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
@@ -203,6 +199,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "CIA"
 }
