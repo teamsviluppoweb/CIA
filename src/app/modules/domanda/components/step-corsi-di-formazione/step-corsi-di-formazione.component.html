@@ -3,10 +3,7 @@
   <form>
 
     <table [dataSource]="corsiDichiarati"
-           cdkDropList
            #table
-           [cdkDropListData]="corsiDichiarati"
-           (cdkDropListDropped)="dropTable($event)"
            id="tabDatiDichiarati"
            fxFill mat-table>
 
@@ -71,7 +68,7 @@
       </ng-container>
 
       <tr *matHeaderRowDef="TitoliDiStudioHeaderEdit" mat-header-row></tr>
-      <tr *matRowDef="let row; columns: TitoliDiStudioHeaderEdit; let i = index" mat-row  cdkDrag [cdkDragData]="row"></tr>
+      <tr *matRowDef="let row; columns: TitoliDiStudioHeaderEdit; let i = index" mat-row></tr>
     </table>
 
   </form>

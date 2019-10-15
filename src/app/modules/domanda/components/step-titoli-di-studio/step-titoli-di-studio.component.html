@@ -3,10 +3,7 @@
   <form>
 
     <table [dataSource]="titoliDiStudioDichiarati"
-           cdkDropList
            #table
-           [cdkDropListData]="titoliDiStudioDichiarati"
-           (cdkDropListDropped)="dropTable($event)"
            id="tabDatiDichiarati"
            fxFill mat-table>
 
@@ -52,7 +49,7 @@
 
 
       <tr *matHeaderRowDef="TitoliDiStudioHeader" mat-header-row></tr>
-      <tr *matRowDef="let row; columns: TitoliDiStudioHeader; let i = index" mat-row  cdkDrag [cdkDragData]="row"></tr>
+      <tr *matRowDef="let row; columns: TitoliDiStudioHeader; let i = index" mat-row ></tr>
     </table>
 
   </form>

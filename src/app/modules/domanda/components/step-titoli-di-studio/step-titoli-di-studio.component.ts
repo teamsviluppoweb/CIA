@@ -195,14 +195,6 @@ export class StepTitoliDiStudioComponent implements OnInit {
   }
 
 
-  dropTable(event: CdkDragDrop<Formazione[]>) {
-    const prevIndex = this.titoliDiStudioDichiarati.findIndex((d) => {
-      return d === event.item.data;
-    });
-    moveItemInArray(this.titoliDiStudioDichiarati, prevIndex, event.currentIndex);
-    this.table.renderRows();
-  }
-
   deleteRow(index) {
     this.titoliDiStudioDichiarati.splice(index, 1);
     // trigger updated array in mat data table

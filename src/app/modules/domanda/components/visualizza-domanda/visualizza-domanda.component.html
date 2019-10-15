@@ -130,9 +130,6 @@
 
                         <table  *ngIf="visualizzaTitoli"
                                 [dataSource]="titoliDiStudioDichiarati"
-                               cdkDropList
-                               #table
-                               [cdkDropListData]="titoliDiStudioDichiarati"
                                id="tabDatiDichiarati"
                                fxFill mat-table>
 
@@ -155,7 +152,7 @@
                             </ng-container>
 
                             <tr *matHeaderRowDef="TitoliDiStudioHeader" mat-header-row></tr>
-                            <tr *matRowDef="let row; columns: TitoliDiStudioHeader; let i = index" mat-row  cdkDrag [cdkDragData]="row"></tr>
+                            <tr *matRowDef="let row; columns: TitoliDiStudioHeader; let i = index" mat-row></tr>
                         </table>
                         <p *ngIf="!visualizzaTitoli"> Nessuno</p>
 
@@ -167,9 +164,6 @@
                 <h2>Corsi aggiornamento dichiarati</h2>
                 <table *ngIf="visualizzaCorsi"
                         [dataSource]="corsiDichiarati"
-                       cdkDropList
-                       #table
-                       [cdkDropListData]="corsiDichiarati"
                        fxFill mat-table>
 
 
@@ -211,7 +205,7 @@
 
 
                     <tr *matHeaderRowDef="CorsiHeader" mat-header-row></tr>
-                    <tr *matRowDef="let row; columns: CorsiHeader; let i = index" mat-row  cdkDrag [cdkDragData]="row"></tr>
+                    <tr *matRowDef="let row; columns: CorsiHeader; let i = index" mat-row></tr>
                 </table>
                 <p *ngIf="!visualizzaCorsi"> Nessuno</p>
             </mat-card-content>

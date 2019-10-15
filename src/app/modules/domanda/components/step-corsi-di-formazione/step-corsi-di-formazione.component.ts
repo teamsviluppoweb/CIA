@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatTable} from '@angular/material';
 import {Corsi, Formazione} from '../../../../core/models/api.interface';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {AggiungiCorsiComponent} from './aggiungi-corsi/aggiungi-corsi.component';
 import {ApiService} from '../../../../core/services/api/api.service';
 
@@ -113,16 +112,6 @@ export class StepCorsiDiFormazioneComponent implements OnInit {
     });
   }
 
-
-  dropTable(event: CdkDragDrop<Formazione[]>) {
-    console.log('dio');
-    const prevIndex = this.corsiDichiarati.findIndex((d) => {
-      console.log('yahoo');
-      return d === event.item.data;
-    });
-    moveItemInArray(this.corsiDichiarati, prevIndex, event.currentIndex);
-    this.table.renderRows();
-  }
 
   deleteRow(index) {
     this.corsiDichiarati.splice(index, 1);
