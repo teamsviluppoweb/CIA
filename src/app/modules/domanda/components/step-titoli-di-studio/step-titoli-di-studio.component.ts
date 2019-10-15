@@ -93,6 +93,7 @@ export class StepTitoliDiStudioComponent implements OnInit {
       data: {data: this.titoliDiStudioDichiarati[index]},
     });
 
+
     dialogRef.afterClosed().subscribe(dataDialog => {
       if (dataDialog) {
         if (dataDialog.data.isOkToInsert) {

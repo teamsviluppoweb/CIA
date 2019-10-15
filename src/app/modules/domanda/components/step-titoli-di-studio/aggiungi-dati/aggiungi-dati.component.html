@@ -46,7 +46,7 @@
 
      <!-- TODO: ngIf crea errori non fa caricare la dropdown lista la prima volta -->
      <mat-form-field *ngIf="displayIndirizzi"  appearance="outline"  fxFlex.xs="auto">
-       <mat-label> <mat-icon>edit</mat-icon> Indirizzo titolo studio</mat-label>
+       <mat-label> <mat-icon>edit</mat-icon> Data conseguimento</mat-label>
        <mat-select #singleSelect
                    formControlName="indirizzo"
                    placeholder="Seleziona indirizzo">
@@ -67,8 +67,9 @@
   <div fxLayout="row" fxLayout.xs="column" >
 
     <mat-form-field appearance="outline" fxFlex="0 0 20" fxFlex.xs="auto">
-      <mat-label> <mat-icon>edit</mat-icon> Indirizzo titolo studio</mat-label>
+      <mat-label> <mat-icon>edit</mat-icon> Data conseguimento</mat-label>
       <input name="dataConseguimento"
+              placeholder="dd/mm/yyyy"
                [matDatepicker]="pickerDataConseguimento"
                 matInput
                formControlName="dataConseguimento"
@@ -81,7 +82,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" fxFlex fxFlex.xs="auto">
+    <mat-form-field appearance="outline" fxFlex="0 0 20" fxFlex.xs="auto">
       <mat-label> <mat-icon>edit</mat-icon> Durata anni</mat-label>
       <label>
         <input name="durataAnni"
@@ -95,13 +96,7 @@
       </mat-error>
     </mat-form-field>
 
-
-  </div>
-
-  <div fxLayout="row" fxLayout.xs="column" >
-
-
-    <mat-form-field appearance="outline" fxFlex fxFlex.xs="auto">
+    <mat-form-field appearance="outline" fxFlex="0 0 60" fxFlex.xs="auto">
       <mat-label> <mat-icon>edit</mat-icon> Nome istituto</mat-label>
       <label>
         <input name="istituto"
@@ -114,10 +109,13 @@
         Il campo è <strong>Obbligatorio</strong>
       </mat-error>
     </mat-form-field>
-
   </div>
 
   <div fxLayout="row" fxLayout.xs="column" >
+
+
+
+
 
     <mat-form-field appearance="outline" fxFlex="0 0 50" fxFlex.xs="auto">
       <mat-label> <mat-icon>edit</mat-icon>Provincia istituo</mat-label>
