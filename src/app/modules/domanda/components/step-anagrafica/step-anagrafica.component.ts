@@ -1,14 +1,14 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm} from '@angular/forms';
+import {ChangeDetectionStrategy, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {ApiService} from '../../../../core/services/api/api.service';
-import {ErrorStateMatcher, MatStepper} from "@angular/material";
+import {MatStepper} from "@angular/material";
 import * as moment from 'moment';
 
 
 @Component({
   selector: 'app-step-anagrafica',
   templateUrl: './step-anagrafica.component.html',
-  styleUrls: ['./step-anagrafica.component.scss']
+  styleUrls: ['./step-anagrafica.component.scss'],
 })
 export class StepAnagraficaComponent implements OnInit {
 

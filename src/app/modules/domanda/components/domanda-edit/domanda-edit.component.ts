@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {Router} from '@angular/router';
@@ -7,7 +7,7 @@ import {StepAnagraficaComponent, StepDichiarazoiniComponent, StepQualificaSedeCo
 @Component({
   selector: 'app-domanda-edit',
   templateUrl: './domanda-edit.component.html',
-  styleUrls: ['./domanda-edit.component.scss']
+  styleUrls: ['./domanda-edit.component.scss'],
 })
 export class DomandaEditComponent implements OnInit {
 
@@ -79,6 +79,10 @@ export class DomandaEditComponent implements OnInit {
           console.log(x);
         }
     );
+  }
+
+  DisplayValue() {
+    console.log(this.moduloDomanda.value);
   }
 
 

@@ -1,10 +1,10 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {QualificaSede, QualificheApiLst, SediApiLSt} from '../../../../core/models/api.interface';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm} from '@angular/forms';
+import {QualificheApiLst, SediApiLSt} from '../../../../core/models/api.interface';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {Observable, ReplaySubject, Subject} from 'rxjs';
 import {ErrorStateMatcher, MatSelect, MatStepper} from '@angular/material';
-import {concatMap, filter, map, take, takeUntil} from 'rxjs/operators';
+import {take, takeUntil} from 'rxjs/operators';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -17,7 +17,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 @Component({
   selector: 'app-step-qualifica-sede',
   templateUrl: './step-qualifica-sede.component.html',
-  styleUrls: ['./step-qualifica-sede.component.scss']
+  styleUrls: ['./step-qualifica-sede.component.scss'],
 })
 export class StepQualificaSedeComponent implements OnInit, OnDestroy {
 

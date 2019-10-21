@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {ApiService} from '../../../../../core/services/api/api.service';
@@ -9,7 +9,7 @@ import {tap} from "rxjs/operators";
 @Component({
   selector: 'app-aggiungi-corsi',
   templateUrl: './aggiungi-corsi.component.html',
-  styleUrls: ['./aggiungi-corsi.component.scss']
+  styleUrls: ['./aggiungi-corsi.component.scss'],
 })
 export class AggiungiCorsiComponent implements OnInit {
 

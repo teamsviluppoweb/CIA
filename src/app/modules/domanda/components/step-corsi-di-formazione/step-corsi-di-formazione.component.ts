@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatTable} from '@angular/material';
 import {Corsi, Formazione} from '../../../../core/models/api.interface';
 import {AggiungiCorsiComponent} from './aggiungi-corsi/aggiungi-corsi.component';

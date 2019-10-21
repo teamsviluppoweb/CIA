@@ -22,17 +22,19 @@
     </mat-step>
 
     <mat-step label="Corsi di formazione">
-      <!-- <ng-template matStepLabel><h2 class="stepper-title">Corsi di formazione</h2></ng-template>
-      <app-step-corsi-di-formazione></app-step-corsi-di-formazione> -->
+       <ng-template matStepLabel><h2 class="stepper-title">Corsi di formazione</h2></ng-template>
+      <!--<app-step-corsi-di-formazione></app-step-corsi-di-formazione> -->
       <h2>Corsi di formazione deve essere sincronizzato</h2>
     </mat-step>
 
 
     <mat-step label="Invia Domanda">
       <ng-template matStepLabel><h2 class="stepper-title">Invia domanda</h2></ng-template>
-      <button (click)="inviaDomanda()">Submit</button>
+      <button  class="material-button" color="primary" (click)="inviaDomanda()">Submit</button>
     </mat-step>
 
   </mat-vertical-stepper>
 
 </form>
+
+{{DisplayValue()}}

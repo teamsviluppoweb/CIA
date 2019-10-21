@@ -17,7 +17,6 @@ import {concatMap, filter, map, take, takeUntil} from 'rxjs/operators';
     selector: 'app-aggiungi-dati',
     templateUrl: './aggiungi-dati.component.html',
     styleUrls: ['./aggiungi-dati.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AggiungiDatiComponent implements OnInit, OnDestroy {
 
@@ -247,6 +246,8 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
 
         this.dataDialog.data.isOkToInsert = true;
         this.dataDialog.data.isEditing = false;
+
+
 
         console.log(this.dataDialog.data);
     }

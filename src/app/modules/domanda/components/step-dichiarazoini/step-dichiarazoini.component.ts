@@ -1,11 +1,11 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {MatStepper} from "@angular/material";
 
 @Component({
   selector: 'app-step-dichiarazoini',
   templateUrl: './step-dichiarazoini.component.html',
-  styleUrls: ['./step-dichiarazoini.component.scss']
+  styleUrls: ['./step-dichiarazoini.component.scss'],
 })
 export class StepDichiarazoiniComponent implements OnInit {
 

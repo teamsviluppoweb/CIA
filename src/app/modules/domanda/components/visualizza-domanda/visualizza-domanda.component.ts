@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {MatTable} from '@angular/material';
@@ -16,7 +16,7 @@ const corsiHeaderList = ['nomeCorso', 'durataCorso', 'dataDiConseguimento', 'ist
 @Component({
   selector: 'app-visualizza-domanda',
   templateUrl: './visualizza-domanda.component.html',
-  styleUrls: ['./visualizza-domanda.component.scss']
+  styleUrls: ['./visualizza-domanda.component.scss'],
 })
 export class VisualizzaDomandaComponent implements OnInit {
 

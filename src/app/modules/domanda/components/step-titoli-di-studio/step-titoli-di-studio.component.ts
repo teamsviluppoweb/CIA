@@ -1,11 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatTable} from '@angular/material';
 import {AggiungiDatiComponent} from './aggiungi-dati/aggiungi-dati.component';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {Observable, of} from 'rxjs';
 import {Formazione} from '../../../../core/models/api.interface';
-import { TitoliStudioPossedutiInterface} from '../../../../core/models/domanda.interface';
+import {TitoliStudioPossedutiInterface} from '../../../../core/models/domanda.interface';
 
 // tslint:disable-next-line:max-line-length
 const tabellaHeader = ['anno', 'titolo-di-studio', 'conseguito-presso', 'delete', 'edit'];
@@ -171,6 +170,8 @@ export class StepTitoliDiStudioComponent implements OnInit {
 
           this.titoliDiStudioDichiarati = [dataDialog.data].concat(this.titoliDiStudioDichiarati);
           this.restApi.domanda.titoliStudioPosseduti = this.titoliDiStudioDichiarati;
+
+
 
           // Cancello le chiavi non necessarie
           const key1 = 'isOkToInsert';
