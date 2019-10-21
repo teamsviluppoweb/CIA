@@ -67,3 +67,11 @@ export interface StatoDomandaObject {
   inviataInData: any;
   ultimaModifica: any;
 }
+
+export interface InfoConcorso {
+  nomeConcorso: string;
+  titoloConcorso: string;
+  dataInizioDomanda: string;
+  dataFineDOmanda: string;
+  dataFineConcorso: string;
+}

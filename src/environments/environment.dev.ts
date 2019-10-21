@@ -13,6 +13,7 @@
                 comuni: 'province/',
                 visualizzaDomanda: 'getDomanda',
                 salvaDomanda: 'Domanda',
+                info: 'qualifiche',
             }
 
         };

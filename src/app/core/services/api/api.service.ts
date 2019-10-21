@@ -8,7 +8,7 @@ import {
     ComuniLSt,
     Corsi,
     CorsiApiLst,
-    Formazione, ProvinceLSt,
+    Formazione, InfoConcorso, ProvinceLSt,
     QualificaSede,
     QualificheApiLst,
     SediApiLSt, StatoDomandaObject,
@@ -196,6 +196,19 @@ export class ApiService {
         catchError(this.handleError('Get lista comuni', []))
     );
   }
+
+    getInfoConcorso(): Observable<any[] | InfoConcorso> {
+        const refresh = false;
+
+        const options = createHttpOptions(refresh);
+
+        return this.http.get<InfoConcorso>(environment.endpoints.backendLocation + environment.endpoints.info, options).pipe(
+            map((info: InfoConcorso) => {
+                return info;
+            }),
+            catchError(this.handleError('Get informazione concorso', []))
+        );
+    }
 
   getDomanda(observe = false, refresh): Observable<any[] | DomandaObject | HttpResponse<DomandaObject>> {
 

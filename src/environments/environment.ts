@@ -21,6 +21,7 @@ export const environment = {
     comuni: 'province/',
     visualizzaDomanda: 'getDomanda',
     salvaDomanda: 'salvaDomanda',
+    info: 'qualifiche',
   }
 
 };
