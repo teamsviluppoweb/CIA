@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from '../../../../core/services/api/api.service';
-import {DomandaModel, DomandaObject} from '../../../../core/models';
+import {DomandaObject, InfoConcorsoModel} from '../../../../core/models';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
 
@@ -16,13 +16,15 @@ export class PaginaIntermediaComponent implements OnInit {
   utlimaModifica;
   statoDomanda;
 
+  infoConcorso: InfoConcorsoModel;
+
   constructor(private restApi: ApiService,
               private router: Router)  {
-    this.restApi.getDomanda(false,false).subscribe(
+    this.restApi.getDomanda(false, false).subscribe(
         (x: DomandaObject) => {
           this.nomeCognomeCandidato = x.domanda.anagCandidato.cognome + ' ' + x.domanda.anagCandidato.nome;
-          this.dataInvio = moment(x.domanda.dataInvio).locale("it-IT").format('dddd d MMMM YYYY HH:mm');
-          this.utlimaModifica = moment(x.domanda.dataModifica).locale("it-IT").format('dddd d MMMM YYYY HH:mm');
+          this.dataInvio = moment(x.domanda.dataInvio).locale('it-IT').format('dddd d MMMM YYYY HH:mm');
+          this.utlimaModifica = moment(x.domanda.dataModifica).locale('it-IT').format('dddd d MMMM YYYY HH:mm');
 
           if (this.restApi.operazioneAttuale === 1) {
             this.statoDomanda = 'Inviata (modificabile)';
@@ -33,6 +35,12 @@ export class PaginaIntermediaComponent implements OnInit {
 
         }
     );
+
+    this.infoConcorso = this.restApi.concorso;
+
+    this.infoConcorso.dataFineConcorso = moment(this.infoConcorso.dataFineConcorso).locale('it-IT').format('dddd d MMMM YYYY HH:mm');
+    this.infoConcorso.dataFineDomanda = moment(this.infoConcorso.dataFineDomanda).locale('it-IT').format('dddd d MMMM YYYY HH:mm');
+    this.infoConcorso.dataInizioDomanda = moment(this.infoConcorso.dataInizioDomanda).locale('it-IT').format('dddd d MMMM YYYY HH:mm');
   }
 
   ngOnInit() {

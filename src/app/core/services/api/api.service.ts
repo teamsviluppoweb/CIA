@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
+import {forkJoin, Observable, Subject} from 'rxjs';
 import {Router} from '@angular/router';
 import {catchError, map, tap} from 'rxjs/operators';
 import {HandleError, HttpErrorHandler} from '..';
@@ -15,7 +15,7 @@ import {
     TipologiaTitoliDiStudioLSt, TitoliDiStudioIndirizzoLSt, TitoliDiStudioLSt
 } from '../../models/api.interface';
 import {DomandaInterface} from '../../models/domanda.interface';
-import {DomandaModel, DomandaObject} from '../../models';
+import {DomandaModel, DomandaObject, InfoConcorsoModel} from '../../models';
 import {environment} from '../../../../environments/environment';
 
 // To use if we don't want cached application forms response
@@ -38,12 +38,14 @@ export class ApiService {
   private handleError: HandleError;
 
   domanda: DomandaModel;
+  concorso: InfoConcorsoModel;
   operazioneAttuale;
 
   private statoDomandaObj = new Subject<any>();
 
-  constructor(private http: HttpClient, private router: Router, httpErrorHandler: HttpErrorHandler, private d: DomandaModel) {
+  constructor(private http: HttpClient, private router: Router, httpErrorHandler: HttpErrorHandler, private d: DomandaModel, private c: InfoConcorsoModel) {
     this.domanda = d;
+    this.concorso = c;
     this.handleError = httpErrorHandler.createHandleError('ApiService');
   }
 
@@ -197,16 +199,16 @@ export class ApiService {
     );
   }
 
-    getInfoConcorso(): Observable<any[] | InfoConcorso> {
+    getInfoConcorso(): Observable<InfoConcorso> {
         const refresh = false;
 
         const options = createHttpOptions(refresh);
 
         return this.http.get<InfoConcorso>(environment.endpoints.backendLocation + environment.endpoints.info, options).pipe(
-            map((info: InfoConcorso) => {
-                return info;
+            tap((x: InfoConcorso) => {
+                this.concorso = x;
             }),
-            catchError(this.handleError('Get informazione concorso', []))
+            catchError(this.handleError('Get informazione concorso', null))
         );
     }
 
@@ -241,6 +243,17 @@ export class ApiService {
          }),
          catchError(this.handleError('Get domanda', []))
     );
+  }
+
+
+  tokenLoginAttempt(observe = false, refresh) {
+      const options = createHttpOptions(refresh, false);
+
+      const domanda = this.getDomanda(true,false);
+      const infoConcorso = this.getInfoConcorso();
+
+      return forkJoin([domanda, infoConcorso]);
+
   }
 
   salvaDomanda(): Observable<any[] | DomandaInterface> {

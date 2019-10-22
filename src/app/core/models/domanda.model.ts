@@ -6,6 +6,7 @@ import {
 } from './domanda.interface';
 import {Injectable} from "@angular/core";
 import {
+        InfoConcorso,
         QualificheApiLst,
         SediApiLSt,
         TipologiaTitoliDiStudioLSt,
@@ -122,4 +123,15 @@ export class ProtocolloModel implements ProtocolloInterface {
         numero: string;
         data: string;
 
+}
+
+@Injectable({
+        providedIn: 'root',
+})
+export class InfoConcorsoModel implements InfoConcorso {
+        nomeConcorso: string;
+        titoloConcorso: string;
+        dataInizioDomanda: string;
+        dataFineDomanda: string;
+        dataFineConcorso: string;
 }

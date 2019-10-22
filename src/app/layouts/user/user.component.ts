@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import {Observable, Subscription} from "rxjs";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {map, share, timestamp} from "rxjs/operators";
@@ -6,9 +6,9 @@ import {ApiService} from "../../core/services/api/api.service";
 import {MatDrawer} from "@angular/material";
 import {Router} from "@angular/router";
 import {AuthService} from "../../core/services/auth-service/auth.service";
-import {DomandaObject} from "../../core/models";
 import * as moment from 'moment';
 import {StatoDomandaObject} from "../../core/models/api.interface";
+import {InfoConcorsoModel} from "../../core/models";
 
 
 @Component({
@@ -29,7 +29,7 @@ export class UserComponent  {
   menuAltroInfo = true;
 
   subscriptionStato: Subscription;
-
+  nomeConcorso;
 
   utente: string;
 
@@ -42,6 +42,10 @@ export class UserComponent  {
               private authService: AuthService,
               private breakpointObserver: BreakpointObserver,
               private router: Router) {
+
+    this.nomeConcorso = this.restApi.concorso.nomeConcorso;
+    console.log(this.nomeConcorso);
+
 
     this.subscriptionStato =  this.restApi.getMessage().subscribe((message: StatoDomandaObject) => {
       if (message) {

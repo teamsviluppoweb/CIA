@@ -72,6 +72,6 @@ export interface InfoConcorso {
   nomeConcorso: string;
   titoloConcorso: string;
   dataInizioDomanda: string;
-  dataFineDOmanda: string;
+  dataFineDomanda: string;
   dataFineConcorso: string;
 }
