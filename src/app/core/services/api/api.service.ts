@@ -17,6 +17,7 @@ import {
 import {DomandaInterface} from '../../models/domanda.interface';
 import {DomandaModel, DomandaObject, InfoConcorsoModel} from '../../models';
 import {environment} from '../../../../environments/environment';
+import * as moment from 'moment';
 
 // To use if we don't want cached application forms response
 
@@ -207,6 +208,9 @@ export class ApiService {
         return this.http.get<InfoConcorso>(environment.endpoints.backendLocation + environment.endpoints.info, options).pipe(
             tap((x: InfoConcorso) => {
                 this.concorso = x;
+                this.concorso.dataInizioDomanda =  moment(x.dataFineConcorso).locale('it-IT').format('dddd d MMMM YYYY HH:mm');
+                this.concorso.dataFineDomanda =  moment(x.dataFineDomanda).locale('it-IT').format('dddd d MMMM YYYY HH:mm');
+                this.concorso.dataFineConcorso =  moment(x.dataFineConcorso).locale('it-IT').format('dddd d MMMM YYYY HH:mm');
             }),
             catchError(this.handleError('Get informazione concorso', null))
         );
@@ -219,16 +223,17 @@ export class ApiService {
 
     return this.http.get<DomandaObject>(environment.endpoints.backendLocation + environment.endpoints.visualizzaDomanda, options).pipe(
          tap( (data: DomandaObject) => {
-             this.operazioneAttuale = data['operazione'];
-            const response = data.domanda;
-            this.domanda.id = response.id;
-            this.domanda.idDomanda = response.idDomanda;
-            this.domanda.versione = response.versione;
-            this.domanda.stato = response.stato;
-            this.domanda.dataInvio = response.dataInvio;
-            this.domanda.anagCandidato = response.anagCandidato;
-            this.domanda.titoliStudioPosseduti = response.titoliStudioPosseduti;
-            this.domanda.corsiAggAmm = response.corsiAggAmm;
+             this.operazioneAttuale = data.operazione;
+             const response = data.domanda;
+             this.domanda.id = response.id;
+             this.domanda.idDomanda = response.idDomanda;
+             this.domanda.versione = response.versione;
+             this.domanda.stato = response.stato;
+             this.domanda.dataInvio = response.dataInvio;
+             this.domanda.anagCandidato = response.anagCandidato;
+             this.domanda.titoliStudioPosseduti = response.titoliStudioPosseduti;
+             this.domanda.corsiAggAmm = response.corsiAggAmm;
+
 
 
              // Invio lo stato della domanda
@@ -236,7 +241,14 @@ export class ApiService {
                  inviataInData: data.domanda.dataInvio,
                  ultimaModifica: data.domanda.dataModifica,
                  statoDomanda: data.operazione,
+                 displayVisualizzaDomanda: true,
+                 domandaMenuTesto: 'Modifica Domanda'
              };
+
+             if (this.operazioneAttuale === 0) {
+                 stato.displayVisualizzaDomanda = false;
+                 stato.domandaMenuTesto = 'Compila Domanda';
+             }
 
              this.sendStato(stato);
 
@@ -249,7 +261,7 @@ export class ApiService {
   tokenLoginAttempt(observe = false, refresh) {
       const options = createHttpOptions(refresh, false);
 
-      const domanda = this.getDomanda(true,false);
+      const domanda = this.getDomanda(true, false);
       const infoConcorso = this.getInfoConcorso();
 
       return forkJoin([domanda, infoConcorso]);

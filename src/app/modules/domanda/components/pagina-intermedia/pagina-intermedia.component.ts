@@ -3,6 +3,7 @@ import {ApiService} from '../../../../core/services/api/api.service';
 import {DomandaObject, InfoConcorsoModel} from '../../../../core/models';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
+import {InfoConcorso} from "../../../../core/models/api.interface";
 
 @Component({
   selector: 'app-pagina-intermedia',
@@ -16,7 +17,7 @@ export class PaginaIntermediaComponent implements OnInit {
   utlimaModifica;
   statoDomanda;
 
-  infoConcorso: InfoConcorsoModel;
+  infoConcorso: InfoConcorso;
 
   constructor(private restApi: ApiService,
               private router: Router)  {
@@ -38,9 +39,8 @@ export class PaginaIntermediaComponent implements OnInit {
 
     this.infoConcorso = this.restApi.concorso;
 
-    this.infoConcorso.dataFineConcorso = moment(this.infoConcorso.dataFineConcorso).locale('it-IT').format('dddd d MMMM YYYY HH:mm');
-    this.infoConcorso.dataFineDomanda = moment(this.infoConcorso.dataFineDomanda).locale('it-IT').format('dddd d MMMM YYYY HH:mm');
-    this.infoConcorso.dataInizioDomanda = moment(this.infoConcorso.dataInizioDomanda).locale('it-IT').format('dddd d MMMM YYYY HH:mm');
+
+    console.log(this.infoConcorso);
   }
 
   ngOnInit() {

@@ -34,12 +34,12 @@
 
             <p style="font-weight: 200; text-align: center; margin-bottom: 1px; padding-bottom: 0">Azioni Domanda</p>
             <mat-nav-list *ngIf="menuMainInfo">
-                <a [routerLink]="['/domanda/visualizza']" mat-list-item style="font-size: 14px">
+                <a *ngIf="displayVisualizzaDomanda" [routerLink]="['/domanda/visualizza']" mat-list-item style="font-size: 14px">
                     <mat-icon style="padding-right: 1em;">notes</mat-icon>
                     Visualizza domanda</a>
                 <a [routerLink]="['/domanda/edit']" mat-list-item style="font-size: 14px">
                     <mat-icon style="padding-right: 1em;">edit</mat-icon>
-                    Modifica domanda
+                    {{testoDomanda}}
                 </a>
                 <a [routerLink]="['/domanda/info']" mat-list-item style="font-size: 14px">
                     <mat-icon style="padding-right: 1em;">info</mat-icon>

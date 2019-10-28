@@ -66,6 +66,8 @@ export interface StatoDomandaObject {
   statoDomanda: any;
   inviataInData: any;
   ultimaModifica: any;
+  domandaMenuTesto: string;
+  displayVisualizzaDomanda: boolean;
 }
 
 export interface InfoConcorso {

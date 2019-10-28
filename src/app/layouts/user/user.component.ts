@@ -28,8 +28,11 @@ export class UserComponent  {
   menuMainInfo = true;
   menuAltroInfo = true;
 
+
   subscriptionStato: Subscription;
   nomeConcorso;
+  testoDomanda: string;
+  displayVisualizzaDomanda:boolean;
 
   utente: string;
 
@@ -50,8 +53,12 @@ export class UserComponent  {
     this.subscriptionStato =  this.restApi.getMessage().subscribe((message: StatoDomandaObject) => {
       if (message) {
         message = message['text'];
+
+        console.log(message);
         this.inviataInData = moment(message.inviataInData).locale("it-IT").format('dddd d MMMM YYYY HH:mm');
         this.ultimaModifica = moment(message.ultimaModifica).locale("it-IT").format('dddd d MMMM YYYY HH:mm');
+        this.testoDomanda = message.domandaMenuTesto;
+        this.displayVisualizzaDomanda = message.displayVisualizzaDomanda;
 
 
         switch (message.statoDomanda as number) {
@@ -111,5 +118,6 @@ export class UserComponent  {
   closeDialog() {
     this.topbarDrawer.toggle();
   }
+
 
 }
