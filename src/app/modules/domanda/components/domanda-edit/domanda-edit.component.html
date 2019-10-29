@@ -30,7 +30,7 @@
 
     <mat-step label="Invia Domanda">
       <ng-template matStepLabel><h2 class="stepper-title">Invia domanda</h2></ng-template>
-      <button  class="material-button" color="primary" (click)="inviaDomanda()">Submit</button>
+      <button [disabled]="isSendingDisabled"  class="material-button" color="primary" (click)="inviaDomanda()">Submit</button>
     </mat-step>
 
   </mat-vertical-stepper>

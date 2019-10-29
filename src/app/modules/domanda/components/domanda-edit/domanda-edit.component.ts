@@ -14,6 +14,7 @@ import {ProvinceLSt} from '../../../../core/models/api.interface';
 export class DomandaEditComponent implements OnInit {
 
   public moduloDomanda: FormGroup;
+  isSendingDisabled = false;
 
   @ViewChild(StepAnagraficaComponent, { static: false }) StepAnagraficaComponent: StepAnagraficaComponent;
   @ViewChild(StepQualificaSedeComponent, { static: false }) StepQualificaSedeComponent: StepQualificaSedeComponent;
@@ -27,6 +28,7 @@ export class DomandaEditComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private restApi: ApiService, private router: Router) {
 
+    this.isSendingDisabled = false;
     this.displayDichiarazioni = (this.restApi.domanda.stato === 0);
 
     this.moduloDomanda = this.fb.group({
@@ -73,13 +75,14 @@ export class DomandaEditComponent implements OnInit {
   ngOnInit(): void {}
 
   inviaDomanda() {
-    console.log(this.restApi.domanda);
+    this.isSendingDisabled = true;
     this.restApi.salvaDomanda().pipe(
         concatMap( () => {
           return this.restApi.getDomanda(false, true);
         }),
         ).subscribe(
         (x) => {
+          this.isSendingDisabled = false;
           this.router.navigate(['/domanda/visualizza']);
           console.log('inviata con successo');
           console.log(x);
