@@ -2,7 +2,9 @@ import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/co
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {Router} from '@angular/router';
-import {StepAnagraficaComponent, StepDichiarazoiniComponent, StepQualificaSedeComponent} from "..";
+import {StepAnagraficaComponent, StepDichiarazoiniComponent, StepQualificaSedeComponent} from '..';
+import {concatMap} from 'rxjs/operators';
+import {ProvinceLSt} from '../../../../core/models/api.interface';
 
 @Component({
   selector: 'app-domanda-edit',
@@ -48,16 +50,16 @@ export class DomandaEditComponent implements OnInit {
       }),
       dichiarazione: this.fb.group({
         uno: ['', [(control) => {
-          return !control.value ? { 'required': true } : null;
+          return !control.value ? { required: true } : null;
         }]],
         due: ['', [(control) => {
-          return !control.value ? { 'required': true } : null;
+          return !control.value ? { required: true } : null;
         }]],
         tre: ['', [(control) => {
-          return !control.value ? { 'required': true } : null;
+          return !control.value ? { required: true } : null;
         }]],
         quattro: ['', [(control) => {
-          return !control.value ? { 'required': true } : null;
+          return !control.value ? { required: true } : null;
         }]],
       }),
     });
@@ -72,7 +74,11 @@ export class DomandaEditComponent implements OnInit {
 
   inviaDomanda() {
     console.log(this.restApi.domanda);
-    this.restApi.salvaDomanda().subscribe(
+    this.restApi.salvaDomanda().pipe(
+        concatMap( () => {
+          return this.restApi.getDomanda(false, true);
+        }),
+        ).subscribe(
         (x) => {
           this.router.navigate(['/domanda/visualizza']);
           console.log('inviata con successo');
@@ -82,7 +88,7 @@ export class DomandaEditComponent implements OnInit {
   }
 
   DisplayValue() {
-    console.log(this.moduloDomanda.value);
+    // console.log(this.moduloDomanda.value);
   }
 
 

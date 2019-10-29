@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {forkJoin, Observable, Subject} from 'rxjs';
 import {Router} from '@angular/router';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, debounceTime, map, share, tap} from 'rxjs/operators';
 import {HandleError, HttpErrorHandler} from '..';
 import {
     ComuniLSt,
@@ -23,13 +23,10 @@ import * as moment from 'moment';
 
 
 
-function createHttpOptions(refresh = true, observe = false) {
-  const headerRefresh = refresh ? {'x-refresh': 'true'} : {};
-  const headerResponse = observe ? {observe: 'response'} : {};
-
-  const headers = new HttpHeaders(headerRefresh);
-
-  return { headers };
+function createHttpOptions(refresh = false) {
+    const headerMap = refresh ? {'x-refresh': 'true'} : {};
+    const headers = new HttpHeaders(headerMap) ;
+    return { headers };
 }
 
 @Injectable({
@@ -218,8 +215,8 @@ export class ApiService {
 
   getDomanda(observe = false, refresh): Observable<any[] | DomandaObject | HttpResponse<DomandaObject>> {
 
-    const options = createHttpOptions(refresh, false);
-
+    const options = createHttpOptions(true);
+    console.log(options);
 
     return this.http.get<DomandaObject>(environment.endpoints.backendLocation + environment.endpoints.visualizzaDomanda, options).pipe(
          tap( (data: DomandaObject) => {
@@ -259,7 +256,7 @@ export class ApiService {
 
 
   tokenLoginAttempt(observe = false, refresh) {
-      const options = createHttpOptions(refresh, false);
+      const options = createHttpOptions(refresh);
 
       const domanda = this.getDomanda(true, false);
       const infoConcorso = this.getInfoConcorso();
@@ -277,7 +274,7 @@ export class ApiService {
                 console.log('post');
             }
         ),
-        catchError(this.handleError('Salva domanda', []))
+      catchError(this.handleError('Salva domanda', []))
     );
   }
 
