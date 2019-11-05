@@ -5,12 +5,14 @@ import {MaterialModule} from './material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {CustomDatePipe} from "../pipe/custom-date.pipe";
 import {StatoDomandaPipe} from "../pipe/stato-domanda.pipe";
+import {InfoAzioneDomandaPipe} from "../pipe/info-azione-domanda.pipe";
 
 
 @NgModule({
   declarations: [
       CustomDatePipe,
-      StatoDomandaPipe
+      StatoDomandaPipe,
+      InfoAzioneDomandaPipe
   ],
   imports: [
     FormsModule,
@@ -26,7 +28,8 @@ import {StatoDomandaPipe} from "../pipe/stato-domanda.pipe";
     FlexLayoutModule,
     MaterialModule,
     CustomDatePipe,
-    StatoDomandaPipe
+    StatoDomandaPipe,
+    InfoAzioneDomandaPipe
   ],
 })
 export class SharedModule { }

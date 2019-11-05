@@ -37,9 +37,8 @@ export class ApiService {
 
   domanda: DomandaModel;
   concorso: InfoConcorsoModel;
-  operazioneAttuale;
 
-  private statoDomandaObj = new Subject<any>();
+  private statoDomandaSubject = new Subject<any>();
 
   constructor(private http: HttpClient, private router: Router, httpErrorHandler: HttpErrorHandler, private d: DomandaModel, private c: InfoConcorsoModel) {
     this.domanda = d;
@@ -47,16 +46,16 @@ export class ApiService {
     this.handleError = httpErrorHandler.createHandleError('ApiService');
   }
 
-    sendStato(message: StatoDomandaObject) {
-        this.statoDomandaObj.next({ text: message });
+    sendStato(data: DomandaObject) {
+        this.statoDomandaSubject.next(data);
     }
 
     clearStato() {
-        this.statoDomandaObj.next();
+        this.statoDomandaSubject.next();
     }
 
-    getMessage(): Observable<any> {
-        return this.statoDomandaObj.asObservable();
+    getMessage(): Observable<DomandaObject> {
+        return this.statoDomandaSubject.asObservable();
     }
 
   getListaCorsi(): Observable<any[] | CorsiApiLst[]> {
@@ -232,22 +231,7 @@ export class ApiService {
              this.domanda.corsiAggAmm = response.corsiAggAmm;
 
 
-
-             // Invio lo stato della domanda
-             const stato: StatoDomandaObject = {
-                 inviataInData: data.domanda.dataInvio,
-                 ultimaModifica: data.domanda.dataModifica,
-                 statoDomanda: data.operazione,
-                 displayVisualizzaDomanda: true,
-                 domandaMenuTesto: 'Modifica Domanda'
-             };
-
-             if (this.operazioneAttuale === 0) {
-                 stato.displayVisualizzaDomanda = false;
-                 stato.domandaMenuTesto = 'Compila Domanda';
-             }
-
-             this.sendStato(stato);
+             this.sendStato(data);
 
          }),
          catchError(this.handleError('Get domanda', []))
