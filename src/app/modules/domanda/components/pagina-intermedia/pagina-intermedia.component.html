@@ -36,13 +36,13 @@
             <h4 >Ecco lo storico delle tue attivita</h4>
                 <ul>
                     <li fxLayout="row">
-                        <p>Domanda inviata il:&nbsp;</p> <p class="info">{{ (domanda | async).domanda.dataInvio |customDate}}</p>
+                        <p>Domanda inviata il:&nbsp;</p> <p class="info">{{ (domanda | async).domanda.dataInvio | customDate}}</p>
                     </li>
                     <li fxLayout="row">
-                        <p>Ultima modifica:&nbsp;</p> <p class="info">{{utlimaModifica}}</p>
+                        <p>Ultima modifica:&nbsp;</p> <p class="info">{{ (domanda | async).domanda.dataModifica | customDate}}</p>
                     </li>
                     <li fxLayout="row">
-                        <p>Stato domanda:&nbsp;</p> <p class="info">{{statoDomanda}}</p>
+                        <p>Stato domanda:&nbsp;</p> <p class="info">{{ (domanda| async).domanda.stato | statoDomanda}}</p>
                     </li>
                 </ul>
         </div>
