@@ -37,6 +37,7 @@ export class ApiService {
 
   domanda: DomandaModel;
   concorso: InfoConcorsoModel;
+  operazione: number;
 
   private statoDomandaSubject = new Subject<any>();
 
@@ -219,7 +220,7 @@ export class ApiService {
 
     return this.http.get<DomandaObject>(environment.endpoints.backendLocation + environment.endpoints.visualizzaDomanda, options).pipe(
          tap( (data: DomandaObject) => {
-             this.operazioneAttuale = data.operazione;
+             this.operazione = data.operazione;
              const response = data.domanda;
              this.domanda.id = response.id;
              this.domanda.idDomanda = response.idDomanda;
