@@ -33,10 +33,10 @@
         </div>
 
         <div>
-            <h4>Ecco lo storico delle tue attivita</h4>
+            <h4 >Ecco lo storico delle tue attivita</h4>
                 <ul>
                     <li fxLayout="row">
-                        <p>Domanda inviata il:&nbsp;</p> <p class="info">{{dataInvio}}</p>
+                        <p>Domanda inviata il:&nbsp;</p> <p class="info">{{ (domanda | async).domanda.dataInvio |customDate}}</p>
                     </li>
                     <li fxLayout="row">
                         <p>Ultima modifica:&nbsp;</p> <p class="info">{{utlimaModifica}}</p>

@@ -3,17 +3,19 @@ import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from './material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {CustomDatePipe} from "../pipe/custom-date.pipe";
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+      CustomDatePipe,
+  ],
   imports: [
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
     FlexLayoutModule,
     MaterialModule,
-
   ],
   exports: [
     FormsModule,
@@ -21,6 +23,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     RouterModule,
     FlexLayoutModule,
     MaterialModule,
-  ]
+    CustomDatePipe
+  ],
 })
 export class SharedModule { }

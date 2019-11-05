@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from '../../../../core/services/api/api.service';
-import {DomandaObject, InfoConcorsoModel} from '../../../../core/models';
+import {DomandaModel, DomandaObject, InfoConcorsoModel} from '../../../../core/models';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
 import {InfoConcorso} from "../../../../core/models/api.interface";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-pagina-intermedia',
@@ -19,12 +20,14 @@ export class PaginaIntermediaComponent implements OnInit {
 
   infoConcorso: InfoConcorso;
 
+  domanda: Observable<DomandaObject>;
+
   constructor(private restApi: ApiService,
               private router: Router)  {
     this.restApi.getDomanda(false, false).subscribe(
         (x: DomandaObject) => {
           this.nomeCognomeCandidato = x.domanda.anagCandidato.cognome + ' ' + x.domanda.anagCandidato.nome;
-          this.dataInvio = moment(x.domanda.dataInvio).locale('it-IT').format('dddd d MMMM YYYY HH:mm');
+          this.dataInvio = x.domanda.dataInvio;
           this.utlimaModifica = moment(x.domanda.dataModifica).locale('it-IT').format('dddd d MMMM YYYY HH:mm');
 
           if (this.restApi.operazioneAttuale === 1) {
@@ -35,9 +38,11 @@ export class PaginaIntermediaComponent implements OnInit {
           }
 
         }
+
     );
 
     this.infoConcorso = this.restApi.concorso;
+    this.domanda = this.restApi.getDomanda(false, false);
 
 
     console.log(this.infoConcorso);

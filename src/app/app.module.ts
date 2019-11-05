@@ -18,27 +18,29 @@ import {RouterModule} from "@angular/router";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    UserComponent,
-    GuestComponent,
-  ],
-  imports: [
-    BrowserAnimationsModule,
-    SharedModule,
-    CoreModule,
-    AppRoutingModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-  ],
-  providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'it-IT'},
-    {provide: LocationStrategy, useClass: HashLocationStrategy},
-],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        UserComponent,
+        GuestComponent,
+    ],
+    imports: [
+        BrowserAnimationsModule,
+        SharedModule,
+        CoreModule,
+        AppRoutingModule,
+        LayoutModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+    ],
+    providers: [
+        {provide: MAT_DATE_LOCALE, useValue: 'it-IT'},
+        {provide: LocationStrategy, useClass: HashLocationStrategy},
+    ],
+    exports: [
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
