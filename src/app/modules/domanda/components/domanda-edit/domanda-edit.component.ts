@@ -11,7 +11,7 @@ import {ProvinceLSt} from '../../../../core/models/api.interface';
   templateUrl: './domanda-edit.component.html',
   styleUrls: ['./domanda-edit.component.scss'],
 })
-export class DomandaEditComponent implements OnInit {
+export class DomandaEditComponent  {
 
   public moduloDomanda: FormGroup;
   isSendingDisabled = false;
@@ -33,22 +33,21 @@ export class DomandaEditComponent implements OnInit {
 
     this.moduloDomanda = this.fb.group({
       anagrafica: this.fb.group({
-        nome: [''],
-        cognome: [''],
-        dataNascita: [''],
-        comuneNascita: [''],
-        domicilio: ['', Validators.required],
-        codiceFiscale: [''],
-        telefono: ['', Validators.required],
-        email: ['', Validators.required],
-        sedeServizio: ['']
+        nome: [],
+        cognome: [],
+        dataNascita: [],
+        comuneNascita: [],
+        domicilio: [Validators.required],
+        codiceFiscale: [],
+        telefono: [Validators.required],
+        email: [Validators.required],
+        sedeServizio: []
       }),
       sediQualifiche: this.fb.group({
-        sedeGiuridica: ['',  Validators.required],
-        qualifica: ['', Validators.required],
-
-        sedeDropdown: [''],
-        qualificaDropdown: [''],
+        sedeGiuridica: [Validators.required],
+        qualifica: [Validators.required],
+        sedeDropdown: [],
+        qualificaDropdown: [],
       }),
       dichiarazione: this.fb.group({
         uno: ['', [(control) => {
@@ -72,8 +71,6 @@ export class DomandaEditComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {}
-
   inviaDomanda() {
     this.isSendingDisabled = true;
     this.restApi.salvaDomanda().pipe(
@@ -84,8 +81,6 @@ export class DomandaEditComponent implements OnInit {
         (x) => {
           this.isSendingDisabled = false;
           this.router.navigate(['/domanda/visualizza']);
-          console.log('inviata con successo');
-          console.log(x);
         }
     );
   }
