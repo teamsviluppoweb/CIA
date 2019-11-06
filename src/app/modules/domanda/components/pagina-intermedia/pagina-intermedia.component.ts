@@ -12,13 +12,14 @@ export class PaginaIntermediaComponent implements OnInit {
 
   infoConcorso: InfoConcorsoModel;
   domanda: DomandaModel;
+  operazione;
 
   constructor(private restApi: ApiService,
               private router: Router)  {
 
     this.infoConcorso = this.restApi.concorso;
     this.domanda = this.restApi.domanda;
-
+    this.operazione = this.restApi.operazione;
   }
 
   ngOnInit() {

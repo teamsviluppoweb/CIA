@@ -6,7 +6,7 @@ import {ApiService} from '../../core/services/api/api.service';
 import {MatDrawer} from '@angular/material';
 import {Router} from '@angular/router';
 import {AuthService} from '../../core/services/auth-service/auth.service';
-import {DomandaObject} from '../../core/models';
+import {DomandaObject, InfoConcorsoModel} from '../../core/models';
 
 
 @Component({
@@ -18,9 +18,8 @@ export class UserComponent implements OnDestroy {
 
   @ViewChild('drawer', { static: true }) topbarDrawer: MatDrawer;
 
-  inviataInData;
-  ultimaModifica;
-
+  data: DomandaObject;
+  dataConcorso: InfoConcorsoModel;
   subscriptionStato: Subscription;
 
 
@@ -34,11 +33,11 @@ export class UserComponent implements OnDestroy {
               private breakpointObserver: BreakpointObserver,
               private router: Router) {
 
+    this.dataConcorso = this.restApi.concorso;
 
     this.subscriptionStato = this.restApi.getMessage().subscribe((data: DomandaObject) => {
       if (data) {
-        this.inviataInData = data.domanda.dataInvio;
-        this.ultimaModifica = data.domanda.dataModifica;
+        this.data = data;
       } else {
         // clear messages when empty message received
         data = null;

@@ -11,7 +11,7 @@
 
             <mat-toolbar  style="background-color: #ba1b21; color: white;cursor: pointer;">
                 <mat-icon >person</mat-icon>
-                <p style="font-weight: 400; font-size: 14px">&nbsp;{{restApi.domanda.anagCandidato.nome + ' ' + restApi.domanda.anagCandidato.cognome}}</p>
+                <p style="font-weight: 400; font-size: 14px">&nbsp;{{data.domanda.anagCandidato.nome + ' ' + data.domanda.anagCandidato.cognome}}</p>
                 <span class="spacer"></span>
                 <mat-icon (click)="CloseNavBar()">close</mat-icon>
             </mat-toolbar>
@@ -21,25 +21,25 @@
 
 
                 <a mat-list-item style="font-size: 14px">
-                    <b>Data invio:&nbsp;</b>{{inviataInData | customDate}}</a>
+                    <b>Data invio:&nbsp;</b>{{data.domanda.dataInvio | customDate}}</a>
 
                 <a mat-list-item style="font-size: 14px">
-                    <b>Ultima modifica:&nbsp;</b>{{ultimaModifica | customDate}}</a>
+                    <b>Ultima modifica:&nbsp;</b>{{data.domanda.dataModifica | customDate}}</a>
 
                 <a mat-list-item style="font-size: 14px">
-                    <b>Stato:&nbsp;</b>{{restApi.operazione | statoDomanda}}</a>
+                    <b>Stato:&nbsp;</b>{{data.operazione | statoDomanda}}</a>
             </mat-nav-list>
 
             <mat-divider style="margin: 10px"></mat-divider>
 
             <p style="font-weight: 200; text-align: center; margin-bottom: 1px; padding-bottom: 0">Azioni Domanda</p>
             <mat-nav-list>
-                <a *ngIf="restApi.domanda.stato !== 0" [routerLink]="['/domanda/visualizza']" mat-list-item style="font-size: 14px">
+                <a *ngIf="data.domanda.stato !== 0" [routerLink]="['/domanda/visualizza']" mat-list-item style="font-size: 14px">
                     <mat-icon style="padding-right: 1em;">notes</mat-icon>
                     Visualizza domanda</a>
                 <a [routerLink]="['/domanda/edit']" mat-list-item style="font-size: 14px">
                     <mat-icon style="padding-right: 1em;">edit</mat-icon>
-                   {{restApi.domanda.stato| infoAzioneDomanda}}
+                   {{data.domanda.stato| infoAzioneDomanda}}
                 </a>
                 <a [routerLink]="['/domanda/info']" mat-list-item style="font-size: 14px">
                     <mat-icon style="padding-right: 1em;">info</mat-icon>
@@ -79,7 +79,7 @@
                     {{MenuIconState()}}
                 </mat-icon>
             </button>
-            <h1 id="title">{{restApi.concorso.nomeConcorso}}</h1>
+            <h1 id="title">{{dataConcorso.nomeConcorso}}</h1>
 
             <span class="spacer"></span>
             <button Click mat-flat-button mat-button style="background-color: transparent; color: white;" (click)="Logout()">ESCI

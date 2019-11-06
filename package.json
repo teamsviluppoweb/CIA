@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "local-start": "ng serve --host 172.16.26.72 --configuration=uffweb",
+    "local-start": "ng serve --host 172.16.15.201 --configuration=uffweb",
     "build": "ng build --prod --extra-webpack-config webpack.extra.js --configuration=uffweb",
     "build-host": "ng build --prod --extra-webpack-config webpack.extra.js --configuration=uffweb  &&  http-server -g dist/CIA/",
     "host": "http-server dist/CIA/",
@@ -33,6 +33,7 @@
     "http-server": "^0.11.1",
     "moment": "^2.24.0",
     "ngx-build-plus": "^8.1.5",
+    "ngx-cacheable": "^1.3.0",
     "ngx-mat-select-search": "^1.8.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
