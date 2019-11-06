@@ -68,7 +68,7 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
             this.listaDescrizioneSedi = this.listaSedi.map(nome => nome.desc).slice();
             this.setInitialValue(this.filtroSedi);
 
-            if (this.restApi.domanda.stato === 1) {
+            if (this.restApi.operazione === 1) {
               this.sedeGiuridica.patchValue(this.restApi.domanda.anagCandidato.sedeAttuale.desc,  { emitEvent: false });
             }
         }
@@ -85,7 +85,7 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
 
             this.listaDescrizioneQualifiche = this.listaQualifiche.map(nome => nome.desc).slice();
 
-            if (this.restApi.domanda.stato === 1) {
+            if (this.restApi.operazione === 1) {
             this.qualifica.patchValue(this.restApi.domanda.anagCandidato.qualificaAttuale.desc,  { emitEvent: false });
           }
         }
