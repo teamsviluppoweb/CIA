@@ -1,71 +1,47 @@
 import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import {QualificheApiLst, SediApiLSt} from '../../../../core/models/api.interface';
 import {ApiService} from '../../../../core/services/api/api.service';
 import {Observable, ReplaySubject, Subject} from 'rxjs';
-import {ErrorStateMatcher, MatSelect, MatStepper} from '@angular/material';
+import {MatSelect, MatStepper} from '@angular/material';
 import {take, takeUntil} from 'rxjs/operators';
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-        const isSubmitted = form && form.submitted;
-        return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-    }
-}
 
 @Component({
   selector: 'app-step-qualifica-sede',
   templateUrl: './step-qualifica-sede.component.html',
   styleUrls: ['./step-qualifica-sede.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StepQualificaSedeComponent implements OnInit, OnDestroy {
 
-  @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
-
   @Input() parent: FormGroup;
+  @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
   @ViewChild('stepper', { static: false }) private myStepper: MatStepper;
 
-  // Lista delle qualifiche filtrate dalle parole chiavi nel campo
-  $sediLst: Observable<any[] | SediApiLSt>;
-
-  public filtroSedi: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
-  public filtroQualifiche: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
-
-  // Lista oggetto sedi
+  filtroSedi: ReplaySubject<SediApiLSt[]> = new ReplaySubject<SediApiLSt[]>(1);
   listaSedi: SediApiLSt[];
+
+  filtroQualifiche: ReplaySubject<QualificheApiLst[]> = new ReplaySubject<QualificheApiLst[]>(1);
   listaQualifiche: QualificheApiLst[];
 
-  // Lista descrizione sedi
-  listaDescrizioneSedi: string[];
-  listaDescrizioneQualifiche: string[];
 
-  $qualificheLst: Observable<any[] | QualificheApiLst>;
 
   private onDetroy = new Subject<void>();
 
 
-  constructor(private fb: FormBuilder, private restApi: ApiService) {
-
-    this.$qualificheLst = this.restApi.getListaQualifiche();
-    this.$sediLst = this.restApi.getListaSedi();
-
-
-  }
+  constructor(private restApi: ApiService) {}
 
   ngOnInit() {
 
-    this.onChanges();
+    this.onChangesForm();
 
     this.restApi.getListaSedi().subscribe(
         (Sedi: SediApiLSt[]) => {
 
-
             this.listaSedi = Sedi;
 
-            // Gli passo un array di stringhe contenente solo i nomi delle province
-            this.filtroSedi.next(this.listaSedi.map(nome => nome.desc).slice());
-            this.listaDescrizioneSedi = this.listaSedi.map(nome => nome.desc).slice();
+            this.filtroSedi.next(this.listaSedi.slice());
+
             this.setInitialValue(this.filtroSedi);
 
             if (this.restApi.operazione === 1) {
@@ -79,11 +55,9 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
 
             this.listaQualifiche = Qualifiche;
 
-            // Gli passo un array di stringhe contenente solo i nomi delle province
-            this.filtroQualifiche.next(this.listaQualifiche.map(nome => nome.desc).slice());
+            this.filtroQualifiche.next(this.listaQualifiche.slice());
             this.setInitialValue(this.filtroQualifiche);
 
-            this.listaDescrizioneQualifiche = this.listaQualifiche.map(nome => nome.desc).slice();
 
             if (this.restApi.operazione === 1) {
             this.qualifica.patchValue(this.restApi.domanda.anagCandidato.qualificaAttuale.desc,  { emitEvent: false });
@@ -91,7 +65,6 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
         }
     );
 
-    this.onChanges();
   }
 
 
@@ -103,8 +76,8 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
     this.onDetroy.complete();
   }
 
-  private setInitialValue(value) {
-    value
+  private setInitialValue(data: (Observable<SediApiLSt[]> | Observable<QualificheApiLst[]>)) {
+    data
         .pipe(take(1), takeUntil(this.onDetroy))
         .subscribe(() => {
           // setting the compareWith property to a comparison function
@@ -117,53 +90,45 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
   }
 
 
-  private filterList(value, form, filters) {
-    if (!value) {
-      return;
+    private filtraRicerca(qualifica: (QualificheApiLst[] | SediApiLSt[]), form, filters) {
+        if (!qualifica) {
+            return;
+        }
+        // ottiene la keyword di ricerca
+        let search = form.value;
+        if (!search) {
+            filters.next(qualifica.slice());
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+        // Filtra le province
+        filters.next(
+            qualifica.filter(nm => nm.desc.toLocaleLowerCase().indexOf(search) > -1)
+        );
     }
-    // ottiene la keyword di ricerca
-    let search = form.value;
-    if (!search) {
-      filters.next(value.slice());
-      return;
-    } else {
-      search = search.toLowerCase();
-    }
-    // Filtra le province
-    filters.next(
-        value.filter(prov => prov.toLocaleLowerCase().indexOf(search) > -1)
-    );
-  }
 
 
-  onChanges() {
+    onChangesForm() {
 
-      this.sedeGiuridica.valueChanges.subscribe((x) => {
-          this.restApi.domanda.anagCandidato.sedeAttuale = this.listaSedi.
-          filter(selected => selected.desc === this.sedeGiuridica.value)
-              .map(selected => selected)
-              .reduce(selected => selected);
+      this.sedeGiuridica.valueChanges.subscribe((input) => {
+          this.restApi.domanda.anagCandidato.sedeAttuale = input;
       });
 
-      this.qualifica.valueChanges.subscribe((x) => {
-          this.restApi.domanda.anagCandidato.qualificaAttuale = this.listaQualifiche.
-          filter(selected => selected.desc === this.qualifica.value)
-              .map(selected => selected)
-              .reduce(selected => selected);
+      this.qualifica.valueChanges.subscribe((input) => {
+          this.restApi.domanda.anagCandidato.qualificaAttuale = input;
       });
 
-    // Analizza i cambiamenti del testo nel campo di ricerca del dropdown search dei comuni
       this.sedeDropdown.valueChanges
         .pipe(takeUntil(this.onDetroy))
         .subscribe(() => {
-          this.filterList(this.listaDescrizioneSedi, this.sedeDropdown, this.filtroSedi);
+          this.filtraRicerca(this.listaSedi, this.sedeDropdown, this.filtroSedi);
         });
 
-    // Analizza i cambiamenti del testo nel campo di ricerca del dropdown search dei comuni
       this.qualificaDropdown.valueChanges
         .pipe(takeUntil(this.onDetroy))
         .subscribe(() => {
-          this.filterList(this.listaDescrizioneQualifiche, this.qualificaDropdown, this.filtroQualifiche);
+          this.filtraRicerca(this.listaQualifiche, this.qualificaDropdown, this.filtroQualifiche);
         });
 
   }

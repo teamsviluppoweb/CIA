@@ -13,7 +13,7 @@
                                [noEntriesFoundLabel]="'Nessun risultato'"
                                [placeholderLabel]="'Cerca sede'"></ngx-mat-select-search>
         <mat-option *ngFor="let sede of (filtroSedi | async)" [value]="sede">
-          {{sede}}
+          {{sede.desc}}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="sedeGiuridica.hasError('required')">
