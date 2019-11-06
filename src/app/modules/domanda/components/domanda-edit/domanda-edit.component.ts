@@ -29,7 +29,7 @@ export class DomandaEditComponent implements OnInit {
   constructor(private fb: FormBuilder, private restApi: ApiService, private router: Router) {
 
     this.isSendingDisabled = false;
-    this.displayDichiarazioni = (this.restApi.domanda.stato === 0);
+    this.displayDichiarazioni = (this.restApi.operazione === 0);
 
     this.moduloDomanda = this.fb.group({
       anagrafica: this.fb.group({
