@@ -4,10 +4,7 @@
 
     <p>Il candidato dichiara di:</p>
     <div fxLayout="column" fxLayout.xs="column">
-      <mat-checkbox formControlName="uno">avere almeno 15 anni di anzianità nel proprio ruolo</mat-checkbox>
-      <mat-checkbox formControlName="due">possedere un titolo di studio di secondo grado ad indirizzo tecnico professionale ...</mat-checkbox>
-      <mat-checkbox formControlName="tre">non aver riportato sanzioni disciplinari</mat-checkbox>
-      <mat-checkbox formControlName="quattro">non aver riporrtato sentenza irrevocabile di condanna ...</mat-checkbox>
+      <mat-checkbox *ngFor="let data of dichirazioni" [formControlName]="data.formControl">{{data.testo}}</mat-checkbox>
     </div>
 
     <div fxLayout="column" style="margin-top: 10px;">

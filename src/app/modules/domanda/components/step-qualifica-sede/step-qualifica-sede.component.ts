@@ -41,7 +41,6 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
             this.listaSedi = Sedi;
 
             this.filtroSedi.next(this.listaSedi.slice());
-
             this.setInitialValue(this.filtroSedi);
 
             if (this.restApi.operazione === 1) {
