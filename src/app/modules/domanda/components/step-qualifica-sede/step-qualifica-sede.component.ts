@@ -44,7 +44,11 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
             this.setInitialValue(this.filtroSedi);
 
             if (this.restApi.operazione === 1) {
-              this.sedeGiuridica.patchValue(this.restApi.domanda.anagCandidato.sedeAttuale.desc,  { emitEvent: false });
+              this.sedeGiuridica.patchValue( this.listaSedi
+                      .filter(x => x.desc === this.restApi.domanda.anagCandidato.sedeAttuale.desc)
+                      .map(x => x)
+                      .reduce(x => x)
+                  ,  { emitEvent: false });
             }
         }
     );
@@ -59,8 +63,12 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
 
 
             if (this.restApi.operazione === 1) {
-            this.qualifica.patchValue(this.restApi.domanda.anagCandidato.qualificaAttuale.desc,  { emitEvent: false });
-          }
+                this.qualifica.patchValue( this.listaQualifiche
+                        .filter(x => x.desc === this.restApi.domanda.anagCandidato.qualificaAttuale.desc)
+                        .map(x => x)
+                        .reduce(x => x)
+                    ,  { emitEvent: false });
+            }
         }
     );
 
@@ -111,6 +119,7 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
     onChangesForm() {
 
       this.sedeGiuridica.valueChanges.subscribe((input) => {
+          console.log(this.sedeGiuridica.value);
           this.restApi.domanda.anagCandidato.sedeAttuale = input;
       });
 

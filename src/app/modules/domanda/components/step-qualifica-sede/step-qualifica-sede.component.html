@@ -34,7 +34,7 @@
                                [noEntriesFoundLabel]="'Nessun risultato'"
                                [placeholderLabel]="'Cerca sede'"></ngx-mat-select-search>
         <mat-option *ngFor="let qualifica of (filtroQualifiche | async)" [value]="qualifica">
-          {{qualifica}}
+          {{qualifica.desc}}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="qualifica.hasError('required')">
