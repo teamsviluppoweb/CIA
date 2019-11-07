@@ -12,13 +12,17 @@ import {AnagCandidatoModel} from '../../../../core/models';
   styleUrls: ['./step-anagrafica.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StepAnagraficaComponent  {
+export class StepAnagraficaComponent implements OnInit{
 
   @Input() parent: FormGroup;
   @ViewChild('stepper', { static: false }) private myStepper: MatStepper;
 
 
   constructor(private restApi: ApiService) {
+
+  }
+
+  ngOnInit(): void {
     this.onChangesForm();
 
     const anagrafica: AnagCandidatoModel = this.restApi.domanda.anagCandidato;
@@ -33,6 +37,7 @@ export class StepAnagraficaComponent  {
       email: anagrafica.email,
     });
   }
+
 
   /*  Osservo i cambiamenti del form e li applico alla classe domanda */
 

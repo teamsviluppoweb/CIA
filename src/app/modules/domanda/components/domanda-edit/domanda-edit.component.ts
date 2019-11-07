@@ -11,7 +11,7 @@ import {ProvinceLSt} from '../../../../core/models/api.interface';
   templateUrl: './domanda-edit.component.html',
   styleUrls: ['./domanda-edit.component.scss'],
 })
-export class DomandaEditComponent  {
+export class DomandaEditComponent implements OnInit{
 
   public moduloDomanda: FormGroup;
   isSendingDisabled = false;
@@ -27,7 +27,9 @@ export class DomandaEditComponent  {
   displayDichiarazioni = true;
 
   constructor(private fb: FormBuilder, private restApi: ApiService, private router: Router) {
+  }
 
+  ngOnInit(): void {
     this.isSendingDisabled = false;
     this.displayDichiarazioni = (this.restApi.operazione === 0);
 
