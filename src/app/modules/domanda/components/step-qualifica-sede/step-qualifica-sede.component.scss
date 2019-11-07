@@ -10,3 +10,15 @@ mat-form-field {
 #dichiarazioni {
   margin-left: 50px;
 }
+
+.dataMismatch {
+  ::ng-deep &.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: orange;
+  }
+
+  ::ng-deep &.mat-focused .mat-form-field-label {
+    color: orange;
+  }
+
+}
+

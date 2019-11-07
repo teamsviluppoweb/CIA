@@ -6,13 +6,17 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {CustomDatePipe} from "../pipe/custom-date.pipe";
 import {StatoDomandaPipe} from "../pipe/stato-domanda.pipe";
 import {InfoAzioneDomandaPipe} from "../pipe/info-azione-domanda.pipe";
+import {DataConseguimentoPipe} from "../pipe/data-conseguimento.pipe";
+import {InvalidQualificaDirective} from "../directive/invalid-qualifica.directive";
 
 
 @NgModule({
   declarations: [
       CustomDatePipe,
       StatoDomandaPipe,
-      InfoAzioneDomandaPipe
+      InfoAzioneDomandaPipe,
+      DataConseguimentoPipe,
+      InvalidQualificaDirective,
   ],
   imports: [
     FormsModule,
@@ -29,7 +33,9 @@ import {InfoAzioneDomandaPipe} from "../pipe/info-azione-domanda.pipe";
     MaterialModule,
     CustomDatePipe,
     StatoDomandaPipe,
-    InfoAzioneDomandaPipe
+    InfoAzioneDomandaPipe,
+    DataConseguimentoPipe,
+    InvalidQualificaDirective
   ],
 })
 export class SharedModule { }

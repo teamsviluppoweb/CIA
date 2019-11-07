@@ -6,7 +6,7 @@
 
     <mat-form-field appearance="outline" fxFlex="0 0 50" fxFlex.xs="auto">
       <mat-label> <mat-icon>edit</mat-icon> Sede Giuridica</mat-label>
-      <mat-select #singleSelect
+      <mat-select #sediSelect
                   formControlName="sedeGiuridica"
                   placeholder="Seleziona sede">
         <ngx-mat-select-search formControlName="sedeDropdown"
@@ -25,16 +25,16 @@
 
 
 
-    <mat-form-field appearance="outline" fxFlex="0 0 50" fxFlex.xs="auto">
+    <mat-form-field appearance="outline" fxFlex="0 0 50" fxFlex.xs="auto" [ngClass]="{'dataMismatch': isQualificaMismatched}" >
       <mat-label> <mat-icon>edit</mat-icon> Qualifica</mat-label>
-      <mat-select #singleSelect
+      <mat-select #qualificheSelect
                   formControlName="qualifica"
                   placeholder="Seleziona qualifica">
         <ngx-mat-select-search formControlName="qualificaDropdown"
                                [noEntriesFoundLabel]="'Nessun risultato'"
                                [placeholderLabel]="'Cerca sede'"></ngx-mat-select-search>
         <mat-option *ngFor="let qualifica of (filtroQualifiche | async)" [value]="qualifica">
-          {{qualifica.desc}}
+          <p> {{qualifica.desc}} <small *ngIf="qualifica.desc === qualificainvalida.desc">(INVALIDA)</small></p>
         </mat-option>
       </mat-select>
       <mat-error *ngIf="qualifica.hasError('required')">
@@ -42,6 +42,10 @@
         Il campo è <strong>Obbligatorio</strong>
       </mat-error>
     </mat-form-field>
+    <mat-error *ngIf="isQualificaMismatched" style="color: black;">
+      <mat-icon matSuffix style="color: orange; vertical-align: middle; font-size: 22px;">error</mat-icon>
+      La tua qualifica non corrisponde ai <strong>requisiti del concorso</strong>
+    </mat-error>
 
 
   </div>

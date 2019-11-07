@@ -6,6 +6,7 @@ import {Observable, ReplaySubject, Subject} from 'rxjs';
 import {MatSelect, MatStepper} from '@angular/material';
 import {take, takeUntil} from 'rxjs/operators';
 
+
 @Component({
   selector: 'app-step-qualifica-sede',
   templateUrl: './step-qualifica-sede.component.html',
@@ -15,7 +16,9 @@ import {take, takeUntil} from 'rxjs/operators';
 export class StepQualificaSedeComponent implements OnInit, OnDestroy {
 
   @Input() parent: FormGroup;
-  @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
+  @ViewChild('sediSelect', { static: true }) sediSelect: MatSelect;
+  @ViewChild('qualificheSelect', { static: true }) qualificheSelect: MatSelect;
+
   @ViewChild('stepper', { static: false }) private myStepper: MatStepper;
 
   filtroSedi: ReplaySubject<SediApiLSt[]> = new ReplaySubject<SediApiLSt[]>(1);
@@ -24,16 +27,21 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
   filtroQualifiche: ReplaySubject<QualificheApiLst[]> = new ReplaySubject<QualificheApiLst[]>(1);
   listaQualifiche: QualificheApiLst[];
 
+  isQualificaMismatched: boolean;
+  qualificainvalida: QualificheApiLst;
 
 
   private onDetroy = new Subject<void>();
 
 
-  constructor(private restApi: ApiService) {}
+  constructor(private restApi: ApiService) {
+      this.isQualificaMismatched = false;
+  }
 
   ngOnInit() {
 
     this.onChangesForm();
+
 
     this.restApi.getListaSedi().subscribe(
         (Sedi: SediApiLSt[]) => {
@@ -41,34 +49,52 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
             this.listaSedi = Sedi;
 
             this.filtroSedi.next(this.listaSedi.slice());
-            this.setInitialValue(this.filtroSedi);
+            this.setInitialSediValue(this.filtroSedi);
 
-            if (this.restApi.operazione === 1) {
-              this.sedeGiuridica.patchValue( this.listaSedi
+            this.sedeGiuridica.patchValue( this.listaSedi
                       .filter(x => x.desc === this.restApi.domanda.anagCandidato.sedeAttuale.desc)
                       .map(x => x)
                       .reduce(x => x)
                   ,  { emitEvent: false });
-            }
+
         }
     );
 
     this.restApi.getListaQualifiche().subscribe(
         (Qualifiche: QualificheApiLst[]) => {
 
+
             this.listaQualifiche = Qualifiche;
 
+            /*
+            * Controllo se la qualifica del candidato esiste nella lista attuale delle qualifiche, se non esiste allora
+            * la salvo e la inserisco nel lista delle qualifche per tenerla sempre d'occhio nel onChange del form e
+            * avverto il candidato che la sua qualifica non è valida per il concorso attuale
+            * */
+
+            this.isQualificaMismatched = (this.listaQualifiche
+                .filter(x => this.restApi.domanda.anagCandidato.qualificaAttuale.desc === x.desc).length < 1);
+
+            if (this.isQualificaMismatched) {
+                this.qualificainvalida = this.restApi.domanda.anagCandidato.qualificaAttuale;
+                this.listaQualifiche.push(this.restApi.domanda.anagCandidato.qualificaAttuale);
+                this.listaQualifiche.slice();
+                this.qualificheSelect._onFocus();
+            }
+
             this.filtroQualifiche.next(this.listaQualifiche.slice());
-            this.setInitialValue(this.filtroQualifiche);
+            this.setInitialQualificheValue(this.filtroQualifiche);
 
 
-            if (this.restApi.operazione === 1) {
-                this.qualifica.patchValue( this.listaQualifiche
+            this.qualifica.patchValue( this.listaQualifiche
                         .filter(x => x.desc === this.restApi.domanda.anagCandidato.qualificaAttuale.desc)
                         .map(x => x)
                         .reduce(x => x)
                     ,  { emitEvent: false });
-            }
+
+
+
+
         }
     );
 
@@ -83,7 +109,10 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
     this.onDetroy.complete();
   }
 
-  private setInitialValue(data: (Observable<SediApiLSt[]> | Observable<QualificheApiLst[]>)) {
+
+
+
+    private setInitialSediValue(data: Observable<SediApiLSt[]>) {
     data
         .pipe(take(1), takeUntil(this.onDetroy))
         .subscribe(() => {
@@ -92,9 +121,28 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
           // the form control (i.e. _initializeSelection())
           // this needs to be done after the filteredBanks are loaded initially
           // and after the mat-option elements are available
-          this.singleSelect.compareWith = (a: string, b: string) => a && b && a === b;
+
+
+          this.sediSelect.compareWith = (a: string, b: string) => a && b && a === b;
         });
-  }
+    }
+
+    private setInitialQualificheValue(data: Observable<SediApiLSt[]>) {
+        data
+            .pipe(take(1), takeUntil(this.onDetroy))
+            .subscribe(() => {
+                // setting the compareWith property to a comparison function
+                // triggers initializing the selection according to the initial value of
+                // the form control (i.e. _initializeSelection())
+                // this needs to be done after the filteredBanks are loaded initially
+                // and after the mat-option elements are available
+
+
+                this.sediSelect.compareWith = (a: string, b: string) => a && b && a === b;
+            });
+    }
+
+
 
 
     private filtraRicerca(qualifica: (QualificheApiLst[] | SediApiLSt[]), form, filters) {
@@ -123,7 +171,8 @@ export class StepQualificaSedeComponent implements OnInit, OnDestroy {
           this.restApi.domanda.anagCandidato.sedeAttuale = input;
       });
 
-      this.qualifica.valueChanges.subscribe((input) => {
+      this.qualifica.valueChanges.subscribe((input: QualificheApiLst) => {
+          this.isQualificaMismatched = input.desc === this.qualificainvalida.desc;
           this.restApi.domanda.anagCandidato.qualificaAttuale = input;
       });
 
