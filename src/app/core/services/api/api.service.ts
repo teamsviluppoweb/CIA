@@ -6,28 +6,22 @@ import {catchError, debounceTime, map, share, tap} from 'rxjs/operators';
 import {HandleError, HttpErrorHandler} from '..';
 import {
     ComuniLSt,
-    Corsi,
     CorsiApiLst,
-    Formazione, InfoConcorso, ProvinceLSt,
-    QualificaSede,
+    InfoConcorso,
+    ProvinceLSt,
     QualificheApiLst,
-    SediApiLSt, StatoDomandaObject,
+    SediApiLSt,
     TipologiaTitoliDiStudioLSt, TitoliDiStudioIndirizzoLSt, TitoliDiStudioLSt
 } from '../../models/api.interface';
 import {DomandaInterface} from '../../models/domanda.interface';
 import {DomandaModel, DomandaObject, InfoConcorsoModel} from '../../models';
 import {environment} from '../../../../environments/environment';
 import * as moment from 'moment';
+import {Cacheable, CacheBuster} from 'ngx-cacheable';
 
-// To use if we don't want cached application forms response
+const apiCache$ = new Subject<void>();
+const domandaCache$ = new Subject<void>();
 
-
-
-function createHttpOptions(refresh = false) {
-    const headerMap = refresh ? {'x-refresh': 'true'} : {};
-    const headers = new HttpHeaders(headerMap) ;
-    return { headers };
-}
 
 @Injectable({
   providedIn: 'root'
@@ -59,12 +53,15 @@ export class ApiService {
         return this.statoDomandaSubject.asObservable();
     }
 
-  getListaCorsi(): Observable<any[] | CorsiApiLst[]> {
+
+
+    @Cacheable({
+        cacheBusterObserver: apiCache$
+    })
+    getListaCorsi(): Observable<any[] | CorsiApiLst[]> {
     const refresh = false;
 
-    const options = createHttpOptions(refresh);
-
-    return this.http.get<CorsiApiLst[]>( environment.endpoints.backendLocation + environment.endpoints.corsi, options).pipe(
+    return this.http.get<CorsiApiLst[]>( environment.endpoints.backendLocation + environment.endpoints.corsi).pipe(
         map(corsi => {
             return corsi
                 .map(x => x)
@@ -77,12 +74,12 @@ export class ApiService {
     );
   }
 
+  @Cacheable({
+      cacheBusterObserver: apiCache$
+  })
   getListaQualifiche(): Observable<any[] | QualificheApiLst[]> {
-    const refresh = false;
 
-    const options = createHttpOptions(refresh);
-
-    return this.http.get<QualificheApiLst[]>(environment.endpoints.backendLocation + environment.endpoints.qualifiche, options).pipe(
+    return this.http.get<QualificheApiLst[]>(environment.endpoints.backendLocation + environment.endpoints.qualifiche).pipe(
         map(qualifiche => {
             return qualifiche
                 .map(x => x)
@@ -94,12 +91,12 @@ export class ApiService {
     );
   }
 
+  @Cacheable({
+      cacheBusterObserver: apiCache$
+  })
   getListaSedi(): Observable<any[] | SediApiLSt[]> {
-    const refresh = false;
 
-    const options = createHttpOptions(refresh);
-
-    return this.http.get<SediApiLSt[]>(environment.endpoints.backendLocation + environment.endpoints.sedi, options).pipe(
+    return this.http.get<SediApiLSt[]>(environment.endpoints.backendLocation + environment.endpoints.sedi).pipe(
         map(sedi => {
             return sedi
                 .map(x => x)
@@ -111,12 +108,12 @@ export class ApiService {
     );
   }
 
+
+  @Cacheable({
+      cacheBusterObserver: apiCache$
+  })
   getTipologiaTitoliDiStudio(): Observable<any[] | TipologiaTitoliDiStudioLSt[]> {
-    const refresh = false;
-
-    const options = createHttpOptions(refresh);
-
-    return this.http.get<TipologiaTitoliDiStudioLSt[]>(environment.endpoints.backendLocation + environment.endpoints.tipologieTitoliStudio, options).pipe(
+    return this.http.get<TipologiaTitoliDiStudioLSt[]>(environment.endpoints.backendLocation + environment.endpoints.tipologieTitoliStudio).pipe(
         map(tipologia => {
             return tipologia
                 .map(x => x)
@@ -128,12 +125,13 @@ export class ApiService {
     );
   }
 
+
+  @Cacheable({
+      cacheBusterObserver: apiCache$
+  })
   getTitoli(id: string): Observable<any[] | TitoliDiStudioLSt[]> {
-    const refresh = false;
 
-    const options = createHttpOptions(refresh);
-
-    return this.http.get<TitoliDiStudioLSt[]>(environment.endpoints.backendLocation + environment.endpoints.titoliTitoloStudio +  id, options).pipe(
+      return this.http.get<TitoliDiStudioLSt[]>(environment.endpoints.backendLocation + environment.endpoints.titoliTitoloStudio +  id).pipe(
         map(titoli => {
             return titoli
                 .map(x => x)
@@ -145,13 +143,14 @@ export class ApiService {
     );
   }
 
-  getIndirizzoTitoli(id: string): Observable<any[] | TitoliDiStudioIndirizzoLSt[]> {
-    const refresh = false;
 
-    const options = createHttpOptions(refresh);
+  @Cacheable({
+      cacheBusterObserver: apiCache$
+  })
+  getIndirizzoTitoli(id: string): Observable<any[] | TitoliDiStudioIndirizzoLSt[]> {
 
     // tslint:disable-next-line:max-line-length
-    return this.http.get<TitoliDiStudioIndirizzoLSt[]>(environment.endpoints.backendLocation + environment.endpoints.indirizziTitoliStudio +  id,  options).pipe(
+    return this.http.get<TitoliDiStudioIndirizzoLSt[]>(environment.endpoints.backendLocation + environment.endpoints.indirizziTitoliStudio +  id).pipe(
         map(indirizzi => {
             return indirizzi
                 .map(x => x)
@@ -163,12 +162,13 @@ export class ApiService {
     );
   }
 
+
+  @Cacheable({
+      cacheBusterObserver: apiCache$
+  })
   getProvince(): Observable<any[] | ProvinceLSt[]> {
-    const refresh = false;
 
-    const options = createHttpOptions(refresh);
-
-    return this.http.get<ProvinceLSt[]>(environment.endpoints.backendLocation + environment.endpoints.province, options).pipe(
+    return this.http.get<ProvinceLSt[]>(environment.endpoints.backendLocation + environment.endpoints.province).pipe(
         map((province: ProvinceLSt[]) => {
             return province
                 .map(x => x)
@@ -180,12 +180,12 @@ export class ApiService {
     );
   }
 
+
+  @Cacheable({
+      cacheBusterObserver: apiCache$
+  })
   getComuni(codiceProvincia: string): Observable<any[] | ComuniLSt[]> {
-    const refresh = false;
-
-    const options = createHttpOptions(refresh);
-
-    return this.http.get<ComuniLSt[]>(environment.endpoints.backendLocation + environment.endpoints.comuni + codiceProvincia, options).pipe(
+    return this.http.get<ComuniLSt[]>(environment.endpoints.backendLocation + environment.endpoints.comuni + codiceProvincia).pipe(
         map((comuni: ComuniLSt[]) => {
             return comuni
                 .map(x => x)
@@ -197,12 +197,11 @@ export class ApiService {
     );
   }
 
-    getInfoConcorso(): Observable<InfoConcorso> {
-        const refresh = false;
-
-        const options = createHttpOptions(refresh);
-
-        return this.http.get<InfoConcorso>(environment.endpoints.backendLocation + environment.endpoints.info, options).pipe(
+  @Cacheable({
+    cacheBusterObserver: apiCache$
+  })
+   getInfoConcorso(): Observable<InfoConcorso> {
+        return this.http.get<InfoConcorso>(environment.endpoints.backendLocation + environment.endpoints.info).pipe(
             tap((x: InfoConcorso) => {
                 this.concorso = x;
                 this.concorso.dataInizioDomanda =  moment(x.dataFineConcorso).locale('it-IT').format('dddd d MMMM YYYY HH:mm');
@@ -213,12 +212,13 @@ export class ApiService {
         );
     }
 
-  getDomanda(observe = false, refresh): Observable<any[] | DomandaObject | HttpResponse<DomandaObject>> {
 
-    const options = createHttpOptions(true);
-    console.log(options);
+  @Cacheable({
+    cacheBusterObserver: domandaCache$
+  })
+  getDomanda(): Observable<any[] | DomandaObject | HttpResponse<DomandaObject>> {
 
-    return this.http.get<DomandaObject>(environment.endpoints.backendLocation + environment.endpoints.visualizzaDomanda, options).pipe(
+    return this.http.get<DomandaObject>(environment.endpoints.backendLocation + environment.endpoints.visualizzaDomanda).pipe(
          tap( (data: DomandaObject) => {
              this.operazione = data.operazione;
              const response = data.domanda;
@@ -239,17 +239,9 @@ export class ApiService {
     );
   }
 
-
-  tokenLoginAttempt(observe = false, refresh) {
-      const options = createHttpOptions(refresh);
-
-      const domanda = this.getDomanda(true, false);
-      const infoConcorso = this.getInfoConcorso();
-
-      return forkJoin([domanda, infoConcorso]);
-
-  }
-
+  @CacheBuster({
+    cacheBusterNotifier: domandaCache$
+  })
   salvaDomanda(): Observable<any[] | DomandaInterface> {
 
 
