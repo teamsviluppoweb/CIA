@@ -163,7 +163,7 @@ export class AggiungiDatiComponent implements OnInit, OnDestroy {
                     this.provinceFilter.next(this.province_lst.map(nome => nome.nome).slice());
                     this.provinceNomi = this.province_lst.map(nome => nome.nome).slice();
 
-                    return this.restApi.getDomanda(false,false);
+                    return this.restApi.getDomanda();
                 }),
             )
             .subscribe(

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import {ApiService} from '../../core/services/api/api.service';
 import {MatDrawer} from '@angular/material';
 import {Router} from '@angular/router';
@@ -33,16 +33,15 @@ export class UserComponent implements OnDestroy {
               private breakpointObserver: BreakpointObserver,
               private router: Router) {
 
+    this.restApi.getDomanda().subscribe(
+        (x: DomandaObject) => {
+          this.data = x;
+          console.log(this.data);
+        }
+    );
     this.dataConcorso = this.restApi.concorso;
 
-    this.subscriptionStato = this.restApi.getMessage().subscribe((data: DomandaObject) => {
-      if (data) {
-        this.data = data;
-      } else {
-        // clear messages when empty message received
-        data = null;
-      }
-    });
+    this.restApi.getDomanda();
   }
 
   ngOnDestroy(): void {

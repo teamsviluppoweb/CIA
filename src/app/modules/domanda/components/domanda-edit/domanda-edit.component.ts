@@ -75,11 +75,7 @@ export class DomandaEditComponent implements OnInit{
 
   inviaDomanda() {
     this.isSendingDisabled = true;
-    this.restApi.salvaDomanda().pipe(
-        concatMap( () => {
-          return this.restApi.getDomanda(false, true);
-        }),
-        ).subscribe(
+    this.restApi.salvaDomanda().subscribe(
         (x) => {
           this.isSendingDisabled = false;
           this.router.navigate(['/domanda/visualizza']);

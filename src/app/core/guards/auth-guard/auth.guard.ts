@@ -1,7 +1,7 @@
  import { Injectable } from '@angular/core';
  import { CanActivate} from '@angular/router';
  import {Observable} from 'rxjs';
- import {AuthService} from "../../services/auth-service/auth.service";
+ import {AuthService} from '../../services/auth-service/auth.service';
 
  @Injectable({
   providedIn: 'root'
@@ -15,7 +15,6 @@
     }
 
     canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-
         switch (this.ispectUrl(this.url)) {
 
             case true: {

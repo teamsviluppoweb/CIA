@@ -59,7 +59,7 @@ export class VisualizzaDomandaComponent implements OnInit {
     this.titoliDiStudioDichiarati =  this.restApi.domanda.titoliStudioPosseduti;
     this.corsiDichiarati  = this.restApi.domanda.corsiAggAmm;
 
-    this.restApi.getDomanda(false, true).subscribe(
+    this.restApi.getDomanda().subscribe(
         (x: DomandaObject) => {
 
           console.log(x);

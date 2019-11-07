@@ -213,10 +213,8 @@ export class ApiService {
     }
 
 
-  @Cacheable({
-    cacheBusterObserver: domandaCache$
-  })
-  getDomanda(): Observable<any[] | DomandaObject | HttpResponse<DomandaObject>> {
+
+  getDomanda(): Observable<any[] | DomandaObject> {
 
     return this.http.get<DomandaObject>(environment.endpoints.backendLocation + environment.endpoints.visualizzaDomanda).pipe(
          tap( (data: DomandaObject) => {
@@ -231,7 +229,7 @@ export class ApiService {
              this.domanda.titoliStudioPosseduti = response.titoliStudioPosseduti;
              this.domanda.corsiAggAmm = response.corsiAggAmm;
 
-
+             console.log(data);
              this.sendStato(data);
 
          }),
@@ -239,9 +237,6 @@ export class ApiService {
     );
   }
 
-  @CacheBuster({
-    cacheBusterNotifier: domandaCache$
-  })
   salvaDomanda(): Observable<any[] | DomandaInterface> {
 
 

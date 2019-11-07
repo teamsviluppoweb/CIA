@@ -22,7 +22,6 @@ export const routes: Routes = [
   {
     path: 'info',
     component: PaginaIntermediaComponent,
-    canActivate: [DomandaViewPermissionGuard],
   },
 ];
 
